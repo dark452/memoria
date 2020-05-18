@@ -1,0 +1,119 @@
+\select@language {spanish}
+~\hfill \textbf {P\'agina}\par 
+\contentsline {chapter}{\'Indice de Tablas}{\relax \fontsize {17.28}{22}\selectfont {\es@scroman {v}}}
+\contentsline {chapter}{\'Indice de Figuras}{\relax \fontsize {17.28}{22}\selectfont {\es@scroman {vi}}}
+\contentsline {chapter}{Resumen}{\relax \fontsize {17.28}{22}\selectfont {\es@scroman {viii}}}
+\contentsline {chapter}{\numberline {I}INTRODUCCI\'ON}{1}
+\contentsline {section}{\numberline {1.1}Conceptos b\'asicos}{1}
+\contentsline {section}{\numberline {1.2}Problema a resolver}{3}
+\contentsline {section}{\numberline {1.3}Justificaci\'on}{4}
+\contentsline {section}{\numberline {1.4}Objetivos}{5}
+\contentsline {section}{\numberline {1.5}Descripci\'on}{6}
+\contentsline {section}{\numberline {1.6}Resultados esperados}{7}
+\contentsline {section}{\numberline {1.7}Metodolog\IeC {\'\i }a}{7}
+\contentsline {section}{\numberline {1.8}Recursos necesarios}{9}
+\contentsline {chapter}{\numberline {II}MARCO TE\'ORICO}{11}
+\contentsline {section}{\numberline {2.1}La evoluci\'on del modelado de bases de datos}{11}
+\contentsline {subsection}{\numberline {2.1.1}Generalidades}{11}
+\contentsline {subsection}{\numberline {2.1.2}Sistema de archivos}{14}
+\contentsline {subsection}{\numberline {2.1.3}Modelo jer\'arquico de base de datos}{14}
+\contentsline {subsection}{\numberline {2.1.4}Modelo de red de base de datos}{16}
+\contentsline {subsection}{\numberline {2.1.5}Bases de datos relacionales}{18}
+\contentsline {subsection}{\numberline {2.1.6}Bases de datos orientadas al objeto}{21}
+\contentsline {subsubsection}{Objeto}{23}
+\contentsline {subsection}{\numberline {2.1.7}Bases de datos objeto relacional}{24}
+\contentsline {section}{\numberline {2.2}Datos semi estructurados}{27}
+\contentsline {section}{\numberline {2.3}Algunos motores con soporte objeto relacional y XML}{41}
+\contentsline {subsection}{\numberline {2.3.1}PostgreSQL}{41}
+\contentsline {subsubsection}{Creaci\'on de tipos}{42}
+\contentsline {subsection}{\numberline {2.3.2}SQLServer}{48}
+\contentsline {subsection}{\numberline {2.3.3}DB2}{52}
+\contentsline {section}{\numberline {2.4}Oracle}{57}
+\contentsline {subsection}{\numberline {2.4.1}Tipos de datos colecci\'on}{58}
+\contentsline {subsubsection}{El tipo VARRAY}{59}
+\contentsline {subsubsection}{Tablas anidadas}{60}
+\contentsline {subsection}{\numberline {2.4.2}Tipos de objetos}{60}
+\contentsline {subsubsection}{Estructura de un tipo de objeto}{61}
+\contentsline {subsubsection}{Componentes de un tipo objeto}{64}
+\contentsline {subsubsection}{Par\'ametro SELF}{65}
+\contentsline {subsubsection}{Sobrecarga}{65}
+\contentsline {subsubsection}{Constructores}{66}
+\contentsline {subsection}{\numberline {2.4.3}Declaraci\'on e inicializaci\'on de objetos}{66}
+\contentsline {subsection}{\numberline {2.4.4}Invocaci\'on de constructores y m\'etodos}{68}
+\contentsline {subsubsection}{Paso de par\'ametros a un constructor}{68}
+\contentsline {subsubsection}{Invocaci\'on de m\'etodos}{69}
+\contentsline {subsection}{\numberline {2.4.5}Compartici\'on de objetos}{69}
+\contentsline {subsubsection}{Utilizaci\'on de referencias}{71}
+\contentsline {subsubsection}{Limitaciones en la definici\'on de tipos}{72}
+\contentsline {subsection}{\numberline {2.4.6}Manipulaci\'on de objetos}{72}
+\contentsline {subsubsection}{Selecci\'on de objetos}{73}
+\contentsline {subsubsection}{El operador VALUE}{74}
+\contentsline {subsubsection}{El operador REF}{74}
+\contentsline {subsubsection}{Referencias colgadas (\textit {dangling refs})}{75}
+\contentsline {subsubsection}{El operador DEREF}{75}
+\contentsline {subsubsection}{Inserci\'on de objetos}{76}
+\contentsline {subsubsection}{Actualizaci\'on de objetos}{76}
+\contentsline {subsubsection}{Eliminaci\'on de objetos}{76}
+\contentsline {subsection}{\numberline {2.4.7}Herencia}{76}
+\contentsline {subsection}{\numberline {2.4.8}Valores y funciones XML}{79}
+\contentsline {subsubsection}{Tipo de dato XML}{80}
+\contentsline {subsubsection}{Mapeado de XMLType dado un esquema XML}{80}
+\contentsline {subsubsection}{Crear tables y/o columnas XMLType}{81}
+\contentsline {subsubsection}{Insertar documentos XML}{81}
+\contentsline {subsubsection}{Consultar documentos XML}{82}
+\contentsline {subsubsection}{SQLX}{83}
+\contentsline {subsubsection}{Vistas XMLType}{85}
+\contentsline {subsubsection}{Dise\~nando la base de datos XML}{86}
+\contentsline {chapter}{\numberline {III}CASO DE ESTUDIO}{87}
+\contentsline {section}{\numberline {3.1}Descripci\'on del Caso de Estudio}{87}
+\contentsline {section}{\numberline {3.2}Diagrama entidad relacionamiento}{92}
+\contentsline {section}{\numberline {3.3}Modelo relacional}{93}
+\contentsline {section}{\numberline {3.4}Notaci\'on UML para el modelo entidad relacionamiento}{96}
+\contentsline {section}{\numberline {3.5}Implementaci\'on modelo objeto relacional}{99}
+\contentsline {subsection}{\numberline {3.5.1}Dise\~no de una base de datos objeto relacional utilizando la transformaci\'on de ER a objeto relacional}{99}
+\contentsline {subsubsection}{Algoritmo propuesto para la transformaci\'on de ER a objeto relacional en Oracle 11G}{99}
+\contentsline {subsection}{\numberline {3.5.2}Restricciones del problema para su implementaci\'on}{118}
+\contentsline {section}{\numberline {3.6}Implementaci\'on de modelo de datos semi estructurado}{118}
+\contentsline {subsection}{\numberline {3.6.1}Nuevo requerimiento}{119}
+\contentsline {section}{\numberline {3.7}Comparaci\'on de resultados}{127}
+\contentsline {chapter}{\numberline {IV}CONCLUSIONES}{136}
+\contentsline {section}{\numberline {4.1}Recomendaciones en la elecci\'on del tipo de base de datos para una aplicaci\'on particular}{136}
+\contentsline {section}{\numberline {4.2}Cumplimiento de los objetivos}{138}
+\contentsline {section}{\numberline {4.3}Contratiempos en la planificaci\'on}{142}
+\contentsline {section}{\numberline {4.4}Experiencia personal}{142}
+\contentsline {section}{\numberline {4.5}Trabajo futuro}{143}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{144}
+\contentsline {chapter}{Anexo \numberline {A}Detalles, sintaxis y ejemplos de algunos motores de base de datos con soporte objeto relacional}{148}
+\contentsline {section}{\numberline {A.1}PostgreSQL}{148}
+\contentsline {subsection}{\numberline {A.1.1}Sintaxis y ejemplos O-R}{148}
+\contentsline {subsection}{\numberline {A.1.2}Sintaxis y ejemplos XML}{153}
+\contentsline {section}{\numberline {A.2}SQLServer}{156}
+\contentsline {subsection}{\numberline {A.2.1}Sintaxis y ejemplos O-R}{156}
+\contentsline {subsection}{\numberline {A.2.2}Sintaxis y ejemplos XML}{158}
+\contentsline {section}{\numberline {A.3}DB2}{163}
+\contentsline {subsection}{\numberline {A.3.1}Sintaxis y ejemplos O-R}{163}
+\contentsline {subsection}{\numberline {A.3.2}Sintaxis y ejemplos XML}{164}
+\contentsline {section}{\numberline {A.4}Oracle}{167}
+\contentsline {subsection}{\numberline {A.4.1}Sintaxis y ejemplos O-R}{167}
+\contentsline {subsection}{\numberline {A.4.2}Sintaxis y ejemplos XML}{184}
+\contentsline {subsection}{\numberline {A.4.3}\IeC {\textquestiondown }Como almacenar XML en Oracle?}{189}
+\contentsline {subsubsection}{\IeC {\textquestiondown }XMLType o tablas relacionales?}{189}
+\contentsline {subsubsection}{Modelos de almacenamiento XMLType}{190}
+\contentsline {subsubsection}{Elecci\'on de la estructura de almacenamiento}{191}
+\contentsline {chapter}{Anexo \numberline {B}Documentaci\'on caso de estudio}{193}
+\contentsline {section}{\numberline {B.1}Documentaci\'on DER}{193}
+\contentsline {section}{\numberline {B.2}Documentaci\'on modelo relacional}{205}
+\contentsline {section}{\numberline {B.3}C\'odigo SQL de creaci\'on de tablas del modelo relacional}{218}
+\contentsline {section}{\numberline {B.4}Mapeo de caso de estudio de entidad relacionamiento / UML a la capa objeto relacional}{229}
+\contentsline {section}{\numberline {B.5}Mapeo de caso de estudio de la capa objeto relacional a la capa de persistencia}{240}
+\contentsline {section}{\numberline {B.6}Detalles de implementaci\'on de nuevo requerimiento utilizando XML}{242}
+\contentsline {subsection}{\numberline {B.6.1}Registro de esquema en servidor}{242}
+\contentsline {subsection}{\numberline {B.6.2}Verificaci\'on de validez de documentos XML}{243}
+\contentsline {chapter}{Anexo \numberline {C}Desempe\~no de consultas SQL relacionales y objeto-relacionales en Oracle}{244}
+\contentsline {chapter}{Anexo \numberline {D}Mapeo objeto relacional (ORM)}{249}
+\contentsline {section}{\numberline {D.1}Tipos de mapeadores}{250}
+\contentsline {subsection}{\numberline {D.1.1}Enfoque a tuplas}{250}
+\contentsline {subsection}{\numberline {D.1.2}Enfoque a entidades}{251}
+\contentsline {subsection}{\numberline {D.1.3}Enfoque a modelo de dominio}{251}
+\contentsline {section}{\numberline {D.2}Frameworks de persistencia}{251}
+\contentsfinish 

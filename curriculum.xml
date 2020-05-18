@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<curriculum>
+	<estudios>
+		<estudio nivel="Enseñanza Basica">
+			<nombre_establecimiento>Carlos Condell </nombre_establecimiento>
+			<ciudad>Tocopilla</ciudad>
+			<fecha_egreso>1997</fecha_egreso>
+		</estudio>
+		<estudio nivel="Enseñanza Media">
+			<nombre_establecimiento>Liceo Domingo Latrille</nombre_establecimiento>
+			<ciudad>Tocopilla</ciudad>
+			<fecha_egreso>2001</fecha_egreso>
+		</estudio>
+		<estudio nivel="Enseñanza Superior">
+			<nombre_establecimiento>Universidad Católica del norte</nombre_establecimiento>
+			<carrera>Ingeniería de Ejecución en Computación e Informática</carrera>
+			<ciudad>Antofagasta</ciudad>
+			<fecha_egreso>2011</fecha_egreso>
+		</estudio>
+	</estudios>
+	<cursos>
+		<curso area="Informática">
+			<tipo>Diplomado</tipo>
+			<nombre>Redes de datos</nombre>
+			<horas>50</horas>
+		</curso>
+		<curso area="Idiomas">
+			<tipo>Capacitación</tipo>
+			<nombre>Inglés intermedio</nombre>
+			<horas>100</horas>
+		</curso>			
+	</cursos>
+	<idiomas>
+		<idioma nombre="Español">
+			<nivel>Nativo</nivel>
+		</idioma>
+		<idioma nombre="Ingles">
+			<nivel>Medio</nivel>
+		</idioma>
+	</idiomas>
+</curriculum>

@@ -1,0 +1,49 @@
+\select@language {spanish}
+~\hfill \textbf {P\'agina}\par 
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Entorno de un sistema de bases de datos simplificado}}{3}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces La evoluci\'on de las t\'ecnicas de modelos de bases de datos}}{13}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Relaciones modelo jer\'arquico de bases de datos\relax }}{15}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Modelo de red de base de datos}}{17}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Modelo relacional}}{18}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Base de datos que almacena estudiantes y cursos}}{20}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Tercera generaci\'on de bases de datos\relax }}{21}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Modelo de bases de datos orientado a objetos}}{22}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Ejemplo de objeto\relax }}{23}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Tipos de datos internos de DB2 soportados\relax }}{54}
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Estructura de un tipo de objeto}}{62}
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Ejemplo de herencia\relax }}{77}
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Diagrama de flujo de decisi\'on para almacenar XML en Oracle}}{86}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagrama entidad relaci\'on\relax }}{92}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagrama UML del modelo relacional\relax }}{98}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Entidad Personal con atributo compuesto\relax }}{100}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Ejemplo objetos relacionamiento N : N\relax }}{102}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Ejemplo objeto intersecci\'on relacionamiento N : N\relax }}{102}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Entidad Personal con atributo multivaluado\relax }}{104}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Entidad Personal con atributo derivado\relax }}{105}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Relacionamiento 1 a N\relax }}{106}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Relacionamiento N a N\relax }}{108}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Relacionamiento N a N con atributos\relax }}{110}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Entidad d\'ebil\relax }}{112}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Generalizaci\'on de entidades\relax }}{114}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Agregaciones\relax }}{115}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Resultado de consulta a columna XMLTYPE (con tags)\relax }}{123}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Resultado a columna XMLTYPE nodos}}{124}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Resultado a columna XMLTYPE despu\'es UPDATE}}{126}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Resultado a columna XMLTYPE antes UPDATE nodos}}{126}
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Resultado a columna XMLTYPE despu\'es UPDATE nodos}}{127}
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Resultado a columna XMLTYPE despu\'es DELETE nodos}}{127}
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Resultado de consulta a listado de celulares}}{129}
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Cantidad tablas modelo relacional}}{131}
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Cantidad tablas modelo objeto relacional}}{132}
+\contentsline {figure}{\numberline {3.23}{\ignorespaces Tabla resumen de criterios}}{133}
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Ejemplo estructura de esquema XML (Documento XSD)}}{184}
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Ejemplo XPath 1}}{188}
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Ejemplo XPath 2}}{188}
+\contentsline {figure}{\numberline {A.4}{\ignorespaces Ejemplo XPath 3}}{189}
+\contentsline {figure}{\numberline {C.1}{\ignorespaces Tasa de bloques leidos para GROUP BY sencillo}}{245}
+\contentsline {figure}{\numberline {C.2}{\ignorespaces Tasa de lecturas de disco para GROUP BY sencillo}}{246}
+\contentsline {figure}{\numberline {C.3}{\ignorespaces Tasa de bloques le\IeC {\'\i }dos para GROUP BY HAVING y ORDER BY}}{246}
+\contentsline {figure}{\numberline {C.4}{\ignorespaces Tasa de lecturas de disco en GROUP BY HAVING y ORDER BY}}{247}
+\contentsline {figure}{\numberline {C.5}{\ignorespaces Tasa de bloques le\IeC {\'\i }dos para las subconsultas con EXISTS}}{248}
+\contentsline {figure}{\numberline {C.6}{\ignorespaces Tasa de bloques le\IeC {\'\i }dos para las subconsultas con la cl\'ausula IN}}{248}
+\contentsfinish 

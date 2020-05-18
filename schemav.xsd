@@ -1,0 +1,55 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="curriculum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="estudios">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="estudio" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="nombre_establecimiento"/>
+                    <xs:element type="xs:string" name="carrera" minOccurs="0"/>
+                    <xs:element type="xs:string" name="ciudad"/>
+                    <xs:element type="xs:short" name="fecha_egreso"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="nivel" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="cursos">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="curso" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="tipo"/>
+                    <xs:element type="xs:string" name="nombre"/>
+                    <xs:element type="xs:byte" name="horas"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="area" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="idiomas">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idioma" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="nivel"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="nombre" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

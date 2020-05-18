@@ -1,0 +1,13 @@
+\select@language {spanish}
+~\hfill \textbf {P\'agina}\par 
+\contentsline {table}{\numberline {II-1}{\ignorespaces Tipos colecci\'on: Varray versus Nested Table\relax }}{60}
+\contentsline {table}{\numberline {III-1}{\ignorespaces Reglas de transformaci\'on a Modelo Objeto relacional}}{103}
+\contentsline {table}{\numberline {III-2}{\ignorespaces Ventajas y desventajas del modelo relacional\relax }}{133}
+\contentsline {table}{\numberline {III-3}{\ignorespaces Ventajas y desventajas del modelo objeto relacional\relax }}{134}
+\contentsline {table}{\numberline {III-4}{\ignorespaces Ventajas y desventajas de XML/SQL\relax }}{135}
+\contentsline {table}{\numberline {A-1}{\ignorespaces Valores que puede tener el tipo base en SQLServer\relax }}{157}
+\contentsline {table}{\numberline {A-2}{\ignorespaces Valores del par\'ametro flags de OPENXML en SQLServer}}{161}
+\contentsline {table}{\numberline {A-3}{\ignorespaces Tabla empleado con datos de ejemplo\relax }}{166}
+\contentsline {table}{\numberline {A-4}{\ignorespaces Comparaci\'on de los diferentes modelos de almacenamiento}}{191}
+\contentsline {table}{\numberline {D-1}{\ignorespaces Herramientas ORM populares en la actualidad\relax }}{252}
+\contentsfinish 

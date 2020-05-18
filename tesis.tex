@@ -1,0 +1,381 @@
+\documentclass[letterpaper,12pt]{report}
+
+%\documentclass[dvips,letterpaper,12pt]{report}
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{caption}
+\usepackage{indentfirst}
+\usepackage{t1enc}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{listings}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{latexsym}
+\usepackage{supertabular}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{uarial}
+\usepackage{tocloft}
+\usepackage{titletoc}
+ \usepackage{adjustbox}
+\usepackage{blindtext}
+%\usepackage{setspace}
+\usepackage{setspace}
+\usepackage[titletoc]{appendix}
+\setcounter{tocdepth}{1}
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document
+\usepackage[letterpaper,left=4cm,right=2.5cm,top=4cm,bottom=2.5cm]{geometry}
+\pagestyle{fancy}
+\renewcommand{\rmdefault}{phv} % Arial
+\renewcommand{\sfdefault}{phv} % Arial
+\bibliographystyle{hispa}
+
+% set up labelformat and labelsep for table
+% set up labelformat and labelsep for subtable
+%\captionsetup[subtable]{labelformat=simple, labelsep=colon}
+
+%%%%%%%%%%%%%%%%%%Definicion de nuevas macros %%%%%%%%%%%%%
+
+\def\tn#1{\textbf{#1}}
+\def\ti#1{\textit{#1}}
+\def\tt#1{\texttt{#1}}
+\def\tsc#1{\textsc{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% xml
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\renewcommand{\lstlistingname}{Código}
+\renewcommand{\lstlistlistingname}{Índice de códigos}
+
+%\captionsetup[lstlisting]{labelformat=simple, labelsep=period}
+
+% \DeclareCaptionFormat{listing}{%
+% \parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip4pt}}
+% \captionsetup[lstlisting]{format=listing,labelfont=black,textfont=black}
+% \lstset{frame=lrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
+
+
+\lstset{
+  %basicstyle=\ttfamily,
+  columns=flexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape
+basicstyle=\footnotesize,      % the size of the fonts that are used
+% for the code numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it is 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=shadowbox,           % adds a frame around the code
+tabsize=2,          % sets default tabsize to 2 spaces
+captionpos=b,           % sets the caption-position to bottom
+breaklines=true,        % sets automatic line breaking
+breakatwhitespace=false,    % sets if automatic breaks should only happen at whitespace
+morecomment=[l]{//},
+morecomment=[s]{/*}{*/},
+escapeinside={\%*}{*)}          % if you want to add a comment within your
+% code
+}
+
+\lstdefinelanguage{XML}
+{
+  columns=flexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape\bfseries,
+ % basicstyle=\footnotesize, 
+  basicstyle=\ttfamily\footnotesize, 
+  morecomment=[s][\color{orange}]{<!--}{-->},
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[c]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type,encoding,
+    xs:schema,xs:element,xs:complexType,xs:sequence,xs:attribute}% list your attributes here
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{codigo}
+%  CODIGO FUENTE
+% \end{codigo}
+%
+\newenvironment{codigo}%
+{\noindent\minipage{\textwidth}\scriptsize\verbatim}%
+{\endverbatim\endminipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   %
+%  Definición margenes documento    %
+%                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\parskip}{0.2cm}
+\setlength{\parindent}{0.2cm}
+%\setlength{\topmargin}{-1cm}
+%\setlength{\topskip}{0cm}
+%\setlength{\textheight}{22.7cm}
+%\setlength{\textwidth}{15.5cm}
+%\setlength{\evensidemargin}{4cm}
+%\setlength{\oddsidemargin}{1.5cm}
+%\setlength{\headheight}{1cm}
+%\setlength{\headsep}{1cm}
+%\setlength{\footskip}{0cm}
+\renewcommand{\headrulewidth}{0pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\figura}[4]{%
+\begin{figure}[!h]%
+\begin{center}%
+\includegraphics [width=#1]{#2}%
+\end{center}%
+\caption{\label{#3}#4}%
+\end{figure}%
+}
+
+\setlength{\baselineskip}{12pt}
+
+%%%%%%%%%%%%%%%%%%Definicion de nuevas macros %%%%%%%%%%%%%
+
+\def\tn#1{\textbf{#1}}
+\def\ti#1{\textit{#1}}
+\def\tt#1{\texttt{#1}}
+\def\tsc#1{\textsc{#1}}
+
+\addto\captionsspanish{%
+  \renewcommand\appendixname{Anexo}
+  \renewcommand\appendixpagename{Anexos}
+}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PRELIMINARES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\frontmatter
+\captionsetup[figure]{labelformat=simple, labelsep=period}
+\renewcommand{\thelstlisting}{\thechapter.\arabic{lstlisting}}
+
+%%%%%%%% TAPA  %%%%%%%%%%%%%%%%%%
+\include{preliminares/tapa}
+%\pagenumbering{Roman}
+\renewcommand*{\thepage}{\Large {\roman{page}}}
+
+%%%%%%%%%%% Pagina de Calificación %%%%%%%%%%%%%%%%
+% \include{preliminar/calificacion}
+
+%%%%%%%%%%% Pagina de Profesor %%%%%%%%%%%%%%%%
+% \include{preliminar/profesorGuia}
+
+%%%%%%%%%%% Pagina de Dedicatoria %%%%%%%%%%%%%%%%
+%\include{preliminar/dedicatoria}
+
+%%%%%%%%%%% Pagina de Agradecimiento %%%%%%%%%%%%%%%%
+{\pagestyle{plain}
+%\doublespacing
+\renewcommand{\baselinestretch}{1.5}
+\small\normalsize
+\linespread{1}
+\include{preliminares/agradecimientos}
+\cleardoublepage}
+
+
+
+\renewcommand{\cfttabpresnum}{Tabla }
+\renewcommand{\cftfigpresnum}{Figura }
+%For List of Figures to say Figure X.X
+\renewcommand{\cftfigfont}{Figura }
+
+%For List of Tables to say Table X.X
+\renewcommand{\cfttabfont}{Tabla }
+% 
+% \cftsetindents{figure}{0em}{3em}
+% 
+% \cftsetindents{table}{0em}{3em}
+%%%%%%%%%% Tabla de Contenidos %%%%%%%%%%%%%%%%
+\renewcommand{\contentsname}{Índice General}
+
+%\addcontentsline{toc}{chapter}{Índice de General}
+\renewcommand\cftchapafterpnum{\vskip-1pt}
+\renewcommand\cftsecafterpnum{\vskip-1pt}
+
+\addtocontents{toc}{~\hfill\textbf{Página}\par} 
+{\pagestyle{plain}
+\onehalfspacing
+\tableofcontents
+\cleardoublepage}
+
+%\singlespacing
+ 
+\newpage
+%\addcontentsline{toc}{chapter}{Índice de Tablas}
+\renewcommand{\tablename}{Tabla} 
+\renewcommand{\listtablename}{Índice de Tablas} 
+\addcontentsline{toc}{chapter}{\listtablename}
+\onehalfspacing
+\listoftables
+\addtocontents{lot}{~\hfill\textbf{Página}\par} 
+%\addtotables{lot}{~\hfill\textbf{Página}\par} 
+
+\newpage
+%\addcontentsline{toc}{chapter}{Índice de Figuras}
+\renewcommand{\listfigurename}{Índice de Figuras} 
+\addcontentsline{toc}{chapter}{\listfigurename}
+{\pagestyle{plain}
+\onehalfspacing
+\listoffigures
+\cleardoublepage}
+\addtocontents{lof}{~\hfill\textbf{Página}\par}
+
+%\renewcommand{\appendixname}{Anexo} 
+%\addtofigures{lof}{~\hfill\textbf{Página}\par}
+\newpage
+%\lstlistoflistings
+%%%%%%%%%%%%%%%%% Interlineado %%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\baselinestretch}{1.5}
+\small\normalsize
+\linespread{1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{tabla}{label}{texto}
+% LA DEFINICION DE LA TABLA :| \begin{tabular}....
+% \end{tabla}
+%
+\newenvironment{tabla}[2]%
+{\def\eLa{#1}\def\eTx{#2}\begin{table}\begin{center}}
+{\end{center}\caption{\label{\eLa}\eTx}\end{table}}
+
+%%%%%%%%% Nomenclatura %%%%%%%%%%%%%
+% \include{preliminar/nomenclatura}
+
+
+%%%%%%%% Resumen %%%%%%%%%%%%%
+\fancyhead[LO,LE]{\bfseries{}}
+{\pagestyle{plain}
+\include{preliminares/resumen}
+\cleardoublepage}
+
+\fancyhead[LO,LE]{\bfseries{\leftmark}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Cuerpo del Informe
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Nueva forma de la marca de capitulo
+% \MakeUppercase
+%\renewcommand{\chaptermark}[1]{%
+%\markboth{ {%
+%\thechapter. \ #1}}{}}
+
+\mainmatter
+
+%%%%%%%%%% Numeración de Paginas %%%%%%%%%%%%%%%%%%%%
+\fancyhead{}% borro todos los campos
+%\fancyhead[LO,LE]{\bfseries \leftmark} %imprime el capitulo
+\fancyhead[RO,RE]{\thepage}
+
+\fancyfoot{}% borro todos los campos
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%Nueva numeración de capítulos %%%%%%%%%%%%%
+\setcounter{chapter}{0}
+\renewcommand{\chaptername}{{\huge\bfseries CAPÍTULO}}
+\renewcommand{\thechapter}{\Roman{chapter}}
+%\renewcommand{\chapter}[1]{\chaptername\ {\huge\bfseries \thechapter}\ {\huge\bfseries : \ #1}\addcontentsline{toc}{\thechapter chapter}{#1}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{chapter}.\arabic{section}.\alph{subsection}.\arabic{subsubsection}}
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\Roman{chapter}-\arabic{table}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{arabic}
+% \include{introduccion/introduccion}
+
+ \include{capitulo1/capitulo1}
+ \include{capitulo2/capitulo2}
+ \include{capitulo3/capitulo3}
+ %\include{capitulo4/capitulo4}
+  \include{capitulo5/capitulo5}
+%  \include{capitulo6/capitulo6}
+%  \include{capitulo7/capitulo7}
+%  \include{capitulo8/capitulo8}
+% 
+% \addcontentsline{toc}{chapter}{Glosario}
+% \include{apendices/glosario}
+% 
+% 
+\addcontentsline{toc}{chapter}{Bibliografía}
+\include{bibliografia/referencias}
+
+
+\appendixpage
+\begin{appendices}
+%\addcontentsline{toc}{chapter}{Anexo}
+
+\setcounter{chapter}{0}
+\renewcommand{\chaptername}{{\huge\bfseries ANEXO}}
+\renewcommand{\thechapter}{\Alph{chapter}}
+\renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\Alph{chapter}.\arabic{section}.\arabic{subsection}}
+\renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\Alph{chapter}-\arabic{table}}
+%\addcontentsline{toc}{chapter}{Motores de sistema de administración de base de
+% datos}
+\renewcommand{\baselinestretch}{1}
+\small\normalsize
+\linespread{1}
+\include{anexos/anexo1}
+
+%\addcontentsline{toc}{chapter}{Documentación caso de estudio}
+\include{anexos/anexo2}
+\include{anexos/anexo4}
+\include{anexos/anexo3}
+
+\end{appendices}
+% %\appendix
+% %\addcontentsline{toc}{chapter}{Apendice}
+% %\setcounter{chapter}{0}
+% %\renewcommand{\chaptername}{{\huge\bfseries APENDICE}}
+% %\renewcommand{\thechapter}{\Alph{chapter}}
+% %\renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
+% %\renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}
+% 
+% \addcontentsline{toc}{chapter}{Apéndice A: Algoritmos Genéticos (AG)}
+% \include{apendices/apendiceAG}
+% 
+% \addcontentsline{toc}{chapter}{Apéndice B: Configuración}
+% \include{apendices/apendiceConfiguracion}
+% 
+% \addcontentsline{toc}{chapter}{Apéndice C: Código Programas de Prueba}
+% \include{apendices/apendiceTest}
+% 
+% \addcontentsline{toc}{chapter}{Apéndice D: Código Base}
+% \include{apendices/apendiceCodigoBase}
+% 
+% \addcontentsline{toc}{chapter}{Apéndice E: Código Estrategias}
+% \include{apendices/apendiceCodigoEstrategias}
+
+
+
+%\include{apendiceCod}
+% \def\bibname{Referencias}
+
+
+%\addcontentsline{toc}{chapter}{Referencias}
+
+\end{document}

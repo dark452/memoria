@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="curriculum">
+	<xs:complexType>
+		<xs:element name="estudios">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="estudio">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="nombre_establecimiento" type="xs:string" />
+								<xs:element name="ciudad" type="xs:string" />
+								<xs:element name="fecha_egreso" type="xs:date" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="cursos">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="curso">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="tipo"	type="xs:string" />
+								<xs:element name="nombre" type="xs:string" />
+								<xs:element name="horas" type="xs:integer" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="idiomas">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="idioma">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="nivel"	type="xs:string" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+	</xs:complexType>
+</xs:element>
+</xs:schema>
