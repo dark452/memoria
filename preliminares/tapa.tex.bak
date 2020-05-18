@@ -1,0 +1,39 @@
+%%\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+{\large UNIVERSIDAD CATÓLICA DEL NORTE}\\
+{\large FACULTAD DE INGENIERÍA Y CIENCIAS GEOLÓGICAS}\\
+{\large DEPARTAMENTO DE INGENIERÍA DE SISTEMAS Y COMPUTACIÓN}\\
+\end{center}
+
+\vspace{6.0cm}
+
+\begin{center}
+{\LARGE{\bfseries Propuesta Tesis }}
+\\
+{\LARGE{\bfseries Relación entre distintos factores del relieve(nombre preliminar)}}
+
+\end{center}
+
+\vspace{3cm}
+
+\hfill
+\begin{minipage}[b]{8.0cm}
+Tesis para optar al Grado de Magister en Ingeniería en Informática.
+\end{minipage}
+
+\vspace{3.0cm}
+
+\begin{center}
+\emph{Marco Antonio Serón Tapia}
+\end{center}
+
+\vspace{0.5cm}
+
+\hfill
+\begin{minipage}[c]{8.0cm}
+Antofagasta, Marzo del 2008.
+\end{minipage}
+
+%%\end{titlepage}
+

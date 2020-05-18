@@ -1,0 +1,1469 @@
+\chapter{CASO DE ESTUDIO} \label{cap3}
+
+\noindent En este capítulo se presenta un caso de estudio que permite
+implementar la teoría en los diferentes modelos. Así mismo,  gracias a este caso de estudio se
+pretende demostrar la importancia de la utilización del modelo objeto relacional
+y XML, ya que, mientras el modelo relacional es muy sencillo de implementar por
+ser el más utilizado, el objeto relacional posee una mayor semántica que se hace
+muy familiar si se tiene conocimientos del paradigma orientación al objeto. 
+
+\section{Descripción del Caso de Estudio} \label{enunciado}
+\noindent Este caso de estudio, es un caso real al cual la memorista se vió
+enfrentada, no obstante su implementación fue llevada a cabo en una base de datos relacional
+pura.
+
+\noindent Se debe desarrollar e integrar un nuevo módulo para
+un sistema de gestión escolar, dicho módulo consiste en implementar las planificaciones curriculares de los 
+profesores según curso y asignatura, a modo de automatizar el proceso actual que se realiza 
+en planillas en papel. 
+
+\noindent Un nivel de enseñanza es el nivel al que pertenece un curso, por
+ejemplo 1º Básico, 2º Básico, etc. Un nivel de enseñanza posee un identificador y un nombre.
+Como es sabido un curso (8ºA) tiene un profesor jefe, año (el 8ºA del 2013), asignaturas y 
+alumnos. Por ejemplo, el 8ºA tiene como profesor jefe a ``Nelson Núñez'', cabe
+mencionar que todos los octavos tienen las mismas asignaturas. En el módulo sólo es necesario tener 
+conocimiento sobre profesores y asignaturas.
+
+\noindent Una asignatura posee un id y nombre. Considere que cada asignatura
+tiene un id distinto para cada nivel por ejemplo: Lenguaje y Comunicación del nivel de enseñanza 7º Básico tiene un 
+código distinto que para los 8º Básicos. Una asignatura es dictada en todos los cursos del 
+mismo nivel de enseñanza (8ºA, 8ºB, 8ºC, etc.), además por cada curso asignatura existe un 
+profesor. Por ejemplo, en el 8ºA la asignatura ``Matemáticas'' es dictada por
+John Pérez y Educación Física por Robert Rodríguez y matemáticas para el 8ºB es dictada por Juan Soto.
+Del profesor interesa el rut, nombres, apellido paterno, apellido materno, fecha de nacimiento, 
+cantidad de cursos en los que hace clase.
+
+\noindent Por otro lado existe el concepto de ``tipo de programa'' el cual tiene
+su identificador, nombre, y abreviatura. Existen 5 tipos de programas base:
+
+\begin{itemize}
+  \item Unidades educativas.
+  \item Objetivos fundamentales verticales.
+  \item Objetivos fundamentales transversales.
+  \item Aprendizajes esperados.
+  \item Contenidos mínimos obligatorios.  
+\end{itemize}
+
+\noindent Un tipo de programa posee muchos detalles de programa
+(curricular), el cual tiene un identificador, descripción, nombre y asignatura asociada. Por ejemplo, para los 8º básicos la 
+asignatura ``Matemáticas'' tiene 2 unidades educativas (recuerde que una unidad
+educativa es uno de los 5 programas tipo), abreviadas con la letra U, donde cada una de ellas tiene un 
+nombre y una descripción:
+
+\begin{itemize}
+  \item Unidad educativa 1: geometría
+  \item Unidad educativa 2: álgebra.
+\end{itemize}
+
+\noindent Cabe mencionar que c/u de ellas, geometría y álgebra, corresponde a un
+detalle del programa, c/u con un código y con un programa tipo asociado (unidad educativa).
+
+\noindent Siguiendo con el ejemplo del nivel 8° básico, la asignatura
+``Educación Física'' tiene 2 contenidos mínimos obligatorios, abreviados con la
+sigla CMO, donde cada uno de ellos tiene un nombre y descripción:
+
+\begin{itemize}
+  \item Contenido mínimo obligatorio 1: Voleibol.
+  \item Contenido mínimo obligatorio 2: Futbol.
+\end{itemize}
+
+\noindent Cada profesor debe hacer su planificación por cada curso. De una
+planificación es importante conocer: id, fecha de creación, última modificación y tipo de planificación. Una planificación
+puede ser del tipo:
+
+\begin{itemize}
+  \item Planificación anual.
+  \item Planificación por unidad.
+  \item Planificación clase a clase.
+\end{itemize}
+
+\noindent En una planificación del tipo anual se pueden crear muchos periodos,
+un periodo posee mes inicio, mes de fin, duración (en horas). Por ejemplo para el periodo 1 se empezará en abril y se 
+terminará en junio y tendrá una duración de 50 hrs, para el periodo 2 se empezará en agosto y 
+se terminará en octubre y este periodo tendrá una duración de 40 hrs.
+
+\noindent En una planificación del tipo por unidad se pueden crear muchas
+unidades y una unidad posee fecha de inicio y fecha de término. Por ejemplo la unidad 1 empezará el 1 de abril y terminará el 
+30 de abril del 2013, la unidad 2 empezará el 2 de Mayo y terminará el 31 de mayo del 2013.
+
+\noindent Por último, de una planificación del tipo clase a clase se pueden
+crear muchas clases y estas poseen fecha, horario (día de la semana, hora de inicio, hora de termino y duración).
+
+\noindent En cada periodo, unidad o clase un alumno debe poseer ciertos
+conocimientos los cuales son llamados ``Aprendizajes previos'', por ejemplo en
+8º A para la asignatura Matemáticas, la unidad 1 que empieza el 2 de Mayo del 2013 y finaliza el 30 de Junio del 2013 posee los siguientes 
+aprendizajes previos:
+
+\begin{itemize}
+  \item Ángulos en polígonos.
+  \item Construcción de polígonos.
+  \item Áreas en triángulos y cuadriláteros.
+  \item Características de conos, cilindros y pirámides.
+\end{itemize}
+
+\noindent En cada clase existe la posibilidad de especificar las actividades a
+desarrollar en dicha clase, una actividad posee un id, nombre, descripción y duración. Una actividad puede utilizar 
+recursos de los cuales importa su id, nombre y descripción. Y por último una actividad emplea 
+una metodología en particular, de una metodología se necesita conocer su id, nombre y 
+descripción. Por ejemplo:
+
+\noindent En 8º B para la asignatura Matemáticas, una de las actividades a
+desarrollar en la clase del 30 de Mayo del 2013 será explicar las diferencias entre círculo y circunferencia, utilizando el 
+concepto de lugar geométrico. Esta actividad utiliza como recurso cartulina y balones de fútbol. 
+Se emplea metodología activa.
+
+\noindent Por otro lado, tanto para un periodo como para una unidad se deben
+especificar las metodologías y los recursos a utilizar.
+
+\noindent Además cada periodo, unidad y clase puede tener muchos detalles de
+programas (curriculares) asociados, el profesor selecciona todos los programas que correspondan. Ejemplo:
+
+\noindent Una planificación anual del curso 8ºC para la asignatura
+``Matemáticas", tiene asociado el aprendizaje esperado AE1 y AE3 para dicha asignatura, los cuales tienen la descripción 
+``Caracterizar la circunferencia y el círculo como lugares geométricos'' y
+``Calcular el área del círculo y de sectores de él''
+
+\noindent Una planificación posee un último estado, aunque la planificación
+puede pasar por varios estados. Los estados pueden ser: ``borrador'',
+``pendiente'', ``rechazado'' y ``validado'', se debe saber en qué fecha cambió
+de estado. De un estado se debe saber id y nombre. Una planificación cuando es creada queda automáticamente en estado borrador y el profesor una 
+vez finalizada la creación la debe enviar a validar, cuando la envía a validar queda en un 
+estado ``pendiente''. La persona encargada de revisar cada una de las
+planificaciones que los profesores envían es un No docente. De un No docente se debe saber su rut, nombres, apellido 
+paterno, apellido materno, fecha de nacimiento y cargo. Un cargo tiene id,
+nombre y descripción. Cada vez que un No docente acepta o rechaza una
+planificación puede escribir un comentario y debe quedar registrada la fecha en
+que se realizó la acción. Cuando la planificación es rechazada el profesor tiene
+la posibilidad de realizar los cambios solicitados y enviarla nuevamente a validación, y esta puede ser validada por otro No docente.
+
+
+\newpage
+\section{Diagrama entidad relacionamiento}
+
+\par \noindent En la figura \ref{Figura 31} se presenta el diagrama entidad
+relacionamiento, en donde solamente se muestran las entidades y
+relacionamientos, el detalle de los atributos y su respectiva documentación se encuentra en el Anexo B.1. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+  \begin{adjustbox}{addcode={\begin{minipage}{\width}}{\caption{\label{Figura 31}Diagrama entidad relación}
+  \end{minipage}},rotate=90,center}
+      \includegraphics[scale=.51]{capitulo3/images/der2.png}%
+  \end{adjustbox}
+\end{figure}
+%  \begin{figure}[H]
+%  \begin{center}
+%   \includegraphics [scale=0.6]{capitulo3/images/der2.png} \end{center}
+%  \caption{\label{Figura 31}Diagrama entidad relación}
+%  \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Modelo relacional}
+
+\noindent A continuación se presenta el modelo relacional del caso de estudio.
+Para realizar la transformación del modelo entidad-relacionamiento al modelo
+relacional se utilizó la opción 8 a mencionada en \cite{navathe} para las especializaciones
+y/o generalizaciones.
+
+\par \noindent Los códigos SQL DDL (Data Definition Language, por sus siglas
+en inglés) de la implementación y la documentación de tablas se encuentran
+detallados en el Anexo \ref{tablas} y Anexo \ref{docrelacional} respectivamente.
+\\
+
+\par 
+
+\noindent \tn{nivel}(\underline{id\_nivel},nom\_nivel)
+
+\noindent \tn{curso}(\underline{id\_nivel,letra},año,num\_correlativo,dv)
+
+\noindent \tn{programa\_tipo}(\underline{id\_pt},nom\_pt,abrev)
+
+\noindent
+\tn{detalle\_programa}(\underline{id\_dp},nom\_dp,desc\_dp,id\_pt,id\_asig)
+
+\noindent
+\tn{personal}(\underline{num\_correlativo,dv},nombres,apaterno,amaterno,fnac,calle,num,cod\_postal,\\
+\hspace{4cm}ciudad,region)
+
+\noindent \tn{personalmail}(\underline{num\_correlativo,dv,mail})
+
+\noindent \tn{personalcelular}(\underline{num\_correlativo,dv,celular})
+
+\noindent \tn{docente}(\underline{num\_correlativo,dv})
+
+\noindent \tn{no\_docente}(\underline{num\_correlativo,dv},id\_cargo)
+
+\noindent
+\tn{asignatura}(\underline{id\_asig},nom\_asig,id\_nivel,letra,num\_correlativo,dv)
+
+\noindent \tn{cargo}(\underline{id\_cargo},nom\_c,desc\_c)
+
+\noindent
+\tn{planificacion}(\underline{id\_plan},ult\_estado,fcreacion,ult\_modif,tipo\_plan,num\_correlativo,dv,
+\\
+\hspace{4cm}id\_asig)
+
+\noindent \tn{plan\_anual}(\underline{id\_plan})
+
+\noindent \tn{plan\_unidad}(\underline{id\_plan})
+
+\noindent \tn{plan\_clase}(\underline{id\_plan})
+
+\noindent
+\tn{periodo}(\underline{id\_periodo},duracion,mes\_ini,mes\_ter,id\_plan\_anual)
+
+\noindent \tn{periodo\_aprevios}(\underline{id\_periodo,aprevio})
+
+\noindent \tn{unidad}(\underline{id\_unidad},fechai,fechat,id\_plan\_unidad)
+
+\noindent \tn{unidad\_aprevios}(\underline{id\_unidad,aprevio})
+
+\noindent
+\tn{clase}(\underline{id\_clase},duracion,dia,hi,ht,fecha,id\_plan\_clase)
+
+\noindent \tn{clase\_aprevios}(\underline{id\_clase,aprevio})
+
+\noindent \tn{estado}(\underline{id\_estado},nom\_estado)
+
+\noindent \tn{planificacion\_estado}(\underline{id\_plan,id\_estado})
+
+\noindent
+\tn{planificacion\_estado\_fcambio}(\underline{id\_plan,id\_estado,fcambio})
+
+\noindent \tn{evaluacion}(\underline{num\_correlativo,dv,id\_plan})
+
+\noindent
+\tn{evaluacion\_detalle}(\underline{num\_correlativo,dv,id\_plan,fecha\_eva},comentario)
+
+\noindent \tn{metodologia}(\underline{id\_met},nom\_met,desc\_met)
+
+\noindent \tn{metodologia\_unidad}(\underline{id\_met,id\_unidad})
+
+\noindent \tn{metodologia\_periodo}(\underline{id\_met,id\_periodo})
+
+\noindent \tn{recurso}(\underline{id\_rec},nom\_rec,desc\_rec)
+
+\noindent \tn{recurso\_unidad}(\underline{id\_rec,id\_unidad})
+
+\noindent \tn{recurso\_periodo}(\underline{id\_rec,id\_periodo})
+
+\noindent \tn{recurso\_actividad}(\underline{id\_rec,id\_act})
+
+\noindent
+\tn{actividad}(\underline{id\_act},desc\_act,duracion,id\_clase,id\_met)
+
+\noindent \tn{detalle\_programa\_unidad}(\underline{id\_dp,id\_unidad})
+
+\noindent \tn{detalle\_programa\_periodo}(\underline{id\_dp,id\_periodo})
+
+\noindent \tn{detalle\_programa\_clase}(\underline{id\_dp,id\_clase})
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \begin{figure}[H]
+%  \begin{center}
+%   \includegraphics [scale=0.9]{capitulo3/images/mer.png} \end{center}
+%  \caption{\label{Figura 32}Modelo entidad relación}
+%  \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Notación UML para el modelo entidad relacionamiento}
+
+\par \noindent Para un mayor entendimiento de cómo se debe implementar el modelo
+objeto relacional es importante tener una visión del caso de estudio en notación
+UML, ya que es más sencillo de visualizar y de transformar. Pero primero se
+especificará la representación propuesta por \cite{navathe} de entidad
+relacionamiento a UML.
+
+\par \noindent En los diagramas de clase
+UML, una clase (equivalente a un tipo de entidad en ER) se muestra como un
+cuadro (véase la figura \ref{FiguraUML}) que incluye tres secciones: la sección
+superior ofrece el nombre de la clase; la sección intermedia incluye los atributos de los objetos individuales 
+de la clase; y la última sección incluye las operaciones que se pueden aplicar a
+esos objetos. En los diagramas ER no se especifican las operaciones.
+Un atributo compuesto se modela como un dominio
+estructurado. Un atributo multivaluado generalmente se modelará como una clase
+separada o como un atributo del tipo arreglo que contenga los valores.
+
+\par \noindent En la tecnología UML, los tipos de relación se denominan asociaciones y las instancias de relación, vínculos. Una asociación binaria (tipo de relación binaria) se representa como una línea que conecta las clases participantes (tipos de entidad)
+y, opcionalmente, puede tener un nombre. Un atributo de relación, denominado
+atributo de vínculo, se coloca en un recuadro conectado con la línea de la asociación mediante una línea discontinua.
+La notación (mín, máx) se utiliza para especificar las restricciones de
+relación, que en terminología UML se denominan multiplicidades. Las multiplicidades se especifican como 
+mín .. máx, y un asterisco (*) indica que no hay un límite máximo en la participación. No obstante, las 
+multiplicidades se colocan en los extremos opuestos de la relación.
+En UML, un asterisco indica una multiplicidad de O ..*, y un 1 indica una multiplicidad de 1..1.
+
+\par \noindent En UML, hay dos tipos de relaciones: asociación y agregación. La
+agregación está pensada para representar una relación entre un objeto completo y sus partes constitutivas, y tiene una
+notación diagramática distinta. No obstante la agregación y la asociación no
+tienen propiedades estructurales diferentes y la elección del tipo de relación que
+hay que utilizar es algo subjetivo. En el modelo ER, las dos se representan
+como relaciones. 
+
+\par \noindent UML también distingue entre asociaciones (o agregaciones) unidireccionales y bidireccionales. En el caso
+unidireccional,
+la línea que conecta las clases se muestra con una flecha para indicar que sólo se necesita una
+dirección para acceder a los objetos relacionados. Si no aparece una flecha, se asume la cualidad bidireccional,
+que es lo predeterminado. Por otro lado, para representar una entidad débil se
+utiliza una composición ya que esta posee una dependencia existencial con
+respecto a la entidad fuerte. En la figura \ref{FiguraUML} se muestra una
+versión simplificada UML del caso de estudio.
+
+
+
+%\par \noindent A continuación se el código SQL con la creación de tablas.\\
+\begin{figure}[H]
+  \begin{adjustbox}{addcode={\begin{minipage}{\width}}{\caption{\label{FiguraUML}Diagrama
+  UML del modelo relacional}
+  \end{minipage}},rotate=90,center}
+      \includegraphics[scale=.5]{capitulo3/images/uml.png}%
+  \end{adjustbox}
+\end{figure}
+
+
+\section{Implementación modelo objeto relacional}
+
+\subsection{Diseño de una base de datos objeto relacional utilizando la
+transformación de ER a objeto relacional}
+
+\par \noindent En la siguiente sección de presentará una descripción de un
+algoritmo propuesto que puede transformar un esquema ER en el esquema de una
+base de datos objeto relacional.
+
+\subsubsection{Algoritmo propuesto para la transformación de ER a objeto
+relacional en Oracle 11G} \label{algoritmoor}
+
+\par \noindent A continuación, se describirán los pasos de un algoritmo para la
+transformación de ER en objeto relacional. Se empleará la base de datos del caso
+de estudio. El esquema ER de esta base de datos se muestra en la figura
+\ref{Figura 31}, mientras que en la figura \ref{FiguraUML}  se muestra el
+esquema de la base de datos objeto relacional correspondiente para ilustrar los pasos del
+mapeado. \\
+
+\par \noindent \tn{Paso 1: Mapeado de atributos compuestos}
+\par \noindent Por cada
+atributo compuesto \tn{C} del esquema ER, se crea un tipo
+estructurado \tn{et} que contenga todos los atributos simples de \ti{C}. Los
+tipos estructurados son útiles para representar atributos compuestos cuando
+dicho atributo debe ser utilizado en múltiples tablas o definiciones de tipos.
+Por ejemplo, el atributo dirección que se ilustra en la figura \ref{Figurap} 
+se definirá como tipo estructurado. En el código \ref{acom} se ve el resultado
+de la transformación.
+
+ \begin{figure}[!hbtp]
+ \begin{center}
+  \includegraphics [scale=0.8]{capitulo3/images/Diagrama1.jpeg} \end{center}
+ \caption{\label{Figurap}Entidad Personal con atributo compuesto}
+ \end{figure}
+ \newpage
+ \begin{lstlisting}[language=SQL, caption={Definición de tipo estructurado para
+ atributo compuesto},label=acom] 
+ CREATE TYPE tDireccion AS OBJECT
+ (	calle	varchar2(255), 	num		varchar2(10),
+ 	cod_postal	number(10),
+ 	ciudad		varchar2(150),
+ 	region		varchar2(100));
+ 	
+ CREATE TYPE tRut AS OBJECT (	
+ num_correlativo		number(10), 	dv		char(1));
+ 	
+ CREATE TYPE tPersonal AS OBJECT
+ (	rut		tRut,
+ 	fnac	date,  	direccion	tDireccion);
+ 	
+ CREATE TABLE Personal OF tPersonal
+ (	primary key(rut.num_correlativo, rut.dv));
+\end{lstlisting}
+
+
+\noindent Es preciso definir los dos casos posibles de
+implementación, tanto para atributos multivaluados, como para relacionamientos
+de 1 : \ N y relacionamientos de N : \ M. 
+
+\begin{itemize}
+  \item En caso de que se conozca el tamaño del relacionamiento o del atributo
+  multivaluado, por ejemplo: 
+  \begin{itemize}
+  \item Un persona tiene a lo más 2 teléfonos fijos.
+  \item Un alumno puede pertenecer como máximo a 3 carreras distintas dentro de
+  la univesidad.
+  \end{itemize}
+  \item En el caso de no conocer el tamaño máximo.
+\end{itemize}
+
+\par \noindent \tn{¿Qué utilizar dependiendo del caso?}
+
+
+\begin{itemize}
+\item Cuando el valor máximo es conocido, se propone utilizar un varray para
+almacenar referencias de los tipos de objetos.
+\item Cuando el valor no se conoce, se utiliza tablas anidadas, donde se
+almacenan referencias del tipo de objeto.
+\item Existe la posibilidad de utilizar un varray aunque se desconozca el valor
+máximo, en este caso se crea un varray con un tamaño máximo de tope a criterio
+del programador. Para realizar la manipulación de datos, es necesario crear
+procedimientos almacenados o métodos dentro del objeto que sean capaces de
+verificar si el varray tiene espacio disponible para insertar nuevos datos.
+	
+\end{itemize}
+
+\noindent Sin embargo, la propuesta anterior que en teoría es la solución
+correcta para cualquier caso, si el problema es muy complejo y las entidades poseen
+una gran cantidad de relacionamientos Oracle, no permite su correcto
+funcionamiento y a la vez mantener la navegabilidad bidireccional.
+Por este motivo para los relacionamientos 1 a N se utilizará la opción de crear
+un varray con un tamaño máximo a criterio.
+En el caso de un relacionamiento de N a N se propone crear un nuevo tipo
+objeto intersección, el cual posee una referencia a cada objeto con el que se
+tiene un relacionamiento, para luego crear un listado (varray) de referencias a ese nuevo objeto intersección y es dicho
+ listado el que se agrega a cada objeto del relacionamiento. En la figura
+ \ref{nn1} y figura \ref{nn2} se muestra un ejemplo del tipo intersección y el
+ listado de referencias.
+  
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.65]{capitulo3/images/nn1.png}
+  \end{center}
+ \caption{\label{nn1}Ejemplo objetos relacionamiento N : N}
+ \end{figure} 
+ 
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.6]{capitulo3/images/nn2.png}
+  \end{center}
+ \caption{\label{nn2}Ejemplo objeto intersección relacionamiento N : N}
+ \end{figure}
+
+\noindent Para el caso de estudio será
+implementado con navegabilidad bidireccional por requerimiento del profesor guía, ya que cualquier objeto
+debe conocer con quien se encuentra asociado. 
+
+\noindent Cabe destacar, que desde el estándar SQL 2003 se tiene soporte a
+MULTISET para reemplazar a los arreglos y es la forma en cómo se implementan los
+relacionamientos en dicho estándar \cite{transformacion_or}. En la tabla
+\ref{tablasql_oracle} se presenta la diferencia entre Oracle y el estándar 2003.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|l|p{4cm}|p{5cm}|}
+ \hline
+\tn{Modelo conceptual}      & \tn{Estándar SQL:2003}       & \tn{Oracle}                                              
+\\ \hline Clase & Tipo estructurado		& Tipo Objeto                             
+\\ \hline Extensión de clase       & Tabla Tipada	& Tabla de Tipo Objeto                                            
+\\ \hline Atributo Multivaluado  & Array / Multiset	&	Varray/Nested Table
+\\ \hline Atributo Compuesto 	&	Row / Columna de Tipo Estructurado	& Columna de
+Tipo Objeto 
+\\	\hline Atributo Derivado	&	Trigger/Método		& Trigger/Método
+\\ \hline	Asociación 1 : 1	& Ref / Ref		&	Ref / Ref
+\\ \hline	Asociación 1 : N	& Ref / Multiset / Array		&	Ref /
+Nested Table / Varray
+\\ \hline	Asociación N : M	& Multiset / Multiset o Array / Array	& Nested
+Table / Nested Table o Varray / Varray
+\\ \hline Asociación Agregación		& 	Multiset / Array	& Nested Table / Varray de
+Referencias
+\\ \hline Asociación Composición	&  Multiset / Array	& Nested Table / Varray de
+Objetos
+\\ \hline	Asociación Generalización	& Tipos / Tablas Tipadas	& Tipos / Tablas de
+Tipo Objeto. \\ 
+\hline
+\end{tabular}
+\caption[Reglas de transformación a Modelo Objeto
+relacional]{\label{tablasql_oracle}Reglas de transformación (Modelo conceptual - Modelo Objeto relacional) \cite{transformacion_or}}
+
+\end{center}
+\end{table}
+
+
+\par \noindent \tn{Paso 2: Mapeado de atributos multivaluados} 
+\par \noindent Por cada atributo multivaluado del esquema ER, existen dos métodos para realizar el
+mapeado: sí el tamaño del atributo multivaluado es conocido \ti{MV} y sí se
+desconoce el tamaño del atributo \ti{MT}. Para \ti{MV} se puede representar
+directamente como un atributo de un tipo objeto \tn{et} para la tabla de
+tipos \tn{c}, en donde se define un varray \tn{V} de referencias de un tipo de
+datos específico. Si es un atributo multivaluado compuesto, crear un \tn{V} que
+contenga un tipo estructurado con los atributos simples de \ti{MV}.
+Por ejemplo en el atributo celular que se ilustra en la figura \ref{Figuram},
+ definirá como tipo varray, se supondrá que a lo más se almacenarán 5 números,
+ en el código
+\ref{amul} se ve el resultado de la transformación. 
+
+\begin{figure}[!hbtp]
+ \begin{center}
+  \includegraphics [scale=1]{capitulo3/images/Diagrama2.jpeg}
+  \end{center}
+ \caption{\label{Figuram}Entidad Personal con atributo multivaluado}
+ \end{figure}
+% \newpage
+ \begin{lstlisting}[language=SQL, caption={Definición de tipo varray para
+ atributo multivaluado},label=amul]
+ CREATE TYPE tCelular AS OBJECT ( num_celular	number(20));
+ CREATE TYPE Celulares AS VARRAY(5) OF REF tCelular;
+ CREATE TYPE tRut AS OBJECT ( num_correlativo	number(10), dv	char(1));
+ 
+ CREATE TYPE tPersonal AS OBJECT
+ (	rut		tRut,
+ 	fnac	date,
+ 	celular	Celulares);
+ 	
+ CREATE TABLE Personal OF tPersonal
+ (	primary key(rut.num_correlativo,rut.dv));
+\end{lstlisting}
+
+\par \noindent \tn{Paso 3: Mapeado de atributos derivados}
+\par \noindent Por cada atributo derivado \ti{D} del esquema ER, se define como
+un método en el tipo estructurado \tn{et} que realice el cálculo requerido y devuelva su valor.
+Por ejemplo en el atributo edad que se ilustra en la figura \ref{Figurad}, se
+definirá como método. En el código \ref{ader} se ve el resultado
+de la transformación.
+
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.8]{capitulo3/images/Diagrama3.jpeg}
+  \end{center}
+ \caption{\label{Figurad}Entidad Personal con atributo derivado}
+ \end{figure}
+ 
+  \begin{lstlisting}[language=SQL, caption={Definición de método para
+ atributo derivado},label=ader]
+ CREATE TYPE tRut AS OBJECT (num_correlativo	number(10), dv	char(1));
+ CREATE TYPE tPersonal AS OBJECT
+ (	rut		tRut, 	fnac	date,
+ 	MEMBER FUNCTION edad RETURN NUMBER)
+ / 	
+ CREATE TYPE BODY tPersonal IS
+  MEMBER function edad RETURN NUMBER IS
+    BEGIN
+     return(trunc(months_between(Sysdate, self.fnac) / 12));
+    END;
+  END;  /
+  
+ CREATE TABLE Personal OF tPersonal
+ (	primary key(rut.num_correlativo, rut.dv));
+\end{lstlisting}
+
+\par \noindent \tn{Paso 4: Mapeado de los tipos de relación 1:1
+binaria}
+\par \noindent Por cada tipo de relación 1:1 binaria \tn{R} sin atributos del
+esquema ER, identifique las relaciones \tn{S} y \tn{T} que corresponden a los tipos de
+entidad que participan en \tn{R}. Se define una tabla de tipos \tn{S1} que posee un tipo estructurado \tn{s1t} con un atributo de tipo
+referencia (t1t). Además definir un tabla de tipos \tn{T1} que posee un tipo
+estructurado \tn{t1t} con un atributo de tipo referencia (s1t).\\
+
+\par \noindent \tn{Paso 5: Mapeado de tipos de relaciones 1:N
+binarias}
+\par \noindent Por cada relación 1:N binaria regular \tn{R} sin atributos,
+identifique la relación \tn{S} que representa el tipo de entidad participante en el lado N del tipo de relación. 
+Al igual que en el mapeado de los tipos de relación 1:1 sin atributos, se define una tabla de tipos \tn{b}
+que posee un tipo objeto \tn{bt} con un atributo del tipo Varray
+que contiene referencias del tipo objeto del lado N. Por ejemplo en el
+relacionamiento que se ilustra en la figura \ref{Figurad1}, se definirán los
+tipos tActividad y tMetodologia, en donde tActividad tiene una referencia a la
+metodología que utiliza, en cambio para representar las actividades que han
+utilizado cierta metodología se emplea un Varray que almacena
+referencias de dichas actividades. En el código \ref{n1} se ve el resultado de
+la transformación.
+
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.8]{capitulo3/images/Diagrama4.jpeg}
+  \end{center}
+ \caption{\label{Figurad1}Relacionamiento 1 a N}
+ \end{figure}
+
+
+  \begin{lstlisting}[language=SQL, caption={Definición de tipos para
+ relacionamiento 1 a N},label=n1]
+  CREATE TYPE tActividad AS OBJECT (	
+ id_act		varchar2(10), 	
+ desc_act	varchar2(255),
+ duracion	integer, 	
+ met_usada	REF metodologia);
+ 	
+ CREATE TYPE ListadoActividades AS VARRAY(50) OF REF tActividades;
+ 
+ CREATE TABLE Actividad OF tActividad (PRIMARY KEY (id_act));
+ 	 	
+ CREATE TYPE tMetodologia AS OBJECT
+ (id_met	varchar2(10), 
+ desc_met	varchar2(255), 
+ actividades	ListadoActividades); 
+ 
+ CREATE TABLE Metodologia OF tMetodologia 
+ (PRIMARY KEY	(id_met));
+\end{lstlisting}
+
+\par \noindent \tn{Paso 6: Mapeado de tipos de relaciones M:N
+binarias}
+\par \noindent Por cada tipo de relación M:N binaria \tn{R} sin atributos, se
+ debe definir un atributo del tipo objeto \tn{to} que contiene referencias del
+ tipo objeto M y del tipo objeto N. Se le debe agregar a cada tipo objeto un
+ varray de referencias del tipo \tn{to}, para luego crear una nueva tabla
+ \tn{tt} de tipos \tn{to}.
+ 
+ \noindent En caso de que  \tn{R} tenga atributos se debe crear una nueva tabla
+ de tipo \tn{S} para representar a \tn{R}. La tabla de relación \tn{S} incluye un tipo objeto \tn{to} que contiene referencias de cada tipo objeto de
+ la tabla de tipo correspondiente, que participa en la relación y además los atributos que
+ posea la relación, al igual que en el relacionamiento sin atributos, a cada
+ objeto se le debe agregar un atributo varray con referencias al tipo objeto
+ \tn{to}.
+ 
+ \noindent Por ejemplo en el relacionamiento que se ilustra en la figura
+ \ref{Figurae}, se definirán los tipos tActividad y tRecurso, en donde se crea el tipo objeto y luego una tabla que almacena referencias de actividades y recursos. En el código \ref{nn} se ve el resultado de la transformación. Otro ejemplo se
+visualiza en la figura \ref{Figuranna}, donde existe un relacionamiento M:N con
+atributos, en el código \ref{nna} se ve el resultado de su implementación. \\
+
+\hspace{6cm}
+
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.8]{capitulo3/images/Diagrama5.jpeg}
+  \end{center}
+ \caption{\label{Figurae}Relacionamiento N a N}
+ \end{figure}
+ 
+ \newpage 
+ 
+  \begin{lstlisting}[language=SQL, caption={Definición de tipos para
+ relacionamiento N a N},label=nn] 
+  CREATE TYPE tActividad AS OBJECT (	
+  id_act		varchar2(10), desc_act	varchar2(255),
+ 	duracion	integer,); 
+ 
+ CREATE TYPE tRecurso AS OBJECT (	
+ 	id_rec		varchar2(10), nom_rec	varchar2(100),
+ 	desc_rec	varchar2(255)); 
+ 	
+ CREATE TYPE Trecurso_actividad AS OBJECT(
+ actividad	REF tActividad, recurso		REF tRecurso); 
+ 
+ CREATE TYPE listado_recurso_activdad AS VARRAY(50) OF REF Trecurso_actividad;
+ 
+ ALTER TYPE tRecurso ADD ATTRIBUTE (listado_actividades
+ listado_recurso_actividad) CASCADE;
+ 
+ ALTER TYPE tActividad ADD ATTRIBUTE (listado_recursos
+ listado_recurso_actividad) CASCADE;
+ 
+ CREATE TABLE Actividad OF tActividad (	PRIMARY KEY (id_act)); /
+ 
+ CREATE TABLE Recurso OF tRecurso ( PRIMARY KEY (id_rec)); /
+ 
+ CREATE TABLE Recurso_Activadad OF Trecurso_activadad (
+ PRIMARY KEY (actividad.id_act,recurso.id_rec));
+\end{lstlisting}
+
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.7]{capitulo3/images/Diagrama5_1.jpeg}
+  \end{center}
+ \caption{\label{Figuranna}Relacionamiento N a N con atributos}
+ \end{figure}
+ 
+
+  \begin{lstlisting}[language=SQL, caption={Definición de tipos para
+ relacionamiento N a N con atributos},label=nna] 
+  CREATE TYPE tPlanificacion AS OBJECT (
+  id_plan		varchar2(10),
+ 	tipo_plan	varchar2(10),
+ 	fcreacion	date,
+ 	ult_estado	varchar2(10),
+ 	ult_modif	varchar2(10)); 
+ 
+ CREATE TYPE tEstado AS OBJECT (
+ 	id_estado	varchar2(10),
+ 	nom_estado	varchar(50)); 
+ 
+ CREATE TYPE fcambio AS OBJECT (
+ 	fecha_cambio	date)); 
+ 
+ CREATE TYPE fecha_cambio AS VARRAY(10) OF fcambio; 
+ 
+ CREATE TYPE tPlanificacion_Estado_fcambio AS OBJECT (
+  planificacion	ref tPlanificacion,
+ 	estado		ref tEstado,
+ 	fecha_c		fecha_cambio); 
+ 	
+ CREATE TYPE listado_planificacion_estado AS VARRAY(50) OF REF
+ tPlanificacion_Estado_fcambio;
+ 
+ ALTER TYPE tPlanificacion ADD ATTRIBUTE (listado_estados
+ listado_planificacion_estado) CASCADE;
+ 
+ ALTER TYPE tEstado ADD ATTRIBUTE (listado_planificaciones
+ listado_planificacion_estado) CASCADE;
+ 
+ CREATE TABLE Planificacion OF tPlanificacion
+ (PRIMARY KEY (id_plan)); 
+  
+ CREATE TABLE Estado OF tEstado
+ (PRIMARY KEY (id_estado); 
+ 
+ CREATE TABLE Planificacion_Estado OF 
+ tPlanificacion_Estado_fcambio (PRIMARY KEY 
+ (planificacion.id_plan,estado.id_estado));/ 
+ 
+\end{lstlisting}
+
+
+\par \noindent \tn{Paso 7: Mapeado de tipos de relaciones N arias}
+\par \noindent Por cada tipo de relación N aria \tn{R}, se debe crear una nueva
+tabla de tipo \tn{S} para representar a \tn{R}. La tabla de relación \tn{S} existen N atributos con tipo referencia definidos, uno para el
+tipo objeto de cada tabla de tipo que participa en la relación.
+\newpage
+
+\par \noindent \tn{Paso 8: Mapeado de tipos de relaciones
+recursivas}
+\par \noindent Se debe tratar como cualquier relacionamiento.
+\\
+
+\par \noindent \tn{Paso 9: Mapeado de los tipos de entidad
+regulares}
+\par \noindent Por cada entidad (fuerte) regular E del esquema ER, se define una
+tabla de tipos \tn{S1} que posee un tipo objeto \tn{s1t} que incluya
+todos los atributos simples, compuestos, multivalor y derivados de E. Un ejemplo se puede visualizar
+en la figura \ref{Figurap} y su implementación en el código \ref{acom}.\\
+
+\par \noindent \tn{Paso 10: Mapeado de los tipos de entidad débiles}
+\par \noindent Por cada tipo de entidad débil W del esquema ER con el tipo de
+entidad propietario E, crear una tabla de tipo objeto para W con una clave
+compuesta que incluya la clave de la tabla tipo objeto de su propietario E. El
+tipo objeto para la tabla de tipo de W puede además incluir un atributo del tipo
+referencia que contiene una fila de la tabla de tipo que representa a E. Para el ejemplo
+de la figura \ref{Figuradeb} se definirán los tipos estructurados nivel\_ob y
+curso\_ob, luego se define el varray de tipos con referencias a curso que contiene los N cursos que posee el nivel. En el código
+\ref{entidaddebil} se detalla la implementación completa.
+
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.6]{capitulo3/images/Diagrama7.jpeg}
+  \end{center}
+ \caption{\label{Figuradeb}Entidad débil}
+ \end{figure}
+
+\newpage
+  \begin{lstlisting}[language=SQL, caption={Definición de tipos para
+ definición de entidad debil},label=entidaddebil]
+ CREATE TYPE nivel_ob AS OBJECT
+  ( id_nivel  NUMBER(10),
+    nom_nivel varchar2(255));
+    
+  CREATE TYPE curso_ob AS OBJECT
+  ( refnivel REF nivel_ob,
+  	id_nivel NUMBER(10),
+    letra CHAR(1),
+    year_ DATE );
+    
+  CREATE TYPE Listado_Cursos AS VARRAY(50) OF REF curso_ob;
+  
+  ALTER TYPE nivel_ob ADD ATTRIBUTE (cursos Listado_Cursos) CASCADE;
+    
+  CREATE TABLE nivel OF nivel_ob ( 
+  PRIMARY KEY (ID_NIVEL)); 
+  
+  CREATE TABLE curso OF curso_ob ( 
+  id_nivel SCOPE IS NIVEL,
+  PRIMARY KEY (id_nivel,letra));
+  
+\end{lstlisting}
+
+\par \noindent \tn{Paso 11: Mapeado de la especialización o
+generalización}
+\par \noindent Para mapear una cierta cantidad de subclases que juntas forman
+una especialización (o, alternativamente, que están generalizadas en una subclase), como las subclases
+{PLAN\_ANUAL, PLAN\_UNIDAD,
+PLAN\_CLASE} de PLANIFICACION de la figura \ref{FiguraH}. Se debe convertir cada
+especialización con \tn{M} subclases \{S1, S2,\ldots, Sm\} y la superclase
+(generalizada) \tn{C}, en donde se debe definir un tipo objeto \tn{Ct}
+para la superclase \tn{C} y luego definir \tn{M} tipos objetos \tn{S\_t}
+de las subclases indicando que se heredan de la superclase \tn{Ct}. En el código
+\ref{her_1} se detalla el proceso de definición y se visualiza el resultado de la transformación.
+
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.7]{capitulo3/images/Diagrama6.jpeg}
+  \end{center}
+ \caption{\label{FiguraH}Generalización de entidades}
+ \end{figure}
+ 
+  \begin{lstlisting}[language=SQL, caption={Definición de tipos para
+ generalización},label=her_1]
+  CREATE TYPE tPlanificacion AS OBJECT
+ (	id_plan		varchar2(10),
+ 	tipo_plan	varchar2(10),
+ 	fcreacion	date,
+ 	ult_estado	varchar2(10),
+ 	ult_modif	varchar2(10))
+ 	NOT FINAL
+ /
+ CREATE TABLE Planificacion OF tPlanificacion
+ (PRIMARY KEY (id_plan))
+  /	 	
+ CREATE TYPE tPlan_anual UNDER tPlanificacion(); /
+ CREATE TYPE tPlan_unidad UNDER tPlanificacion(); /
+ CREATE TYPE tPlan_clase UNDER tPlanificacion(); /
+\end{lstlisting}
+
+\par \noindent \tn{Paso 12: Mapeado de agregaciones}
+\par \noindent Para mapear una agregación dependerá netamente de las entidades y
+relacionamientos en su interior. Si por ejemplo la agregación es como la de
+figura \ref{figagregacion} (la cual se cambió del problema original, para hacer
+más sencilla la implementación del ejemplo) se debe tratar como un
+relacionamiento 1 : N y su implementación se detalla en el código \ref{agre1}.
+En el caso de que el relacionamiento de la figura \ref{figagregacion} sea M : N
+o 1 : 1 ver los códigos \ref{agre2} y \ref{agre3} respectivamente.
+
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1.1]{capitulo3/images/Diagrama9.jpeg}
+  \end{center}
+ \caption{\label{figagregacion}Agregaciones}
+ \end{figure}
+ 
+ \newpage
+  \begin{lstlisting}[language=SQL, caption={Definición de tipos
+  Agregaciones con relacionamiento 1 : N},label=agre1]
+CREATE TYPE curso_ob AS OBJECT  (letra CHAR(1), year_ DATE ));
+    
+CREATE TYPE asignatura_ob AS OBJECT (id_asig number(10),
+	nom_asig	varchar2(255), 	curso_dicta	ref	curso_ob);
+ 	
+CREATE TYPE listado_asignaturas AS VARRAY(50) OF REF asignatura_ob;
+
+ALTER TYPE curso_ob ADD ATTRIBUTE (asignaturas	listado_asignaturas) CASCADE;
+ 
+CREATE TABLE curso OF curso_ob ( PRIMARY KEY (letra));
+
+CREATE TABLE asignatura OF asignatura_ob (PRIMARY KEY (id_asig)); 
+\end{lstlisting}
+%%%%
+\\
+
+  \begin{lstlisting}[language=SQL, caption={Definición de tipos
+  Agregaciones con relacionamiento M : N},label=agre2]
+CREATE TYPE curso_ob AS OBJECT (letra CHAR(1), year_ DATE )) /
+    
+CREATE TYPE asignatura_ob AS OBJECT (	
+id_asig	number(10),	nom_asig  varchar2(255));
+ 	
+CREATE TYPE curso_asignatura AS OBJECT (
+curso 	ref curso_ob, asignatura  ref asignatura_ob);
+ 	
+CREATE TYPE listado_cursos_asignaturas AS VARRAY(100) 
+OF curso_asignatura;
+ 
+ALTER TYPE curso_ob ADD ATTRIBUTE  (
+asignaturas	listado_cursos_asignaturas) CASCADE;
+ 
+ALTER TYPE asignatura_ob ADD ATTRIBUTE  (
+cursos listado_cursos_asignaturas) CASCADE;
+ 
+CREATE TABLE curso OF curso_ob ( PRIMARY KEY (letra));
+
+CREATE TABLE asignatura OF asignatura_ob (PRIMARY KEY (id_asig)); 
+\end{lstlisting}
+
+%%%%%%
+\\
+
+  \begin{lstlisting}[language=SQL, caption={Definición de tipos
+  Agregaciones con relacionamiento 1 : 1},label=agre3]
+ CREATE TYPE curso_ob AS OBJECT
+  ( letra CHAR(1),
+    year_ DATE ));
+    
+ CREATE TYPE asignatura_ob AS OBJECT
+ (	id_asig		number(10),
+ 	nom_asig	varchar2(255),
+ 	curso_dicta	ref	curso_ob);
+ 	  
+ ALTER TYPE curso_ob ADD ATTRIBUTE (asignatura REF asignatura_ob) CASCADE;
+ 
+CREATE TABLE curso OF curso_ob ( PRIMARY KEY (letra));
+
+CREATE TABLE asignatura OF asignatura_ob (PRIMARY KEY (id_asig)); 
+\end{lstlisting}
+
+\subsection{Restricciones del problema para su implementación}
+
+\par \noindent Se definirán algunas restricciones para presentar las distintas
+versiones de implementar el caso de estudio en el modelo objeto relacional. Ya
+que al conocer el tamaño exacto de cada relacionamiento se hace más sencilla su
+implementación.
+
+\par \noindent Las restricciones son las siguientes: 
+
+\begin{itemize}
+  \item Cada personal a lo más tendrá 5 celulares y mails asociados.
+  \item Cada periodo, unidad y clase a lo más tendrá 10 aprendizajes previos
+  asociados.
+  \item Cada actividad de una clase utiliza a lo más 3 metodologías educativas.
+  \item Cada clase a lo más puede realizar 5 actividades.
+\end{itemize}
+
+\par \noindent Los códigos SQL DDL (Data Definition Language) de los tipos y
+tablas de tipos se encuentran detallados en el Anexo
+\ref{tipos_or} y \ref{tablas_or} respectivamente.
+
+ \section{Implementación de modelo de datos semi estructurado}
+ 
+ \par \noindent Primero se extrajo una parte del caso de
+ estudio, para luego modificarlo o agregarle un nuevo requerimiento con el
+ propósito de lograr realizar una implementación apropiada del problema
+ utilizando datos semi estructurados.
+ 
+ \par \noindent En esta sección se pretende realzar la utilidad de emplear
+ los datos semi estructurados en conjunto con el modelo objeto relacional en
+ Oracle, para esto se presentarán algunos ejemplos representados en el caso de
+ estudio, para así ver la real ganancia en problemas del mundo real.
+ 
+ \subsection{Nuevo requerimiento}
+ \par \noindent Para el caso de estudio descrito con anterioridad, es necesario almacenar la información educacional (establecimientos donde cada
+ persona ha estudiado), idiomas que este domina y cursos de
+ perfeccionamiento que haya realizado cada personal del establecimiento, con el
+ fin de disponer de mayor información curricular  de cada empleado.
+ Dado a lo anterior, se agregará un atributo currículum a cada personal,
+ con el propósito de almacenar dicha información. 
+ 
+ \noindent Como la información curricular  de cada persona varía, ya sea por la
+ profesión o la cantidad de estudios que este posea, se sugiere  utilizar las
+ capacidades de XML dentro de Oracle como la solución más viable para almacenar
+ dicha información semi estructurada.
+ Para lograr este objeto, el nuevo atributo currículum deberá ser del tipo
+ XMLType. 
+ 
+ \noindent La estructura de cada documento XML ingresado en dicha columna debe
+ ser validado previamente. En el anexo \ref{anexo_xml} se presenta en detalle el
+ proceso de validación y registro de esquema en Oracle.
+ 
+ \noindent En el código \ref{codigoxml_1} se muestra el esquema XML del
+ currículum de una persona, el cual ha sido registrado en Oracle mediante la
+ función DBMS\_XMLSCHEMA. 
+ 
+\noindent En el código \ref{ejemxml1} se muestra cómo utilizar una columna del
+tipo XML que contiene todos los datos del currículum de una persona dentro de un
+tipo objeto. Luego en el código \ref{ejemxml2} se realiza una inserción en la
+tabla personal\_ob2\_xml, con el fin de efectuar futuras pruebas de selección,
+actualización y eliminación en tablas con columnas XMLType.
+ 
+  \newpage
+ \begin{lstlisting}[language=xml, caption={Ejemplo de estructura del
+ currículum}, label=codigoxml_1] 
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="curriculum">
+    <xs:complexType><xs:sequence>
+        <xs:element name="estudios"><xs:complexType><xs:sequence>
+              <xs:element name="estudio" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType><xs:sequence>
+                    <xs:element type="xs:string" name="nombre_establecimiento"/>
+                    <xs:element type="xs:string" name="carrera" minOccurs="0"/>
+                    <xs:element type="xs:string" name="ciudad"/>
+                    <xs:element type="xs:short" name="fecha_egreso"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="nivel" use="optional"/>
+                </xs:complexType></xs:element>
+            </xs:sequence></xs:complexType></xs:element>
+        <xs:element name="cursos"><xs:complexType><xs:sequence>
+              <xs:element name="curso" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType><xs:sequence>
+                    <xs:element type="xs:string" name="tipo"/>
+                    <xs:element type="xs:string" name="nombre"/>
+                    <xs:element type="xs:byte" name="horas"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="area" use="optional"/>
+                </xs:complexType></xs:element>
+            </xs:sequence></xs:complexType></xs:element>
+        <xs:element name="idiomas"><xs:complexType><xs:sequence>
+              <xs:element name="idioma" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType><xs:sequence>
+                    <xs:element type="xs:string" name="nivel"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="nombre" use="optional"/>
+                </xs:complexType></xs:element>
+            </xs:sequence></xs:complexType></xs:element>
+         </xs:sequence></xs:complexType></xs:element></xs:schema>
+\end{lstlisting}
+ 
+ 
+
+\newpage
+ \begin{lstlisting}[language=SQL, caption={Columna XMLType en caso de estudio},
+ label=ejemxml1] 
+ CREATE TYPE tDireccion AS OBJECT
+ (	calle	varchar2(255), 	num		varchar2(10),
+ 	cod_postal	number(10),	ciudad		varchar2(150),
+ 	region		varchar2(100));
+ 	
+ CREATE TYPE tRut AS OBJECT (num_correlativo	number(10),	dv	char(1));
+ 
+ CREATE TYPE nombre_completo_persona_ob AS OBJECT
+  (
+    nombres  varchar2(255), apaterno varchar2(255),
+    amaterno varchar2(255) );
+ 	
+ CREATE TYPE PERSONAL_OB2_XML AS OBJECT
+ (  rut rut_persona_ob,
+	nombres nombre_completo_persona_ob,
+	fnac date,	direccion direccion_persona_ob,
+	curriculum xmltype);
+  	
+ CREATE TABLE Personal OF PERSONAL_OB2_XML
+ (	primary key(rut.num_correlativo,rut.dv));
+\end{lstlisting}
+
+\noindent Para verificar que efectivamente los datos insertados en la columna
+XMLType conformen un documento XML válido, se sugiere crear un trigger
+(cuya implementación se encuentra en el Anexo \ref{anexo_xml}) que se gatille
+cada vez que se realice una inserción o actualización en dicha columna.
+El tipo XMLType posee un método llamado \textit{schemaValidate()}, el cual
+permite asegurar que todas las instancias almacenas en la columna son validadas
+con respecto al esquema xml.
+
+\newpage
+
+ \begin{lstlisting}[language=SQL, caption={Inserción en tabla con columnas del
+ tipo objeto y XMLTYPE}, label=ejemxml2] 
+ INSERT INTO personal_ob2_xml values
+ (rut_persona_ob(12345678,'4'),nombre_completo_persona_ob('ingeborg','munoz','carnot'), '13-04-1984',direccion_persona_ob('ohiggins','22','3','tocopilla','antofagasta'),
+        curriculum(XMLTYPE('<curriculum><estudios><estudio nivel="Enseñanza Basica">
+			<nombre_establecimiento>Carlos Condell </nombre_establecimiento>
+			<ciudad>Tocopilla</ciudad>
+			<fecha_egreso>1997</fecha_egreso>
+		</estudio>
+		<estudio nivel="Enseñanza Media">
+			<nombre_establecimiento>Liceo Domingo Latrille
+			</nombre_establecimiento>
+			<ciudad>Tocopilla</ciudad><fecha_egreso>2001</fecha_egreso>
+		</estudio>
+		<estudio nivel="Enseñanza Superior">
+			<nombre_establecimiento>Universidad Católica del norte
+			</nombre_establecimiento>
+			<carrera>Ingeniería de Ejecución en Computación e Informática</carrera>
+			<ciudad>Antofagasta</ciudad><fecha_egreso>2011</fecha_egreso>
+		</estudio>
+	</estudios>
+	<cursos>
+		<curso area="Informática"><tipo>Diplomado</tipo>
+			<nombre>Redes de datos</nombre><horas>50</horas>
+		</curso>
+		<curso area="Idiomas"><tipo>Capacitación</tipo>
+			<nombre>Inglés intermedio</nombre><horas>100</horas>
+		</curso>			
+	</cursos>
+	<idiomas>
+		<idioma nombre="Español"><nivel>Nativo</nivel>
+		</idioma>
+		<idioma nombre="Ingles"><nivel>Medio</nivel>
+		</idioma>
+	</idiomas></curriculum>)));
+\end{lstlisting}
+
+\noindent Para poder extraer datos desde la columna XMLTYPE y presentarlo en una
+consulta SQL, se debe especificar el nombre del XPath, de esta forma se retorna
+un fragmento XML. Por ejemplo en código \ref{ejemxml3} se despliega el nombre
+completo y el nombre de todos los establecimientos en que estudió una
+persona y su resultado puede ser visualizado en la figura
+\ref{resultado1}. \\
+
+
+\begin{lstlisting}[language=SQL, caption={Columna XMLType en caso de estudio},
+ label=ejemxml3] 
+ select p.nombres.nombres, 
+ 		p.nombres.apaterno, 
+ 		extract(curriculum, '/curriculum/estudios/estudio/nombre_establecimiento').getStringVal() "estudios" 
+ from personalxml p where p.curriculum is not null;
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.73]{capitulo3/images/xmlresultado1.jpg} \end{center}
+ \caption{\label{resultado1}Resultado de consulta a columna XMLTYPE (con tags)}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent Por otro lado, en el código \ref{ejemxml4} se presenta la consulta en
+caso de que se desee listar cada lugar (como tupla) donde estudió la persona. Se puede
+observar su resultado en la figura \ref{resultado2}. En el caso de que se quiera
+listar todos los nombres de establecimientos sin repetirlos, se debe incluir el
+comando \tn{DISTINCT}.
+\\
+
+\begin{lstlisting}[language=SQL, caption={Columna XMLType en caso de estudio},
+ label=ejemxml4] 
+select extractValue(x.column_value, 'estudio/nombre_establecimiento') as nombre_establecimiento
+from personalxml p,
+table(XMLSequence(extract(p.curriculum,'curriculum/estudios/estudio'))) x;
+\end{lstlisting}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.7]{capitulo3/images/xmlresultado2.jpg} \end{center}
+ \caption[Resultado a columna XMLTYPE nodos]{\label{resultado2}Resultado de
+ consulta a columna XMLTYPE (Tupla por cada nodo)}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent Para actualizar datos dentro de una columna XMLTYPE se debe tener
+claro conocimiento de qué  se desea actualizar exactamente, el
+documento completo o sólo algunos nodos según alguna restricción. Por ejemplo en código \ref{ejemxml5} se
+actualiza la columna XMLTYPE con un documento nuevo. \\
+
+
+\begin{lstlisting}[language=SQL, caption={Actualización de Columna XMLType en
+caso de estudio}, label=ejemxml5] 
+UPDATE personalxml p SET p.curriculum = XMLTYPE('<curriculum><estudios>
+<estudio nivel="Enseñanza Superior">
+			<nombre_establecimiento>Universidad Católica del norte</nombre_establecimiento>
+			<carrera>Ingeniería Civil Plan Común</carrera>
+			<ciudad>Antofagasta</ciudad>
+		</estudio>
+		<estudio nivel="Enseñanza Superior">
+			<nombre_establecimiento>Universidad Católica del norte</nombre_establecimiento>
+			<carrera>Ingeniería de Ejecución en Computación e Informática</carrera>
+			<ciudad>Antofagasta</ciudad><fecha_egreso>2011</fecha_egreso>
+		</estudio>
+	</estudios>
+	<cursos>
+		<curso area="Informática"><tipo>Diplomado</tipo>
+			<nombre>Redes de datos</nombre><horas>50</horas>
+		</curso>
+		<curso area="Informática"><tipo>Capacitación</tipo>
+			<nombre>6to WORKSHOP Iniciativa CLGRID UCN</nombre>
+			<horas>30</horas></curso>	
+		<curso area="Informática"><tipo>Capacitación</tipo>
+			<nombre>Tutorial on Distributed High Performance Computing</nombre>
+			<horas>10</horas></curso>
+	</cursos>
+	<idiomas>
+		<idioma nombre="Español"><nivel>Nativo</nivel></idioma>
+		<idioma nombre="Ingles"><nivel>Medio</nivel></idioma>
+	</idiomas>
+</curriculum>') WHERE p.rut.num_correlativo=12345678;
+\end{lstlisting}
+
+\noindent Los cambios realizados pueden ser comprobados en la figura
+\ref{resultado3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1]{capitulo3/images/xmlresultado3.jpg} \end{center}
+ \caption[Resultado a columna XMLTYPE después
+ UPDATE]{\label{resultado3}Resultado de consulta a columna XMLTYPE después de un UPDATE}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent Si se desea actualizar un nodo en particular dentro del documento XML,
+es necesario tener algún identificador. Según el esquema del documento del
+caso de estudio no se consideró ningún tipo de identificador, pero es
+posible filtrar por algún elemento. En el ejemplo del código \ref{ejemxml6} se
+realiza la actualización de los nodos idioma, en la figura \ref{resultado4} se muestra el resultado de la consulta antes de la
+actualización y en la figura \ref{resultado5} después de la actualización.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1]{capitulo3/images/xmlresultado4.jpg} \end{center}
+ \caption[Resultado a columna XMLTYPE antes UPDATE nodos]{\label{resultado4}Resultado de consulta a columna XMLTYPE antes de
+ UPDATE de nodos}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lstlisting}[language=SQL, caption={Actualización nodos de Columna XMLType
+en caso de estudio}, label=ejemxml6] 
+UPDATE personalxml p SET curriculum = updateXML 
+(curriculum, '/curriculum/idiomas/idioma/nivel/text()','Avanzado')
+where existsNode(curriculum,'/curriculum/idiomas/idioma')=1 
+and p.rut.num_correlativo=12345678;
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1]{capitulo3/images/xmlresultado5.jpg} \end{center}
+ \caption[Resultado a columna XMLTYPE después UPDATE nodos]{\label{resultado5}Resultado de consulta a columna XMLTYPE después de un UPDATE de nodos}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent Finalmente la eliminación de contenido de una columna XMLType, se
+trata igual que la eliminación de otro tipo de datos. Por ejemplo, en el código
+\ref{ejemxml7} se eliminan todos las filas de idioma que sean del nivel
+``Medio'', en la figura \ref{resultado4} se muestra el resultado de la consulta antes de la
+eliminación y en la figura \ref{resultado6} después de la misma. \\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lstlisting}[language=SQL, caption={Actualización nodos de Columna XMLType
+en caso de estudio}, label=ejemxml7] 
+UPDATE personalxml p set 
+p.curriculum=deletexml(p.curriculum,'/curriculum/idiomas/idioma[nivel="Medio"]')
+where p.rut.num_correlativo=12345678;
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1]{capitulo3/images/xmlresultado6.jpg} \end{center}
+ \caption[Resultado a columna XMLTYPE después DELETE
+ nodos]{\label{resultado6}Resultado de consulta a columna XMLTYPE después de un DELETE de nodos}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Comparación de resultados} \label{comparacion_resultados}
+
+\noindent Los criterios a evaluar en cada implementación, son los siguientes:
+
+\begin{itemize}
+  \item Facilidad de modelamiento
+  \item Complejidad de aprendizaje por parte del desarrollador y/o DBA
+\end{itemize}
+
+
+
+\par \noindent El modelamiento de los datos es claramente más sencillo en el
+modelo objeto relacional, ya que se utilizan las cualidades de la orientación al
+objeto, lo que permite al desarrollador codificar su aplicación sin preocuparse
+de las inserciones fragmentadas y redundancia de los datos (en el caso de
+atributos multivaluados en relacionamientos N a N). La creación de objetos
+complejos dentro del SQL, facilita enormemente el modelamiento, ya que existe
+mayor semántica y cada tipo de objeto es consistente con el mundo real, a la
+vez reemplazar los atributos derivados con métodos que calculen los datos
+necesarios, como por ejemplo la edad de una persona
+o la cantidad de ventas realizadas por un vendedor, entre otros.
+Por otro lado, al permitir capacidades tan básicas como los subtipos, posibilita
+la implementación de herencia de tipos, que al igual que en la orientación al
+objeto, se heredan los atributos y métodos.\\
+
+\noindent Si se desea tener un listado de datos dentro de un objeto, estos se
+almacenan en un arreglo, sin la necesidad de generar una tabla exclusiva para almacenar
+dichos datos, además esta información puede ser desplegada con facilidad a
+través de una consulta, dejando atrás los joins y registros duplicados. En el
+código \ref{codigoselectarray} se presenta una consulta sencilla del caso de
+estudio en donde se despliegan todos los celulares de un No
+Docente (en donde los celulares son un varray del tipo celular\_persona\_ob),
+el resultado de dicha consulta se encuentra en la figura \ref{resultadoarray}. \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de consulta a listado de
+celulares de un No Docente}, label=codigoselectarray] 
+SELECT C.* FROM NO_DOCENTE P, TABLE (P.NUM_CELULARES) C 
+WHERE P.RUT.NUM_CORRELATIVO=1234567;
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1.1]{capitulo3/images/resultadoarray.jpg}
+  \end{center}
+ \caption[Resultado de consulta a listado de
+ celulares]{\label{resultadoarray}Resultado de consulta a listado de celulares
+ de un No Docente}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%
+
+\par \noindent La gran diferencia recae en la
+sintaxis de cada implementación, esto es debido a la naturaleza de ambos modelos, es decir, para una consulta en el modelo relacional
+se hace necesario realizar el join de tablas explícitamente en las cláusulas
+FROM y WHERE de la sentencia; sin embargo, cuando se aprovecha la utilización de punteros en el modelo objeto
+relacional, es posible ``navegar'' hacia las demás tablas involucradas en la
+consulta, por lo que no es necesario especificar todas las tablas en la cláusula FROM de la sentencia, sino que basta solamente con utilizar la tabla a consultar 
+en la cláusula FROM de la sentencia. 
+
+\noindent Para ejemplificar lo antes descrito, se
+presenta una consulta que se encarga de desplegar el nombre del tipo de programa, su abreviatura, nombre de la
+asignatura y nombre de nivel de enseñanza de dicha asignatura, de cada detalle
+de programa existente en la base de datos.
+\noindent  En los códigos \ref{casoR} y
+\ref{casoOR} se puede visualizar la consulta realizada en el modelo relacional y en el modelo objeto relacional respectivamente. \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo consulta modelo relacional
+en caso de estudio}, label=casoR] 
+SELECT PT.NOM_PT, PT.ABREV, A.NOM_ASIG, N.NOM_NIVEL
+FROM PROGRAMA_TIPO PT, ASIGNATURA A, NIVEL N, 
+	 			DETALLE_PROGRAMA DP
+WHERE PT.ID_PT=DP.ID_PT AND DP.ID_ASIG=A.ID_ASIG 
+AND		A.ID_NIVEL=N.ID_NIVEL;
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo consulta modelo
+objeto relacional en caso de estudio}, label=casoOR] 
+SELECT DP.PROGRAMA_TIPO.NOM_PT, DP.PROGRAMA_TIPO.ABREV, DP.ASIGNATURA.NOM_ASIG,
+	   DP.ASIGNATURA.CURSO_DICTA.REFNIVEL.NOM_NIVEL
+FROM DETALLE_PROGRAMA DP;
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent Se propone utilizar notación UML para el modelo objeto relacional, ya
+que trabaja directamente con objetos, atributos y sus respectivos métodos. Se
+sugiere utilizar el algoritmo de transformación de modelo relacional a objeto
+relacional detallado en la sección \ref{algoritmoor} del presente capítulo,
+puesto que el resultado final será acorde al modelo realizado en UML.
+Además según las pruebas realizadas, esta es la transformación adecuada si se
+desea desarrollar una aplicación que posea navegabilidad bidireccional. 
+
+\noindent Se requiere de un tiempo y dedicación por parte del desarrollador para
+obtener un nivel de aprendizaje adecuado, ya que puede resultar confuso y
+complejo en un principio, puesto que existen diferencias con el SQL tradicional
+el cual utiliza el modelo relacional. Pero si se tiene una base en la
+orientación al objeto, no debería requerir de tanto tiempo de capacitación y
+sólo sería necesario estudiar los conceptos y la nueva sintaxis que viene de la
+mano del modelo objeto relacional.
+
+
+\noindent Por otro lado, el modelo relacional permite un modelado sencillo con
+consultas potentes. Si no se posee conocimientos en bases de datos relacionales, el tiempo de
+aprendizaje por parte del desarrollador es claramente inferior al del
+objeto relacional.
+En cambio sí se está familiarizado con este modelo resulta sumamente fácil
+implementar cualquier problema medianamente complejo del mundo real. Por el contrario, si el problema
+es muy grande la cantidad de tablas y relacionamientos aumentan, esto provoca que las consultas sean más complejas de escribir, incluso pueden llegar a ser 
+confusas cuando se requiere de muchos joins (por ejemplo entre más de 10 tablas). 
+
+\noindent Otro gran inconveniente es la creación de tablas innecesarias, 
+como se mencionó anteriormente un atributo multivaluado en el modelo relacional, automáticamente genera una tabla,
+produciendo una redundancia de datos en dicha tabla, cuando solamente debería
+bastar con guarda un listado dentro de la misma tabla, por ejemplo el listado notas de un
+alumno en una asignatura en particular. 
+
+\noindent Además cabe destacar la cantidad de tablas que se generan en la
+implementación del caso de estudio en cada modelo, claramente en el modelo
+objeto relacional se disminuye la cantidad de tablas drásticamente, ya que se
+eliminan todas las tablas generadas por los atributos multivaluados y los relacionamientos N a N. En las figuras \ref{count1} y \ref{count2} se visualiza la cantidad de tablas del modelo relacional y el modelo objeto relacional respectivamente.
+\\
+%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.9]{capitulo3/images/count1.jpg}
+  \end{center}
+ \caption[Cantidad tablas modelo relacional]{\label{count1}Cantidad tablas modelo relacional}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.9]{capitulo3/images/count2.jpg}
+  \end{center}
+ \caption[Cantidad tablas modelo objeto relacional]{\label{count2}Cantidad tablas modelo objeto relacional}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%
+
+
+\noindent La implementación de columnas del tipo XML en una base de datos objeto
+relacional, es relativamente sencilla, sólo requiere de la creación del esquema
+del documento XML y validar con dicho esquema cada tupla que se desea
+insertar, con el propósito de verificar que los datos insertados efectivamente
+cumplen las restricciones detalladas en el esquema.
+En cuanto a manejo de datos sólo se debe tener claro cómo funciona XPath y
+obtener cierto nivel de expertiz en su funcionamiento, puesto que las funciones
+de extracción de datos en XML son distintas a las que se manejan en el SQL
+tradicional.
+Luego resulta simple la ejecución de consultas ya sea de selección, actualización o eliminación. Existen algunas funciones características de XML
+que facilitan bastante dicha labor, por lo que el tiempo de aprendizaje por parte del desarrollado es mínimo.
+
+\noindent Aunque en este trabajo de titulación no se desarrollaron experiencias
+para ver tiempos de respuestas en el desempeño de las consultas, existen
+diversas investigaciones que indican significativas mejoras en los tiempos de
+respuestas, esto se ve corroborado por experiencias que se han realizado
+en \cite{comparacion} y \cite{bucky}.
+En el anexo \ref{anexo4} se presenta una parte de los resultados.
+
+
+\noindent En la figura \ref{tablaresumen} se presenta un resumen con el
+comportamiento de los criterios de cada modelo. 
+%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [width=5.7in,height=2.5in]{capitulo3/images/tablaresumen.png}
+  \end{center}
+ \caption[Tabla resumen de criterios]{\label{tablaresumen}Tabla resumen de
+ criterios}
+ \end{figure}
+%%%%%%%%%%%%%%%%
+
+\noindent En el desarrollo del caso de estudio, se resume las características
+del modelo relacional, modelo objeto relacional y datos semi estructurados,
+mostrados en las tablas \ref{tablamodelorelacional}, \ref{tablamodeloor} y
+\ref{modeloxml} respectivamente.
+
+\begin{table}[H]
+    \begin{tabular}{|p{7cm}|p{7cm}|}
+    \hline
+    \multicolumn{2}{|c|}{\tn{Modelo Relacional}} \\ \hline
+    \tn{Ventajas }                     & \tn{Desventajas}                                
+    \\ \hline Lenguaje de consultas potente & No soporta la navegabilidad, se debe acceder a los relacionamientos a través de Joins \\ \hline
+    Simple y puro                 & Poca semántica                                                                        \\ \hline
+    Fácil de aprender                            & Fragmentación de datos y  redundancia \\ \hline 
+    Muy rápido de implementar                            & Dificultad al modelar objetos del mundo real \\ \hline 
+    Sencillez al implementar relacionamientos          & Tipo de datos
+    sencillos, no permite objetos complejos \\ \hline
+    \end{tabular}
+    \caption {\label{tablamodelorelacional} Ventajas y desventajas del modelo
+    relacional}
+\end{table}
+
+\begin{table}[H]
+    \begin{tabular}{|p{7cm}|p{7cm}|}
+    \hline
+    \multicolumn{2}{|c|}{\tn{Modelo Objeto Relacional}} \\ \hline
+    \tn{Ventajas }                     & \tn{Desventajas}                                
+    \\ \hline Semántica en el modelado & Mayor complejidad de aprendizaje
+     \\ \hline Existe navegabilidad & Mayores costos (en tiempos de
+     implementación) 
+     \\ \hline Eliminación de Joins                             &  Complicado al
+     momento implementar relacionamientos bidireccionales \\ \hline Soporte de
+     objetos complejos y herencia & Para implementar relacionamiento
+     bidireccionales cuando los objetos poseen muchos relacionamientos con
+     otros objetos, se debe generar un tipo y tabla intermediario, ya que los
+     varray y nested tables no permiten su implementación correctamente
+     \\
+     \hline Reutilización y compartición & ~ \\ \hline Mejora significativamente la productividad (las consultas son
+       más legibles) & ~ 
+       \\ \hline Preserva el cuerpo de conocimiento y
+       experiencia alcanzado con las bases de datos relacionales & ~
+        \\ \hline El tamaño de las consultas disminuye al momento de consultar
+        relacionamientos, gracias a las referencias y eliminación de joins & ~
+       
+       \\ \hline
+    \end{tabular}
+    \caption {\label{tablamodeloor}Ventajas y desventajas del modelo
+    objeto relacional}
+\end{table}
+
+\begin{table}[H]
+    \begin{tabular}{|p{7cm}|p{7cm}|}
+    \hline
+    \multicolumn{2}{|c|}{\tn{Datos semi estructurados}} \\ \hline
+    \tn{Ventajas }                     & \tn{Desventajas}                                
+    \\ \hline Intercambio flexible de datos relacionales utilizando XML & 
+    Requiere comprender cómo describir la estructura y restricciones del
+    documento xml para lograr crear esquemas XML correctamente.
+    \\
+    \hline Publicar datos relacionales como XML                &  Requiere
+    poseer una expertiz en la utilización de las funciones ligadas a la
+    extracción de información en XML, estas funciones son distintas a las que se
+    manejan en SQL \\ \hline Descomponer XML en datos relacionales                          
+    &                                                   \\ \hline Fiabilidad en la gestión de datos XML                            &                                           \\ \hline Manipulación, búsqueda, almacenamiento                             &                                                                \\ \hline Integración con datos relacionales                            & ~                                                                                     \\ \hline
+    Permite almacenar datos XML de forma nativa 
+en la base de datos                             & ~                                        
+\\ \hline Fácil de aprender                           & ~                                                                                     
+\\ \hline Provee una gran flexibilidad en cuanto a la 
+estructura sin deteriorar el desempeño  &\\ \hline
+
+    \end{tabular}
+    \caption {\label{modeloxml}Ventajas y desventajas de XML/SQL}
+\end{table}

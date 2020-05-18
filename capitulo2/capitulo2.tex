@@ -1,0 +1,2423 @@
+\chapter{MARCO TEÓRICO} \label{capitulo2}
+
+\par
+\noindent Este capítulo habla sobre cómo ha evolucionado el
+modelado de bases de datos a lo largo de la historia y detalla los conceptos de
+datos semi estructurados y XML. Además presenta algunos motores de bases de
+datos que poseen soporte objeto relacional, en donde se especifican los métodos 
+principales de utilización de tipos y XML. Se enfatiza en
+especial al sistema de administración de base de datos Oracle Database 11g, ya
+que es el motor elegido para implementar el caso de estudio que se definirá,
+este SGDB posee las ediciones:
+Oracle Database 11g Express Edition, Standar Edition y
+Enterprise Edition.
+\noindent La edición a evaluar en la presente memoria será Oracle Database 11g
+Enterprise Edition, ya que con ésta es posible la gestión de la información de
+forma eficiente, confiable y segura en aplicaciones transaccionales
+indispensables, almacenes de datos con elevado tráfico de consultas \cite{ora}.
+
+
+
+\section{La evolución del modelado de bases de datos}
+\subsection{Generalidades}
+
+\par \noindent Los modelos de datos son medios formales para representar los datos asociados a una situación real 
+y para manipular tal representación. Las componentes de todo modelo de datos son las siguientes: 
+
+\begin{itemize}
+  \item Las estructuras básicas son los elementos básicos o tipos de objetos que conforman el 
+modelo.
+\item Las reglas que es el conjunto de lineamientos que expresan las propiedades estáticas del 
+modelo. Ellas son:
+	\begin{itemize}
+	  \item Las reglas de formación 
+	\item Las restricciones
+	  \end{itemize}
+\item Los operadores que permiten cambiar el estado de una base de datos modificando su 
+contenido. Ellos están asociados a las propiedades dinámicas de los elementos.
+\end{itemize}
+
+\par \noindent Los modelos de datos se pueden clasificar en modelos de alto
+nivel o semánticos y modelos de bajo nivel o básicos:
+
+\begin{itemize}
+  \item \tn{Los modelos semánticos} capturan un mayor significado de los datos e
+  intentan representar la estructura real de los datos independientemente de las características de almacenamiento, es decir 
+ellos están orientados a las aplicaciones. Existen, hoy en día, numerosos y muy variados modelos 
+semánticos, entre ellos se encuentran: el modelo Entidad-Relación, el 
+modelo Entidad-Relación-Extendido (ERE) y el modelo IFO.
+\item \tn{Los modelos básicos} constituyen el grupo de modelos que han sido
+diseñados orientándose al computador, sobre ellos se han desarrollado la mayoría de los SGBD. Ellos son: el modelo 
+jerárquico, el modelo redes, el modelo relacional, el modelo orientado por
+objetos y el objeto relacional. 
+
+\end{itemize}
+
+
+\par \noindent Muchos modelos semánticos han sido propuestos, pero pocos de ellos han atraído el interés de los 
+desarrolladores de sistemas de base de datos, esto tal vez es debido a la complejidad de tales 
+modelos y a su dificultad para ser plasmados con los modelos básicos actuales. La mayoría de los 
+conceptos del modelado semántico de datos han sido muy bien representados en el
+modelo ERE, el cual goza de gran prestigio y popularidad en el ambiente comercial, jugando un rol muy importante 
+en la mayoría de las herramientas CASE (Computer Aided Software Engineering).
+
+\par \noindent Existieron dos modelos de datos antes del modelo relacional de
+base de datos, el modelo jerárquico y modelo de red, que  
+fueron soluciones parciales de problemas interminables de como almacenar datos y cómo 
+hacerlo eficientemente. El modelo relacional de base de datos es actualmente la mejor 
+solución tanto para almacenamientos como recuperación de datos.
+
+\noindent La evolución de los modelos de base de datos tuvo lugar cuando cada
+modelo de base de datos mejoró del anterior. La solución inicial no fue una base de datos 
+si no que un sistema de archivos, dependiente del sistema operativo.
+Se pueden examinar archivos en el sistema de archivos del sistema operativo
+ejecutando el comando ``dir'' en DOS, un comando ``ls'' en UNIX, o buscando a través del
+Explorador de Windows en Microsoft Windows. El problema que se presenta utilizando un sistema de archivos es que 
+no existe una estructura de base de datos.
+
+\par
+
+\noindent La figura \ref{Figura 12} muestra el proceso de evolución en el tiempo
+desde los finales de 1940.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.535]{capitulo1/images/figura1-2.png} \end{center}
+ \caption[La evolución de las técnicas de modelos de bases de
+ datos]{\label{Figura 12}La evolución de las técnicas de modelos de bases de
+ datos \cite{powell}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Sistema de archivos}
+
+\noindent El uso de un sistema de archivo como modelo de base de datos implica
+no aplicar técnicas de modelado y que la base de datos es almacenada en un archivo 
+plano en un sistema de archivos, utilizando la estructura del sistema operativo.
+\par \noindent Cualquier búsqueda de datos a través de archivos planos debe ser
+explícitamente programada. La ventaja de diferentes modelos de bases de datos es 
+que proporcionan algo de esta programación. Para una base de datos de sistema de 
+archivos, los datos pueden ser almacenados en archivos individuales o en múltiples 
+archivos. Similar a buscar a través de archivos planos, cualquier relación y
+validación entre diferentes archivos planos tendrían que ser programadas y probablemente con una capacidad limitada.
+
+\subsection{Modelo jerárquico de base de datos}
+
+\noindent El modelo jerárquico de base de datos fue desarrollado como una
+solución a las necesidades inmediatas de aplicaciones reales a mediados de los 60s. 
+El sistema más antiguo e importante de base de datos jerárquico es IMS de IBM y fue 
+desarrollado para organizar y almacenar información necesaria para el proyecto de 
+alunizaje del Apolo. IBM y la aviación norteamericana trabajaron juntos para producir 
+la primera versión de IMS en 1968. Las versiones posteriores de IMS fueron
+diseñadas para usarse con dispositivos de cintas magnéticas, pero los posteriores discos magnéticos 
+se convirtieron en el estándar. IMS rápidamente se convirtió en el sistema de base de datos 
+jerárquico dominante en el mercado y fue por muchos años el DBMS más ampliamente usado, hasta 
+que fue remplazado por los sistemas relacionales. Muchas mejoras fueron hechas a IMS después 
+del 68, resultando en nuevas versiones que obtenían ventajas de las mejoras en hardware y software, 
+proporcionando nuevas características como comunicación de datos y máximo desempeño. IMS era capaz de 
+procesar grandes cantidades de datos de modo eficiente. Usaba una estructura de árbol familiar para 
+los programadores acostumbrados a trabajar con archivos. La estructura lógica en la que se sustenta 
+es el árbol, el cual se compone de un nodo raíz y varios nodos sucesores, ordenados jerárquicamente, 
+como se observa en la figura \ref{Figura 12.1}. Cada nodo representa una entidad
+(tipo de registro) y las relaciones entre entidades son las conexiones entre los nodos. El nodo superior es el 
+nodo padre y los inferiores 
+son los nodos hijos. Las conexiones entre archivos no dependen de la información contenida en ellos, 
+se definen al inicio y son fijos (punteros). Las interrelaciones entre registros permiten que un padre 
+tenga muchos hijos, pero un hijo sólo puede tener un padre. Los datos se representan como estructuras de 
+árbol y el árbol representa la jerarquía de registros de datos. La navegación es top-down.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1]{capitulo2/images/figura1-3.png} \end{center}
+ \caption{\label{Figura 12.1}Relaciones modelo jerárquico de bases de datos}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\par \noindent Desventajas:
+
+\begin{itemize}
+  \item No modela sencillamente las relaciones Muchos a Muchos.
+  \item Genera anomalías de inserción.
+  \item Genera anomalías de borrado.
+  \item Genera anomalías de actualización.
+  \item Se pueden dar consultas inconsistentes.
+\end{itemize}
+
+\subsection{Modelo de red de base de datos}
+
+\par \noindent El modelo de base de datos de red es esencialmente un
+refinamiento del modelo jerárquico. El modelo de red permite a las 
+tablas hijas tener más de un padre, por lo tanto creando a una estructura de 
+tabla como red. Múltiples tablas padres para cada hijo permite relacionales de N a N (muchos es a muchos), 
+en adición a las relacionales de 1 a N (1 a muchos). En un ejemplo de modelo de red mostrado en la 
+figura \ref{Figura 12.2}, existe una relación N a N entre empleados y tareas. En
+otras palabras.
+Un empleado puede ser asignado a muchas tareas, y una tarea puede ser asignada a diferentes empleados. Por lo tanto, muchos 
+empleados tienen muchas tareas y vice versa \cite{powell}.
+
+\par \noindent La figura \ref{Figura 12.2} muestra como los administradores
+pueden ser parte de departamentos y compañías. En otras palabras, el modelo de red está 
+tomando en cuenta que no sólo cada departamento dentro de una empresa tiene un administrador, 
+sino que también cada compañía tiene un administrador general (en la vida real, un jefe ejecutivo o CEO). 
+La figura \ref{Figura 12.2} además muestra la incorporación de tipos de tablas
+donde los empleados puede ser definidos de diferentes tipos (tal como tiempo
+completo, part-time, entre otros.). Lo más importante de notar es la nueva tabla
+``Asignaciones'' la cual permite asignar tareas a los empleados. La creación de
+la tabla ``Asignaciones'' es el resultado directo de la adición de la capacidad de padres múltiples entre los modelos jerárquicos y de red. Como ya se señaló, la relación entre las tablas empleados y tareas es de N a N, donde 
+cada empleado puede ser asignado a múltiples tareas y cada tarea puede ser asignada a múltiples empleados. 
+La tabla asignación resuelve el problema de la relación N a N, permitiendo una definición única para la 
+combinación de empleado y tarea. Sin esa definición única, encontrar una
+asignación sería imposible \cite{powell}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.8]{capitulo2/images/figura1-4.png} \end{center}
+ \caption[Modelo de red de base de datos]{\label{Figura 12.2}Modelo de red de
+ base de datos \cite{powell}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\par \noindent Desventajas:
+
+\begin{itemize}
+  \item Resulta difícil definir nuevas relaciones.
+  \item Es complicado darle mantenimiento, ya que cualquier cambio en la
+  estructura requiere una descarga de los datos.
+  \item Representa desperdicio de recursos.
+  \item Genera anomalías de inserción.
+  \item Genera anomalías de borrado.
+\end{itemize}
+
+\subsection{Bases de datos relacionales}
+
+\noindent Las bases de datos relacionales mejoraron en la restricción de la
+estructura jerárquica, no abandonando completamente la jerarquía de datos, 
+como se muestra en la figura \ref{Figura 13}, en donde un tipo de empleado tiene
+muchos empleados asociados o dentro de una compañía existen muchos departamentos.
+Cualquier tabla puede ser accedida directamente sin tener que acceder a todos los objetos padres \cite{powell}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.68]{capitulo1/images/figura1-51.png} \end{center}
+ \caption[Modelo relacional]{\label{Figura 13}Modelo relacional \cite{powell}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\par
+\noindent El modelo de datos relacional introdujo lenguajes de consulta
+de alto nivel que suministraban una alternativa a las interfaces de lenguaje de programación; 
+por lo que era mucho más rápido escribir consultas nuevas. La representación relacional de los 
+datos se parece al ejemplo presentado en la figura \ref{Figura 14}. Los sistemas
+relacionales estaban destinados inicialmente a las mismas aplicaciones que los primitivos sistemas, pero estaban pensados para 
+ofrecer flexibilidad en el desarrollo de nuevas consultas y para reorganizar la base de datos 
+cuando cambiaran los requisitos. Su rendimiento mejoró con el desarrollo de nuevas técnicas de almacenamiento e 
+indexación y unas técnicas mejores de procesamiento y optimización. Eventualmente, las bases de 
+datos relacionales se convirtieron en el tipo de sistema de bases de datos predominante para las 
+aplicaciones de bases de datos tradicionales \cite{navathe}.
+
+
+
+
+\par \noindent Debilidades de los SABD Relacionales:
+
+\begin{itemize}
+  \item \tn{Mal soporte de las transacciones de larga duración}: Suelen ser
+  mucho más comunes para objetos más complejos.
+  \item \tn{Estructura de datos que no permite heterogeneidad}: Este modelo
+  admite homogeneidad vertical y horizontal. Cada tupla posee los mismos
+  atributos. Los valores de una columna tienen que pertenecer al mismo dominio.
+  La intersección de fila y columna debe ser un valor atómico.
+  \item \tn{Pocas facilidades para navegar por los datos}: Acceso asociativo
+  basado en contenido y no basado en el movimiento entre registros individuales.
+  \item \tn{Operaciones restringidas}: Se tienen operaciones orientadas a
+  tuplas, operaciones que proporciona SQL, pero lamentablemente SQL no tolera definir
+   nuevas operaciones.
+   \item \tn{Representación pobre de entidades consideradas del ``mundo real''}:
+   La fragmentación de una entidad del ``mundo real'' en varias relaciones es
+   ineficiente ya que lleva a muchos ``joins'' en el procesamiento de
+   consultas.
+   \item \tn{Manejo complicado de consultas recursivas}: Es complicado manejar consultas sobre relaciones que una relación  tiene consigo misma
+   (directa o indirectamente).
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1]{capitulo1/images/figura1-5.png} \end{center}
+ \caption[Base de datos que almacena estudiantes y cursos]{\label{Figura 14}Base de datos que almacena la información de
+ estudiantes y cursos \cite{navathe}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Bases de datos orientadas al objeto}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.45]{capitulo2/images/generacionesbd.png}
+  \end{center}
+ \caption{\label{Figura 20}Tercera generación de bases de datos}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\noindent Una base de datos orientada a objetos pertenece a la tercera
+generación de bases de datos, ver figura \ref{Figura 20}, la cual proporciona a
+los datos una estructura tridimensional, donde cualquier item en una base de
+datos puede ser recuperado desde cualquier punto de una forma rápida. Considerando que el modelo
+relacional se presta para la recuperación de grupos de registros en dos
+dimensiones, el modelo orientado al objeto es eficiente para encontrar items
+únicos. Por consiguiente, este modelo se desempeña pobremente cuando se desea
+recuperar más de un item, en lo que el modelo relacional es muy competente.
+\par
+\noindent Este tipo de base de datos resuelve algunas de las complejidades más
+ocultas de las bases de datos relacionales. La figura \ref{Figura 21} muestra un
+ejemplo de la estructura de un modelo orientado a objetos y su equivalencia en
+el relacional se encuentra en la figura \ref{Figura 13}. La asignación de tareas a los empleados fue manejada utilizando la inclusión de colecciones (listas) en manager,
+empleado y las especializaciones de la clase empleado. Además se debe notar que
+los diferentes tipos de empleados fueron manejados utilizado especialización.
+\par \noindent Otro beneficio de este modelo es la habilidad inherente de
+gestionar y atender aplicaciones y modelos de bases de datos extremadamente
+complejos. Esto es debido a un principio básico de la metodología de la
+orientación a objetos, por lo que los elementos altamente complejos pueden
+descomponerse en sus partes más elementales, lo que permite su acceso explícito,
+así como también su ejecución a través de esas partes básicas. En otras
+palabras, si se tiene claro cómo funcionan las pequeñas piezas individualmente,
+se puede visualizar el problema completo, que es una combinación de un pequeño
+número de piezas, piezas constituyentes mucho más simples \cite{powell}.
+
+\par \noindent Una discusión recurrente, dice que uno de los
+puntos de fricción entre las aplicaciones orientadas al objeto y las bases de
+datos relacionales es el rendimiento del proceso de mapeo entre los tipos
+estructurales: Objeto y relacional. La estructura de ambos es completamente
+diferente.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.385]{capitulo2/images/orientado.png} \end{center}
+ \caption[Modelo de bases de datos orientado a objetos]{\label{Figura 21}Modelo
+ de bases de datos orientado a objetos
+ \cite{powell}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Objeto}
+\noindent Es una entidad del mundo real percibida en el sistema. En palabras
+técnicas se describe como por sus propiedades, mejor conocidas como
+\ti{atributos} y los \ti{métodos} que puede facilitar. El estado de un objeto se
+determina por los valores que posean sus atributos, valores que siempre han de
+satisfacer las restricciones implantadas sobre ellos. En la figura \ref{Figura
+22} se muestra un ejemplo de objeto. Los métodos definen el comportamiento del
+objeto.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.5]{capitulo2/images/objeto.png} \end{center}
+ \caption{\label{Figura 22}Ejemplo de objeto}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\par \noindent \tn{Abtracción}
+
+\noindent Es el proceso que identifica los aspectos primordiales pero ignora el
+resto. Conlleva centrarse en qué hace y qué es un objeto antes de pensar en cómo
+implementarlo.
+\noindent Posee dos aspectos elementales:
+\begin{itemize}
+  \item \tn{Encapsulación}: Un objeto contiene la estructura de los datos y su
+  conjunto de operaciones las que pueden ser utilizadas para su manipulación.
+  \item \tn{Ocultamiento}: Los aspectos internos de un objeto se encuentran
+  ocultos al exterior. Suministra una forma de independencia de datos.
+\end{itemize}
+
+\subsection{Bases de datos objeto relacional}
+
+\noindent El modelo de bases de datos objeto relacional fue creado como respuesta a las capacidades 
+conflictivas de los modelos relacionales y orientado a objetos.
+Esencialmente las capacidades que posee el modelo orientado a objetos ya se
+encuentran incluidos en las bases de datos relacionales, sin embargo las
+capacidades de una base de datos relacional no están incorporadas en las bases
+de datos orientadas al objeto.
+El modelo objeto relacional intenta incluir los aspectos más eficientes del modelo orientado a objetos en 
+la estructura del modelo relacional, con variados grados de éxito \cite{powell}.
+
+\noindent Algunos sistemas de administración de base de datos como Oracle,
+añadieron algunas capacidades orientadas a objetos a sus productos, resultando 
+en bases de datos híbrida objeto-relacionales. El modelo objeto-relacional extiende 
+al modelo relacional agregando algunos tipos de datos complejos y métodos. En vez 
+de atomicidad y valores simples en los atributos que requiere el modelo relacional, 
+este modelo permite atributos estructurados y tienen conjuntos de arreglos de valores. 
+También permite métodos y herencia. El lenguaje SQL fue extendido en 1999 para crear y 
+manipular los tipos de datos más complejos que soporta este modelo, como la especificación 
+de tipos de datos abstractos (denominados TDA o tipos definidos por el usuario)
+\cite{navathe}. Cabe destacar que este modelo de base de datos posee mucho más
+semántica que el modelo relacional, por lo que hay menos fragmentación de datos.
+\\
+\par \noindent \tn{Características}
+\begin{itemize}
+  \item \tn{Ventajas}:
+  \begin{itemize}
+    \item Reutilización y compartición.
+    \item Conservar los conocimientos relevantes y experiencias
+    alcanzadas con las bases de datos relacionales.
+\item Resuelven muchas de las debilidades de las bases de datos relacionales ya
+conocidas.
+\item Mejora significativa de la productividad.
+\end{itemize}
+	\item \tn{Inconvenientes}:
+	\begin{itemize}
+	  \item Mayores costos.
+	  \item Mayor complejidad.
+	  \item Todo el esfuerzo relacionado con la extensión objeto relacional puede
+	  que sólo sea útil, al final, para un porcentaje muy pequeño de las aplicaciones.
+\end{itemize}
+\end{itemize}
+
+\par \noindent \tn{Aspectos de Objetos en SQL}
+
+\par \noindent Las ganancias primordiales de la extensión objeto relacional:
+
+\begin{itemize}
+  \item \tn{Poder de expresión}: Capacidad de soporte para objetos y relaciones
+  complejas.
+  \item \tn{Integración}: de los modelos relacional y objetos en un solo
+  lenguaje.
+  \item \tn{Extensibilidad}:  Capacidad de extender el sistema de tipos para
+  entregar soporte a las nuevas necesidades de las aplicaciones.
+  \item \tn{Nuevas consultas más potentes}: Recursivas, multimedia, entre otros.
+  \item \tn{Reusabilidad}: Capacidad de compartir librerías de tipos existentes.
+\end{itemize}
+
+\par \noindent \tn{Extensiones de objeto añadidas a SQL}
+\begin{itemize}
+  \item Objetos grandes (Large Objects, LOBs)
+  	\begin{itemize}
+  	  \item Binarios (BLOB).
+  	  \item Carácter (CLOB).
+  	  \end{itemize}
+  \item Constructores de tipos
+  	\begin{itemize}
+  	  \item Tipos de filas (Row types).
+  	  \item Tipos por referencia (Reference types).
+  	  \end{itemize}
+  \item Identidad de objetos (Identity column type)
+  \item Tipos definidos por el usuario (User-Defined types, UDTs)
+  	\begin{itemize}
+    	\item Tipos distintos (Distinct types).
+    	\item Tipos estructurados (Structured types).
+   \end{itemize}
+  \item Funciones, procedimientos y métodos definidos por el usuario.
+  	\begin{itemize}
+  	  \item Funciones (functions). 
+  	  \item Procedimientos (procedures).
+  	\end{itemize}
+  \item Tipos colección (Collections)
+  	\begin{itemize}
+  	  \item Vectores (Arrays).
+  	  \item Multiconjuntos (Multisets).
+  	 \end{itemize}
+  \item Jerarquías de tablas y de vistas
+  	\begin{itemize}
+  	  \item Sub/Supertables.
+  	  \item Sub/Superviews.
+  	 \end{itemize}
+\end{itemize}
+
+\par \noindent Es relevante destacar que existen métodos y herramientas que
+realizan mapeos objetos relacionales, los cuales son detallados en el Anexo
+\ref{orm}.
+%%%%%%%%%%%%%%%%%%%
+%\newpage
+
+
+\section{Datos semi estructurados}
+
+\noindent En palabras simples son datos sin esquema o auto descriptibles, la
+información sobre la estructura está junto con los datos. En la actualidad es
+una necesidad integrar los datos muy estructurados con los poco estructurados.  
+La principal diferencia entre ambos es la forma de manejar los constructores 
+del esquema (nombres de atributos, relaciones y tipos de entidades, entre
+otros.). En el caso de los poco estructurados, la información del esquema se mezcla con
+los valores de los datos ya que un objeto de datos puede tener diferentes atributos 
+ no conocidos por adelantado. Por eso, estos tipos de datos se conocen como datos auto descriptivos.
+ 
+ \noindent La mayor parte de los modelos de base de datos requiere que los tipos
+ de entidades (u objetos o registros, dependiendo del modelo) posean la misma estructura. 
+ La estructura se define en el esquema y permanece sin modificaciones a menos que el 
+ administrador de la base de datos cambie dicho esquema. A diferencia, el modelo semi 
+ estructurado posibilita una colección de nodos, cada uno conteniendo datos, posiblemente 
+ con diferentes esquemas. El nodo tiene información sobre la estructura de su contenido. 
+ 
+ \noindent Algunas características de los datos semi estructurados son:
+
+ \begin{itemize}
+   \item No existe necesariamente una diferencia entre un identificador de un
+   campo y el valor mismo de este.
+   \item Un atributo de un registro puede ser otro registro.
+   \item Un registro no necesariamente tiene que tener todos sus atributos
+   definidos. Mientras por ejemplo en una base de datos relacional un campo
+   debe establecerse como NULL cuando no se tiene, en un ambiente de datos semi
+   estructurados basta con omitir dicho atributo.
+ \end{itemize}
+ \par
+ \noindent A pesar de poder representarse de distintas formas, como por ejemplo
+ documentos SGML (Standard Generalized Markup Language) y XML, actualmente la
+ mejor manera de hacerlo es a través del lenguaje XML.\\
+
+\par 
+\noindent \tn{XML} (eXtensible Markup Language)
+
+\noindent El lenguaje XML es el estándar para estructurar e intercambiar datos
+por la Web, el cual se puede utilizar para suministrar información sobre la estructura y el 
+significado de ciertos componentes de los datos visualizados en una página web, 
+en vez de especificar cómo se debe visualizar la información, trabajo que realiza 
+el lenguaje HTML. El formateo de la visualización se puede especificar por separado,
+por ejemplo mediante XSL (Lenguaje de hojas de estilo extensible, Extensible Stylesheet Language).
+Recientemente, también se ha propuesto a XML como un posible modelo para el almacenamiento y la 
+recuperación de datos, aunque hasta el momento sólo se han desarrollado unos pocos sistemas de 
+bases de datos experimentales basados en XML.
+
+\noindent Posee las siguientes características principales:
+
+\begin{itemize}
+  \item \tn{Sencillo}: Fácil de aprender y de usar.
+  \item \tn{Versátil}: Separa contenido, estructura y presentación.
+   \item \tn{Abierto}: Independiente de plataformas, empresas, lenguajes de
+  programación o entornos de desarrollo.
+  \item \tn{Extensible}: Se pueden definir nuevas etiquetas.
+  \item \tn{Validable}: Cada documento se puede validar frente a un esquema  o
+  definición de tipo de documento (\tn{DTD}), o se puede declarar bien formado.
+    \item \tn{Estructurado}: Se pueden modelar datos a cualquier nivel de
+  complejidad.
+
+
+\end{itemize}
+ 
+\par
+\noindent El objeto básico en XML es el documento XML. En la construcción de un
+documento XML se utilizan dos conceptos de estructuración principales: elementos
+y atributos. Los atributos en XML proporcionan información adicional que
+describe a los elementos \cite{navathe}.
+
+\par
+\noindent Es posible distinguir tres tipos principales de documentos XML:
+
+\begin{itemize}
+  \item \tn{Documentos XML centrados en los datos}: Estos documentos tienen
+  muchos elementos de datos pequeños que respetan una estructura específica y, por tanto,
+  pueden extraerse de una base de datos estructurada. Se formatean como documentos
+  XML para intercambiarlos o visualizarlos por la Web.
+  \item \tn{Documentos XML centrados en el documento}: Son documentos con
+  grandes cantidades de texto, como los artículos y los libros. En estos documentos
+  hay pocos o ningún elemento de datos estructurado.
+  \item \tn{Documentos XML híbridos}: Estos documentos pueden tener partes que
+  contienen datos estructurados y otras partes que son principalmente
+  textuales o no estructuradas.
+\end{itemize}
+
+\par \noindent
+XML fue desarrollado para transmitir datos, un ejemplo relevante es los
+datos de un registro de un listado de libros de una base de datos
+tradicional. Una consulta SQL compleja podría retornar datos en el
+siguiente formato:
+
+ \noindent \ti{History of Interviews, Juan, Smith, 99999-99999, Oracle Press,
+ 2003.}
+ 
+ \par \noindent Si XML es utilizado como salida, este registro ahora posee un
+ contexto adicional por cada elemento de datos, tal y como se observa en el
+ código \ref{codigoxml1}
+ \\
+ 
+\begin{lstlisting}[language=XML, caption={Ejemplo de documento XML},
+label=codigoxml1]
+<book>
+ <title>History of Interviews</title>
+  <author>
+   <firstname>Juan</firstname>
+   <lastname>Smith</lastname>
+  </author>
+  <ISBN>99999-99999</ISBN>
+  <publisher>Oracle Press</publisher>
+  <publishyear>2003</publishyear>
+  <price type="US">10.00</price>
+</book>
+
+\end{lstlisting}
+
+\par \noindent El archivo tiene simetría, y cada pieza de datos tiene su
+contexto de término de la forma \ti{<contexto>\ldots</contexto>}. Cada conjunto
+de etiquetas (inicio / termino) y el dato que se encuentra en su interior es
+llamado elemento. Esta relación puede ser similar a una columna en una base de
+datos en donde el texto de la etiqueta es la nombre de la columna y el texto
+dentro de las etiquetas es el dato de una fila en esa columna. En el ejemplo del
+código \ref{codigoxml1}, el título puede ser el nombre de la columna y 'History
+of Interviews' puede ser el dato en esa fila.
+
+\par \noindent También se puede notar que varias etiquetas contienen etiquetas
+en lugar de datos. Esto es una característica significativa de XML, lo que
+permite anidar datos para definir mejores relaciones. Ahora regresando a la
+metáfora de base de datos, la etiqueta \ti{<author} podría ser modelada como una
+tabla cuyas columnas fueran \ti{<firstname>} y \ti{<lastname>}. En terminología
+XML, estas columnas etiquetas son referenciadas como hijos de la etiqueta
+padre \ti{<author>}.
+
+
+\par \noindent Ahora si se presta atención en la etiqueta \ti{<price>} se puede
+ver que incluye texto con el formato nombre="valor", a esto se le llama
+atributo, y uno o muchos de estos pueden ser incluidos en el inicio de la
+etiqueta de cualquier elemento. Los atributos, sin embargo, no son permitidos en
+la etiqueta de término del elemento (por ejemplo, \ti{</tag nombre="foo''>}).
+Los valores de los atributos deben ir entre comillas (simples o dobles, siempre
+y cuando la etiqueta de inicio y término sean iguales) como se especifica por
+SGML.
+
+\par \noindent El ejemplo completo del código \ref{codigoxml1} está entre las
+etiquetas \ti{<book>\ldots</book>}. Estas etiquetas son definidas como la raíz
+del documento, y quizás sólo exista una en el documento. Los
+documentos XML que siguen la regla de tener solamente una raíz y que todas sus
+etiquetas estén con su respectiva etiqueta de término son considerados
+documentos bien formados.
+
+\par \noindent Los documentos XML poseen una estructura física y una lógica. La
+estructura física simplemente se refiere al archivo XML y a los otros archivos
+que quizás importen, mientras que la estructura lógica se refiere al prólogo y
+al cuerpo del documento. El XML del ejemplo del código \ref{codigoxml1}
+representa el cuerpo en un documento XML, pero falta información importante que
+ayuda a identificar su naturaleza. Esta información es el prólogo.
+\\
+\par
+\noindent \tn{Prólogo}
+
+\par \noindent El prólogo consiste en la declaración del XML (el número de
+versión), una posible pista del lenguaje de codificación, otros atributos, y una
+gramática opcional o un modelo de datos especificado por la definición de
+esquema XML (XML Schema Definition XSD) o por la definición de tipo de documento
+(Documento Type Definition DTD) referenciado a una URL. El prólogo quizás además
+contenga el XSD o DTD real. Un ejemplo con referencia a un DTD externo se
+encuentra en el código \ref{codigoxml2}
+\\
+
+\begin{lstlisting}[language=XML, caption={Ejemplo de referencia externa a DTD}, label=codigoxml2]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE book SYSTEM "book.dtd">
+\end{lstlisting}
+
+
+
+\par \noindent La línea que contiene \ti{<?\ldots?>} del código \ref{codigoxml2}
+es una ejemplo de una instrucción de procesamiento (PI) XML. En el ejemplo del
+código recién mencionado XML es el nombre de XML PI. Además, la codificación del 
+conjunto de caracteres soportados en el ejemplo es una versión comprimida de
+Unicode llamada UTF-8. Aunque los procesadores de XML por lo general detectan la
+codificación de los 3 primeros bytes en el archivo, esta declaración puede ser utilizada como una
+pista para indicar la codificación esperada. Por último, el atributo standalone 
+se refiere a si el procesador necesita incluir o importar otros archivos externos.
+
+\par \noindent La segunda línea de este prólogo se refiere a \ti{DOCTYPE}. Aquí
+es donde se hace la declaración de la gramática o del modelo de datos para este
+documento XML. En algunas aplicaciones, puede ser suficiente para procesar XML
+no tener conocimiento si la información está presente o no, pero la mayoría de
+las veces, una aplicación desea validar el documento XML que recibe para
+confirmar que todo está allí. Para ello, la aplicación debe conocer qué
+elementos se requieren, cuáles pueden tener hijos, cuáles pueden tener
+atributos, entre otros. En términos XML, la gramática o el modelo de datos en el
+ejemplo es referenciado como DTD. Este DTD puede residir en el propio archivo
+XML o simplemente se hace la referencia de manera que el procesador pueda
+localizarlo, como se muestra en el código \ref{codigoxml2} de este ejemplo.
+Por otro lado el ejemplo anterior con una declaración de esquema XML se ve como
+esta descrito en el código \ref{codigoxml3}.
+\\
+\begin{lstlisting}[language=xml, caption={Ejemplo de referencia externa a DTD}, label=codigoxml3]
+<? xml version="1.0" ?>
+<xsd:schema xmlns:xsd=http://www.w3.org/2001/XMLSchema
+xmlns:bk="http://www.mypublishsite.com/books">
+\end{lstlisting}
+
+\par \noindent Para comenzar, se debe puede notar que la declaración del esquema
+XML tiene un prefijo \tn{xsd:}, el cual está asociado con el nombre de espacio (namespace) 
+del esquema XML a través de la declaración: 
+
+\par \noindent \tn{xmlns:xsd=``http://www.w3.org/2001/XMLSchema"}.
+
+\par \noindent 
+Este prefijo es utilizado en los nombre de los tipos de datos definidos en el XSD referenciado 
+para diferenciarlos de otros que utilicen el mismo nombre. La declaración \tn{xsd:schema} 
+denota el comienzo de este esquema XML incorporado en este documento XML, junto con otra 
+declaración:
+
+\par \noindent \tn{xmlns:bk=``http://www.mypublishsite.com/books"}
+
+\par \noindent que define
+el espacio de nombres del prefijo \tn{bk:} con el fin de identificar estos tipos tal como es definido por el autor de este modelo de datos.
+\noindent También se debe tener en cuenta que la declaración de esquema
+está dentro de la etiqueta \tn{<book>} en lugar de en el prólogo. Esta es una
+diferencia distinta entre XSDs y DTDs.
+Por lo tanto, la declaración del esquema XML es un atributo del elemento raíz del documento y es parte del cuerpo.
+\\
+\par
+\noindent \tn{El cuerpo}
+
+\par \noindent 
+El elemento raíz, que contiene el resto del documento XML, seguido del prólogo es llamado el \ti{cuerpo} del documento
+ XML. Esta parte está compuesta por elementos, procesando instrucciones, contenido, atributos, comentarios, referencia a 
+ entidades, entre otros. Como se mencionó anteriormente, los elementos deben comenzar y corresponder las etiquetas de 
+ término anidadas en el orden correcto; de lo contrario, el documento XML no
+ está bien formado, y quizás los analizadores XML señalen errores por este motivo. Los elementos también pueden tener atributos, o valores, tales 
+ como \tn{<author firstname=``Juan'' lastname=``Smith''>}. También existen
+ atributos construidos definidos por la especificación de XML 1.0, tales como
+ \tn{xml:space="preserve''} para indicar que los espacios en blanco entre los elementos son considerados como datos y lo tanto  son conservados.
+ 
+ \par \noindent La referencia a entidades, definida solamente en DTDs, son
+ similares a macros en que las entidades son definidas una vez, y referenciadas 
+ hacia ellas, tales como \tn{\&nameofentity}, se puede utilizar en lugar de la
+ totalidad de sus definiciones. Por ejemplo, en un DTD, \tn{<!ENTITY Copyright
+ ``Copyright 2000 por Smith, Jones, y Doe - Todos los derechos reservados''>}
+ puede ser declarado y luego \tn{\&Copyright} podría ser utilizado como un
+ acceso directo a través del documento XML. En analizador XML debe reconocer las entidades definidas en el DTD, incluso si  el comprobador de validez pueda estar apagado y se especifica un esquema XML adicional.
+ Finalmente, el cuerpo puede contener secciones \ti{character data (CDATA)}
+ para delimitar bloques de texto que de otra manera serían considerados como código, comentarios, referencias a entidades, 
+ instrucciones de procesamiento, entre otros. La sintaxis \ti{CDATA} es la
+ descrita en el código \ref{codigoxml4}. Estas secciones son simplemente
+ omitidas por el analizador XML. Así el cuerpo de documento XML contiene un elemento raíz con su declaración de esquema, 
+ nodos hijos y hermanos, elementos, atributos, nodos de texto que representan el contexto textual de un elemento o 
+ atributo, y secciones CDATA.\\
+\begin{lstlisting}[language=xml, caption={Sintaxis CDATA}, label=codigoxml4]
+<![CDATA[ characters including <, >, /, ?, & not legal anywhere else]]>
+\end{lstlisting}
+
+\par \noindent \tn{Documentos XML bien formados}
+
+\noindent Un documento XML está bien formado sólo
+si existe una raíz y todas las etiquetas de comienzo poseen su correspondiente
+etiqueta de cerrado, con su correspondiente anidación \cite{wang}. Por ejemplo,
+el Código  \ref{codigo1} del documento no está bien formado. Es posible trabajar
+con documentos no asociados a ninguna DTD y que en consecuencia jamás podrán ser
+válidos. El Código \ref{codigo3} representa un documento que se encuentra
+bien formado.\\
+
+\newpage
+
+\begin{lstlisting}[language=xml, caption={Código de documento XML
+que no se encuentra bien formado}, label=codigo1]
+<bookcatalog>
+<book>
+<title>History of Interviews</ti>
+<author>
+<firstname>Juan</firstname>
+<lastname>Smith</author></lastname>
+<ISBN>99999-99999</ISBN>
+<publisher>Oracle Press</publisher>
+<publishyear>2003</publishyear>
+<price type="US">10.00</price>
+</book>
+</bookcatalog>
+<bookcatalog2>...</bookcatalog2>
+\end{lstlisting}
+
+\noindent Las razones por las que no es bien formado son:
+
+\begin{itemize}
+  \item Existen dos raíces, 'bookcatalog' y 'bookcatalog2'.
+  \item La etiqueta <title> \ no posee su etiqueta de término correspondiente,
+  la que sería </title>.
+  \item La etiqueta de término </author> \ no se encuentra correctamente
+  anidada, ya que la etiqueta de término </lastname> \ está posicionada después de la
+  </author>, en vez de ubicarse antes de ella. Los analizadores XML rechazarán
+  este documento sin procesamiento adicional.
+\end{itemize}
+
+\begin{lstlisting}[language=xml, caption={Código de documento XML
+bien formado}, label=codigo3]
+<bookcatalog>
+	<book>
+		<title>History of Interviews</title>
+		<author>
+			<firstname>Juan</firstname>
+			<lastname>Smith</author></lastname>
+		</author>
+		<ISBN>99999-99999</ISBN>
+		<publisher>Oracle Press</publisher>
+		<publishyear>2003</publishyear>
+		<price type="US">10.00</price>
+	</book>
+</bookcatalog>
+\end{lstlisting}
+
+\noindent \tn{Documentos XML Válidos}
+\par
+\noindent Un documento XML válido es el que está conformado por un esquema XML o
+definición de tipo de documento (\tn{DTD}), esto significa que los elementos, atributos, relacionales estructurales y secuencias
+en el documento XML son los mismos que los previamente especificados en el
+esquema XML o definición de tipo de documento (\tn{DTD}) \cite{wang}. Por ejemplo, el código \ref{codigo2} documento
+XML es válido con respecto al DTD. 
+
+\noindent En el código \ref{codigo4} se representa el
+DTD, donde la declaración DOCTYPE especifica el elemento raíz, en
+este caso el elemento \ <bookcatalog>. Un elemento simple se compone de una etiqueta de
+inicio, por ejemplo, \ <title>; todo el texto ``History of Interviews'' entre
+medio de la etiqueta de inicio y la término \ </title>. Sin embargo, sólo un 
+elemento raíz existe en un documento XML. El elemento raíz marca el inicio del
+documento y es considerado el padre de todos los otros elementos, los cuales se
+encuentran anidados con sus respectivas etiquetas de inicio y término. Para que
+los documentos XML sean considerados válidos con respecto a su DTD, el elemento
+raíz \tn{bookcatalog} debe ser el primer elemento para empezar el cuerpo del
+documento XML.
+
+\noindent Así, un analizador XML de validación, al analizar el documento XML de
+acuerdo con las reglas especificadas en el DTD, intenta
+determinar si el documento se ajusta a la DTD (si es válido), lo que significa
+que todos los elementos requeridos, atributos, relaciones estructurales y
+secuencias están según lo declarado. 
+\newpage
+\begin{lstlisting}[language=xml, caption={Código de documento XML
+validamente formado}, label=codigo2]
+<bookcatalog>
+<book>
+<title>History of Interviews</title>
+<author>
+<firstname>Juan</firstname>
+<lastname>Smith</lastname>
+</author>
+<ISBN>99999-99999</ISBN>
+<publisher>Oracle Press</publisher>
+<publishyear>2003</publishyear>
+<price type="US">10.00</price>
+</book>
+</bookcatalog>
+
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[language=xml, caption={Código DTD}, label=codigo4]
+<!-- DTD bookcatalog may have a number of book entries -->
+<!DOCTYPE bookcatalog [
+<!ELEMENT bookcatalog (book)*>
+<!-- Each book element has a title, 1 or more authors, etc. -->
+<!ELEMENT book (title, author+, ISBN, publisher, publishyear, price)>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT author (firstname, lastname)>
+<!ELEMENT firstname (#PCDATA)>
+<!ELEMENT lastname (#PCDATA)>
+<!ELEMENT ISBN (#PCDATA)>
+<!ELEMENT publisher (#PCDATA)>
+<!ELEMENT publishyear (#PCDATA)>
+<!ELEMENT price (#PCDATA)>
+<!ATTLIST price type (US | CAN | UK | EURO) #REQUIRED>
+]>
+
+\end{lstlisting}
+%\newpage
+\par \noindent \tn{Espacios de nombre XML}
+\par \noindent El estándar W3C para XML introduce los siguientes términos con
+respecto a espacios de nombre XML:
+
+\begin{itemize}
+  \item \tn{\ti{Nombre local}}: Representa el nombre de los elementos o atributos sin prefijo. En el 
+  ejemplo del código \ref{codigo2}, \tn{book,title,author,ISBN}, entre otros
+  son considerados nombres locales.
+  Estos son utilizados cada vez que no existe la preocupación de que la etiqueta
+  o nombres de atributos estén duplicados.
+  Los nombres locales también son empleados para referenciar a la parte del nombre de un nombre calificado.
+  
+\item \tn{\ti{Nombre calificado}}: Representa el nombre completo del prefijo.
+Por ejemplo, como continuación de los ejemplos anteriores,
+\tn{bk:title,bk:book}, entre otros, son considerados nombres calificados. Los
+nombres calificados son utilizados más seguido porque el esquema XML define tipos estándar, tales como dirección, cliente, orden de compra, y así sucesivamente, 
+por lo que hay una necesidad de diferenciar la semántica.
+
+\item \tn{\ti{Prefijo de nombre de espacio}}: Representa el prefijo de un
+espacio de nombre declarado utilizando un prefijo espacial, \tn{xmlns}. En el ejemplo anterior se definió un prefijo de espacio 
+de nombre: \tn{bk}. Los prefijos tienen su alcance y por lo tanto deben ser
+únicos dentro de los hijos del elemento padre que declara el espacio de nombres, pero los prefijos pueden ser reemplazados por una nueva declaración sobre un elemento descendiente o atributo.
+
+\item \tn{\ti{Nombre expandido}}: Representa el resultado de aplicación que espacios de nombre definidos por 
+el prefijo de un espacio de nombre al nombre calificado. Por ejemplo, \tn{bk:booklist} podría ser expandido 
+a:
+
+\par \noindent \tn{http://www.mypublishsite.com/books:booklist}. 
+
+\par \noindent El nombre
+expandido nunca es visto en el documento XML en sí, pero es conceptualmente importante.
+
+
+\end{itemize}
+
+\noindent Existen dos tipos de atributos de espacios de nombre: prefijado y por
+defecto. Un atributo de espacio de nombre prefijado es de la forma \tn{nsprefix:attr}, 
+donde \tn{nsprefix} es el prefijo de espacio de nombre previamente declarado. Una vez que el prefijo 
+ha sido declarado, puede ser utilizado para especificar un espacio de nombre para cualquier elemento o 
+atributo en el alcance del elemento donde fue declarado. Por otro lado se podría tener la necesidad de 
+declarar prefijos globales (prefijos que se puedan utilizar en cualquier parte del documento) como atributos 
+del elemento raíz.
+
+\noindent El atributo de espacio de nombre por defecto es \tn{xmlns.xmlns}, tiene el efecto de especificar 
+un espacio de nombre por defecto para todo el alcance de un elemento (incluyendo el elemento en si). Esto 
+no aplica para atributos en sub árboles. Se puede observar un ejemplo en el
+código \ref{codigoxml5}, en donde la declaración del elemento raíz tiene el
+efecto de especificar que todos los elementos dentro de \tn{booklist} (\tn{book,title,author}) están en el espacio de nombre
+\tn{http://www.osborne.com/books}. Sin embargo, el atributo \tn{isbn} no lo está. Los espacios de nombre por defecto
+pueden ser especificados en cualquier nivel del documento y tienen el efecto de reemplazar las declaraciones anteriores.
+Poner \tn{xmlns=""} tiene el efecto de remover la declaración del espacio de nombre por defecto para un documento en 
+particular de un subárbol \cite{wang}.
+\\
+%\newpage
+\begin{lstlisting}[language=xml, caption={Declaración de espacios de nombre
+}, label=codigoxml5]
+<booklist xmlns="http://www.osborne.com/books>"
+ <book isbn="1234-5678-1234">
+  <title>Oracle XML Handbook</title>
+  <author>Oracle XML Team</author>
+ </book>
+ <book isbn="24345-564478-1344234">
+  <title>The C programming language</title>
+  <author>Kernighan and Ritchie</author>
+ </book>
+</booklist>
+\end{lstlisting}
+% 
+% 
+% 
+% \begin{itemize}
+%   \item \tn{Estructurado}: El almacenamiento estructurado descompone el
+%   contenido del documento XML dentro de un juego de objetos. Un beneficio es que los datos pueden ser
+% accesados por aplicaciones que entiendan solamente base de datos relacionales.
+%   \item \tn{No estructurado}: Con el almacenamiento no estrucurado, el documento
+%   XML es almacenado de forma nativa como un character large object (CLOB) dentro de la base de
+% datos.
+% \end{itemize}
+\par \noindent \tn{XML SCHEMA}
+
+\par \noindent XML Schema aparece debido a ciertas limitaciones en los DTD:
+\begin{itemize}
+  \item Los DTD están escritos en una sintaxis diferente al XML.
+  \item No tienen soporte para los espacios de nombres (namespaces).
+  \item Sólo ofrecen tipo de datos limitados.
+  \item Es complejo utilizar DTDs para especificar conjuntos de subelementos.
+\end{itemize}
+
+\par \noindent La validación de documentos XML Schemas es a través de
+restricciones, en donde existen dos tipos de restricciones:
+
+\begin{itemize}
+  \item Restricciones de contenido: Describe el orden y la secuencia de
+  elementos.
+  \item Restricciones de tipo de datos: Describen unidades válidas de datos.
+\end{itemize}
+
+\noindent Las ventajas de utilizar XML Schema:
+
+\begin{itemize}
+  \item Incremento en tipos de datos (double, date, etc).
+  \item Tipos de datos definidos por el usuario.
+  \item Restricción de tipos especializados, por ejemplo restringiendo valores máximos y mínimos.
+  \item Agrupación de atributos y tipos de datos refinables, o ``herencia''.
+  \item Soporte para espacios de nombre (namespaces).
+\end{itemize}
+
+\noindent Se pueden añadir atributos en los elementos. Además se puede
+especificar qué atributo es clave del elemento y por último se pueden definir
+claves externas. \\
+
+\par \noindent \tn{SQL/XML}
+\par \noindent SQL/XML incorpora XML dentro del lenguaje SQL de bases de datos
+objeto relaciones. Permite almacenar documentos XML en sus bases de datos objeto
+relaciones, para luego realizar una búsqueda de dichos documentos mediante
+\ti{XPath} y \ti{XQuery} y así publicar sus datos SQL en el formato de documento
+XML.\\
+
+\par \noindent \tn{XPath}
+\par \noindent XPath es un lenguaje que permite construir expresiones con la
+finalidad de recorrer un documento XML y entregar los nodos del documento que
+contienen la información que se desea. Trata partes de los documentos XML
+mediante expresiones de rutas de acceso, por ejemplo:
+``/curriculum/estudios/estudio/nombre\_establecimiento'', para acceder a los
+atributos basta con agregar
+``/curriculum/estudios/estudio/nombre\_establecimiento/text()''. Los predicados
+de selección, se escriben entre corchetes.\\
+
+\par \noindent \tn{XQuery}
+\par \noindent Es el lenguaje consultivo propio de XML\cite{xquery}, el cual 
+utiliza la
+estructura de árbol de XML para expresar consultas a todas estas fuentes de
+datos, ya sea que estén físicamente almacenados en XML o bien sean vistos como XML vía un middleware. Por otro lado cuenta con una extensa implementación, es potente y más
+fácil de aprender y mantener que otros lenguajes alternativos. 
+
+
+\section{Algunos motores con soporte objeto relacional y XML}
+
+\subsection{PostgreSQL}
+
+\noindent Fue el pionero en muchos de los conceptos existentes en el sistema
+objeto relacional actual, incluido, más tarde en otros sistemas de
+administración comerciales.
+PostgreSQL es un sistema de administración de base de datos objeto relacional,
+que es capaz de
+manejar complejas rutinas y reglas. Ejemplos de su avanzada funcionalidad son consultas SQL declarativas, control de concurrencia
+multi-versión, soporte multi-usuario, transacciones, optimización de consultas,
+herencia y arrays. 
+
+\begin{itemize}
+  \item \tn{Herencia:} Las tablas puedes ser configuradas para heredar
+  características de una tabla padre. Los datos son compartidos entre las tablas  padre e  hija(s). Las
+tuplas insertadas o eliminadas en la tabla  hija serán insertadas o eliminadas en
+la tabla  padre respectivamente. 
+ \item \tn{Altamente extensible:} Soporta operadores funcionales, métodos
+de acceso y tipos de datos definidos por el usuario.
+\end{itemize}
+
+\subsubsection{Creación de tipos}
+
+\par
+
+\noindent Se registra un nuevo tipo de dato para ser utilizado en la base de
+datos actual mediante la sentencia \tn{CREATE TYPE}. El usuario que define el
+nuevo tipo se convierte en su dueño.
+Si se detalla un nombre de esquema en la creación, entonces el tipo es creado en el
+esquema especificado. De lo contrario será creado en el esquema actual. El nombre del
+tipo debe ser distinto de cualquier nombre de tipo o dominio existente en el
+mismo esquema. (Porque las tablas tienen asociadas tipos de datos, el nombre
+del tipo también debe ser diferente del nombre de cualquier tabla existente en
+el mismo esquema.)
+
+\par \noindent Existen cinco formas de la sentencia \tn{CREATE TYPE}, como se
+muestra en el anexo \ref{anexo11}. Estas formas crean
+respectivamente un \ti{tipo compuesto}, un \ti{tipo enum}, \ti{tipo range},
+\ti{tipo base}, o un \ti{tipo shell}. Un \ti{tipo shell} es simplemente un
+placeholder para un tipo que será definido después; es creado utilizando
+\tn{CREATE TYPE} sin parámetros exceptuando el nombre del tipo. Los tipos shell
+son necesarios para enviar referencias cuando se crean tipos range y tipos
+base.\\
+
+
+\noindent \tn{Tipos compuestos}
+ \par \noindent La primera forma de \tn{CREATE TYPE} crea tipos compuestos.
+Un tipo compuesto representa la estructura de una fila o registro; es
+esencialmente solamente una lista de nombre de campos y sus tipos de datos.
+PostgreSQL permite que los tipos compuestos sean utilizados de la misma forma
+que un tipo simple. Por ejemplo, una columna de una tabla puede ser declarada
+para ser un tipo compuesto. El tipo compuesto es especificado por una lista de
+nombres de atributos y tipos de datos. Una recopilación de atributos puede ser
+especificada también, si sus tipos de datos son recopilados. Un tipo compuesto
+es esencialmente lo mismo que el tipo de fila de una tabla, pero utilizando
+\tn{CREATE TYPE} se evade la necesidad de crear una tabla real, cuando todo lo
+que se quiere es definir un tipo. Un tipo compuesto es útil, por ejemplo,
+como argumento o como tipo de retorno en una función, incluso una columna de
+una tabla puede ser declarada como un tipo compuesto.\\
+
+%newpage
+\noindent \tn{Tipos enumerados}
+\par \noindent 
+ La segunda forma de \tn{CREATE TYPE} crea un tipo enumerado (enum). Los tipos
+ Enum toman una lista de una o más etiquetas citadas, cada de las cuales deben
+ ser menor que \ti{NAMEDATALEN} (tamaño del nombre del tipo de dato) bytes de
+ longitud.\\
+
+\par
+\noindent \tn{Tipos range}
+\par \noindent 
+El tercer tipo de \tn{CREATE TYPE} crea un tipo range. El subtipo del tipo range
+puede ser cualquier tipo con una clase de operadores de árbol B asociado (para
+determinar el ordenamiento de los valores para el tipo range). \\
+
+\par
+\noindent \tn{Tipos base}
+
+\par \noindent
+La cuarta forma de \tn{CREATE TYPE} crea un nuevo tipo base (tipo escalar). Para
+crear un nuevo tipo base, el usuario debe ser súper usuario (Esta restricción
+existe porque una definición de tipo errónea podría confundir o incluso dañar el
+servidor). Los parámetros pueden aparecer en cualquier orden, no solamente como
+aparece en la sintaxis presentada en el anexo \ref{anexo11} y la mayoría son
+opcionales.
+Se debe registrar dos o más funciones de aplicación para operar en el tipo en un lenguaje de bajo nivel, generalmente C.
+\noindent Un tipo base siempre debe tener funciones de
+entrada y salida. Estas funciones determinan como el tipo aparece en cadenas
+(para entradas por el usuario y la salida para el usuario) y como el tipo es
+organizado en la memoria. La función de entrada toma un carácter terminado en
+null como su argumento y retorna la representación interna del tipo (en
+memoria). La función de salida toma la representación interna del tipo como
+argumento y retorna un carácter terminado en null. Si se desea hacer algo más
+con el tipo además de simplemente almacenarlo, se debe proporcionar funciones
+adicionales para implementar las operaciones que se desean tener para el tipo.
+\cite{postgresql}
+
+\par
+\noindent Se supondrá que se desea definir un tipo \ti{complejo} que representa
+números complejos. Una forma natural de representar un número complejo en 
+memoria sería la estructura representada en el código \ref{codigo9}.\\
+
+\begin{lstlisting}[language=C, caption={Struct del tipo complejo en C,
+utilizado en PostgreSQL para definir tipos}, label=codigo9] 
+typedef struct Complejo {
+    double      x;
+    double      y;
+} Complejo;
+\end{lstlisting}
+
+\noindent Se deberá hacer que este tipo sea de paso por referencia, ya que es
+demasiado grande para caber en un valor \ti{Datum} (Es un tipo de dato
+universal, cualquier tipo de dato puede ser accesado a través de un valor
+\ti{Datum} \cite{post2}). 
+\par \noindent Como representación externa del tipo, se elige una
+cadena de forma \ti{(x,y)}. Las funciones de entrada y salida habitualmente no
+son difíciles de escribir, especialmente la función de salida como se puede
+apreciar en los códigos \ref{codigo10} y \ref{codigo11}.
+Pero cuando se define la representación de la cadena externa del tipo, se debe recordar que se
+eventualmente se tendrá que escribir un parser completo y robusto para la
+representación como la función de entrada. \\
+
+\begin{lstlisting}[language=C, caption={Función de entrada del
+tipo Complejo}, label=codigo10] 
+PG_FUNCTION_INFO_V1(complex_in);
+Datum
+complex_in(PG_FUNCTION_ARGS){
+    char       *str = PG_GETARG_CSTRING(0);
+    double      x,y;
+    Complex    *result;
+
+    if (sscanf(str, " ( %lf , %lf )", &x, &y) != 2)
+        ereport(ERROR,
+                (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+                 errmsg("invalid input syntax for complex: \"%s\"",str)));
+    result = (Complex *) palloc(sizeof(Complex));
+    result->x = x;
+    result->y = y;
+    PG_RETURN_POINTER(result);
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C, caption={Función de salida del
+tipo Complejo}, label=codigo11] 
+PG_FUNCTION_INFO_V1(complex_out);
+
+Datum
+complex_out(PG_FUNCTION_ARGS)
+{    Complex    *complex = (Complex *) PG_GETARG_POINTER(0);
+    char       *result;
+
+    result = (char *) palloc(100);
+    snprintf(result, 100, "(%g,%g)", complex->x, complex->y);
+    PG_RETURN_CSTRING(result);}
+\end{lstlisting}
+
+\par
+\noindent \tn{Tipos Arrays}
+\par \noindent Siempre que se crea un tipo definido por el usuario, PostgreSQL
+automáticamente crea un tipo array asociado, cuyo nombre se compone del nombre
+del tipo de elemento precedido con un guión bajo, y truncado si es necesario
+para mantenerlo de longitud menor que \ti{NAMEDATALEN} bytes. (Si el nombre
+generado colisiona con un nombre de tipo existente, el proceso es repetido
+hasta que encuentra un nombre sin colisiones.). Este tipo array creado
+implícitamente es de logitud variable y utiliza las funciones de entrada /
+salida \ti{array\_in} y \ti{array\_out}. \\
+
+
+
+\par \noindent
+\tn{XML: Tipos y funciones}
+
+\par \noindent El tipo de datos XML puede ser utilizado para almacenar datos
+XML. Su ventaja sobre el almacenamiento de datos XML en un campo de texto es que
+comprueba los valores de entrada para que estén bien formados, y hay funciones
+soportadas para desempeñar operaciones del tipo seguras.
+\par \noindent El tipo XML puede almacenar documentos bien formados, como está
+definido en los estándares XML, también fragmentos de contenido, los cuales son
+definidos por la producción de contenido XMLDecl en el estándar XML. Esto
+significa que los fragmentos de contenido pueden tener más que un elemento de
+nivel superior o un nodo carácter. La expresión \ti{xmlvalue} es un documento
+que puede ser utilizado para evaluar si un valor XML en particular es un
+documento completo o sólo un fragmento de contenido.\\
+
+\par \noindent \tn{Creando valores XML}
+\par \noindent Para generar un valor del tipo XML de datos de caracteres, se
+debe utilizar la función \ti{xmlparse}, cuya sintaxis es detallada en el anexo \ref{anexo12}.
+La sintaxis específica de PostgreSQL para convertir caracteres
+a cadenas en valores XML de acuerdo a los estándares SQL, es la
+descrita en el anexo \ref{anexo12}.
+
+
+\par \noindent El tipo XML no valida los valores de entrada del DTD, incluso
+cuando el valor de entrada especifica un DTD. Tampoco existe actualmente un
+soporte para validar otros lenguajes de esquema tales como el esquema XML.
+\par \noindent La operación inversa para convertir valor carácter desde XML,
+utiliza la función \ti{xmlserialize} que se especifica en el Anexo A.1, en donde
+\tn{type} puede ser \ti{character, character varying,} o \ti{text} (o un alias para uno de esos). Nuevamente de acuerdo a los
+estándares SQL, esta es la única forma de conversión entre el tipo XML y los
+tipos carácter, pero PostgreSQL también permite simplemente castear el valor.
+Cuando un valor carácter es casteado a tipo XML o desde tipo XML sin pasar a
+través de \ti{XMLPARSE} o \ti{XMLSERIALIZE}, respectivamente, la elección del
+documento contra el contenido es determinado por el parámetro de configuración
+de sesión ``XML option'', en el anexo \ref{anexo12} se especifica su sintaxis. 
+
+
+\par \noindent Un conjunto de funciones y expresiones están disponibles para
+crear contenido XML desde datos SQL. Como tal, son particularmente apropiados
+para formatear resultados de consultas en documentos XML procesados en
+aplicaciones clientes.
+
+\par \noindent La función \ti{xmlcomment} creará un valor XML conteniendo un
+comentario XML con un texto específico como contenido. El texto no puede
+contener ``--'' o terminar con un ``-'' con el fin de que el constructor
+resultante sea un comentario XML válido. Si el argumento es nulo, el resultado
+también lo es. La sintaxis de esta función se puede apreciar en el anexo \ref{anexo12}.
+
+
+
+
+\subsection{SQLServer}
+
+\par \noindent \tn{Tipos}
+
+\par \noindent Un tipo definido por el usuario es implementado a través de una
+clase de un ensamblado en CLR (common language runtime) del framework Microsoft
+.NET. Para unir el tipo definido por el usuario con su implementación, el
+ensamblado CLR que contiene la implementación del tipo primero debe ser
+registrado en SQL Server utilizando la sentencia \tn{CREATE ASSEMBLY}
+\cite{msdn}.
+\noindent La sintaxis para crear un tipo definido por el usuario es detallada
+en el anexo \ref{anexo21}.%código \ref{codigo36}%%
+, mediante la sentencia \tn{CREATE TYPE} al igual
+que en PostgreSQL. 
+
+
+\par \noindent En el código \ref{codigo26} se muestra un ejemplo de cómo crear
+un alias de tipo basado en un tipo de dato varchar. Otro ejemplo es el especificado en el código
+\ref{codigo27}, donde se crea un tipo de dato definido por el usuario. Para
+crear tipo tabla definida por el usuario se debe utilizar el código
+\ref{codigo28}.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de creación de alias de tipo
+basado en el tipo de dato varchar SQLServer}, label=codigo26] 
+CREATE TYPE SSN
+FROM varchar(11) NOT NULL;
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de creación tipo definido
+por el usuario referenciando al ensamblador SQLServer}, label=codigo27] 
+CREATE ASSEMBLY utf8string
+FROM '\\PC\utf8string\utf8string.dll';
+GO
+CREATE TYPE Utf8String
+EXTERNAL NAME utf8string.[Microsoft.Samples.SqlServer.utf8string];
+GO
+\end{lstlisting}
+
+
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de creación de un tipo tabla
+definida por el usuario SQLServer}, label=codigo28] 
+CREATE TYPE LocationTableType AS TABLE
+	( LocationName VARCHAR(50),
+	CostRate INT)
+GO
+\end{lstlisting}
+
+
+
+\par \noindent \tn{Valores y funciones XML}
+
+\par \noindent SQL Server proporciona una plataforma eficaz con el fin de
+programar aplicaciones completas para la administración de datos semi
+estructurados. La compatibilidad con XML se encuentra integrada en todos los componentes de SQL Server e incluye lo
+siguiente:
+
+\begin{itemize}
+  \item El tipo de datos XML. Los valores XML se pueden almacenar de forma
+  nativa en una columna de tipo de datos XML cuyo tipo se puede asignar de
+  acuerdo con una colección de esquemas XML o que puede dejarse sin tipo. Es posible indizar la columna XML.
+  \item La capacidad de especificar una consulta XQuery con datos XML
+  almacenados en columnas y variables de tipo XML.
+  \item Mejoras en OPENROWSET que permiten la carga masiva de datos XML.
+  \item La cláusula FOR XML, para recuperar los datos relacionales en formato XML.
+  \item La función OPENXML, para recuperar datos XML en formato relacional.
+  
+\end{itemize}
+
+\noindent SQL Server posee las siguientes opciones de almacenamiento de XML: 
+
+\begin{itemize}
+  \item Almacenamiento nativo como tipo de datos XML: Los datos son almacenados
+  en una representación interna que mantiene el contenido XML de los mismos. Dicha representación interna 
+  incluye información acerca del orden de los documentos, la jerarquía de
+  inclusión y los valores de los elementos y atributos.
+  \item Asignación de almacenamiento entre XML y relacional: El esquema anotado
+  (AXSD) permite descomponer el código XML en columnas en una o más tablas. Así, se preserva la 
+  confiabilidad de los datos en el nivel relacional. 
+  Como resultado, la estructura jerárquica se mantiene aunque el orden entre
+  los elementos sea omitido. El esquema no puede ser recursivo.
+  \item Almacenamiento de objetos grandes, \tn{[n]varchar(max) y
+  varbinary(max)}: Se almacena una copia idéntica de los datos. Esto resulta
+  de utilidad en el caso de aplicaciones para fines específicos, tales como
+  documentos legales. La mayor parte de las aplicaciones no requieren una copia
+  exacta y les basta con el contenido XML.
+\end{itemize}
+
+\par \noindent \tn{FOR XML}
+
+\par \noindent Se pueden recuperar resultados formales de una consulta SQL como
+XML especificando la cláusula FOR XML en la consulta. La cláusula FOR XML puede
+ser utilizada en consultas de nivel superior y en subconsultas. La cláusula FOR
+XML de nivel superior solamente puede emplearse en la instrucción SELECT. En el
+caso de las subconsultas, FOR XML puede usarse en las instrucciones INSERT,
+UPDATE y DELETE. También puede utilizarse en instrucciones de asignación
+\cite{msdn}. En una cláusula FOR XML se especifica uno de estos modos:
+
+\begin{itemize}
+  \item RAW: Este modo genera un único elemento <row> \ por cada fila del
+conjunto de filas retornado por la instrucción SELECT. Para generar una
+jerarquía XML se pueden escribir consultas FOR XML anidadas.
+  \item AUTO: Genera anidamiento en el XML resultante, empleando una heurística
+  basada en la forma en que se especifica la instrucción SELECT. 
+  El control sobre la forma del XML generado es mínimo. Es posible escribir consultas FOR XML anidadas 
+  para generar una jerarquía XML más allá de la forma del XML generado mediante la heurística del modo AUTO.
+  \item EXPLICIT: Concede un mayor control de la forma del XML. Es posible
+  mezclar atributos y elementos con total libertad para decidir la forma del XML. 
+  Se requiere de un formato específico para el conjunto de filas resultantes
+  generado por la ejecución de la consulta. Después, el formato del conjunto
+  de filas se asigna a una forma de XML. La eficacia del modo EXPLICIT reside 
+  en que se pueden mezclar atributos y elementos con total libertad, crear contenedores y 
+  propiedades complejas anidadas, crear valores separados por espacios y contenido mezclado.
+  \item PATH: Junto con la característica de las consultas anidadas FOR XML,
+  proporciona la flexibilidad del modo EXPLICIT de una manera más sencilla.
+\end{itemize}
+
+\par \noindent \tn{OPENXML}
+
+\par \noindent Proporciona una vista de un conjunto de filas en un
+documento XML. Puesto que OPENXML es un proveedor de conjuntos de filas, puede
+ser utilizado en instrucciones Transact-SQL en las que pueden aparecer
+tablas, vistas o la función OPENROWSET. 
+
+
+\par \noindent En el anexo \ref{anexo22} se detalla mediante ejemplos creación de tablas
+utilizando columna XML, declaración de variables, asignación directa de datos a
+una variable, usando FOR XML, entre otros.
+
+
+\subsection{DB2}
+
+\noindent Es una base de datos propietaria de IBM, la cual posee capacidades
+objeto relacional ya que cuenta con sentencias SQL como \ti{CREATE TYPE} y
+tipos de datos complejos, también trabaja directamente con XML.
+
+\noindent DB2 da soporte a una serie de tipos de datos incorporados. También
+proporciona soporte para los tipos de datos definidos por el usuario. La Figura
+\ref{Figura 23} ilustra los tipos de datos internos a los que este motor da
+soporte \cite{ibm}.
+
+
+
+\noindent La sentencia \ti{CREATE TYPE} define un tipo de datos definido por el
+usuario en el servidor actual.\\
+
+\par \noindent \tn{Tipos definidos por el usuario}
+
+\par \noindent Existen seis tipos de tipos de datos definidos por el usuario:\\
+\par 
+\noindent \tn{Tipo diferenciado}: Este tipo comparte su representación interna
+con un tipo existente (su tipo de ``origen''), sin embargo, es considerado un tipo
+independiente y a la vez incompatible con la mayoría de operaciones. El tipo
+diferenciado siempre tiene su fuente en los tipos de datos incorporados. 
+\par \noindent La ejecución satisfactoria de la sentencia también genera
+funciones para la conversión entre el tipo diferenciado y su tipo de fuente y, opcionalmente, genera el soporte para 
+utilizar los operadores de comparación (=, <>, <, <=, > y >=) con el tipo
+diferenciado. En los casos en que el tipo de fuente es un tipo con parámetros,
+la función para convertir el tipo diferenciado al tipo de fuente tendrá como nombre de función 
+el nombre del tipo de fuente sin los parámetros. El tipo del valor de retorno de esta función 
+incluirá los parámetros dados en la sentencia CREATE TYPE (diferenciado). La función para 
+convertir del tipo de fuente al tipo diferenciado tendrá un parámetro de entrada cuyo tipo 
+es el tipo de fuente incluyendo sus parámetros. En el ejemplo del código
+\ref{codigo31} se visualiza la creación de un tipo diferenciado llamado MILLAS
+que está basado en un tipo de datos DOUBLE, al estar con la opción \tn{WITH
+COMPARISONS} da como resultado la creación de operadores de comparación
+mencionados previamente y su función de conversión retorna un DOUBLE ver código 
+\ref{codigo32}.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo CREATE TYPE Diferenciado
+DB2}, label=codigo31] 
+ CREATE TYPE T_MILES AS DOUBLE
+     WITH COMPARISONS
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo función para tipo diferenciado
+DB2}, label=codigo32] 
+  FUNCTION DOUBLE (T_MILES) RETURNS DOUBLE
+
+  FUNCTION T_MILES (DOUBLE) RETURNS T_MILES
+\end{lstlisting}
+
+
+
+\par \noindent \tn{Tipo estructurado}: El tipo estructurado es un tipo definido
+por el usuario con una estructura definida en la base de datos. Incluye una secuencia
+de atributos con nombre, cada uno de los cuales tiene un tipo de datos. Un tipo
+estructurado además contiene una conjunto de definiciones de método. Este tipo
+puede ser utilizado como tipo de una tabla, de una vista o columna. Al momento
+de ser utilizado para una tabla o vista, esa tabla o vista se denomina tabla con
+tipo o vista con tipo. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.47]{capitulo2/images/tipos_datos_db2.png}
+  \end{center}
+ \caption{\label{Figura 23}Tipos de datos internos de DB2 soportados}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\par \noindent \tn{Tipo de referencia}: Es un tipo compañero de un tipo estructurado. De
+forma semejante a un tipo diferenciado, un tipo de referencia es un tipo escalar
+que comparte una representación común con uno de los tipos de datos internos. 
+La representación de este tipo se define cuando se crea el tipo
+raíz de una jerarquía de tipos.
+Cuando un tipo de referencia es utilizado, se especifica un tipo estructurado
+como parámetro del tipo. Este parámetro se denomina el tipo de destino de la
+referencia. 
+
+\par \noindent \tn{Tipo de matriz}: Un tipo de matriz definido por el usuario es un tipo
+de datos que se define como matriz con elementos de otro tipo de datos. Cada tipo de matriz 
+común tiene un índice con el tipo de datos INTEGER y tiene definida una cardinalidad máxima. 
+Cada matriz asociativa tiene un índice con el tipo de datos INTEGER o VARCHAR y
+no tiene definida una cardinalidad máxima. 
+
+\par \noindent \tn{Tipo de fila}: Un tipo de fila es un tipo de datos que se describe
+como una secuencia ordenada de campos con nombre, cada uno con un tipo de datos
+asociado, que representa naturalmente una fila.
+Un tipo de fila puede ser utilizada como tipo de datos para variables y
+parámetros en SQL PL con el fin de suministrar una manipulación sencilla de una
+fila de datos.\\
+\noindent Un tipo de fila incluye uno o más campos con tipos de datos asociados
+que conforman una fila de datos. 
+
+\par \noindent \tn{Tipo de cursor}: Es un tipo de datos definido por el usuario con la palabra clave CURSOR y opcionalmente con 
+un tipo de fila asociado. Un tipo de cursor definido por el usuario con un tipo 
+de fila asociado es un tipo de cursor de tipo firme (la tipificación firme,
+requiere tipos de datos coincidentes, lo que significa que es necesario convertir explícitamente uno o ambos 
+tipos de datos en un tipo de datos común antes de realizar comparaciones y asignaciones.); de lo contrario, es un tipo de cursor de tipo no firme. El valor de un tipo de cursor definido por el usuario 
+representa una referencia a un cursor subyacente. 
+
+\par \noindent Algunos ejemplos de utilización de definición de tipos de usuario
+en DB2 son expuestos en el anexo \ref{anexo31} \\
+
+\par \noindent \tn{Valores y
+funciones XML}
+
+\par \noindent DB2 proporciona los tipos de datos XML para almacenar documentos
+XML bien formados. Un valor XML representa el XML con el formato que corresponde en
+forma de documento XML, contenido XML o secuencia de nodos XML. Un valor XML que se encuentra almacenado en una tabla como valor de una columna definida con el
+tipo de datos XML tiene que ser un documento XML con el formato correcto. Los
+valores XML se procesan en una representación interna que no puede ser comparada
+con ningún valor de serie. Un valor XML puede transformarse en un valor de cadena de caracteres serializada, 
+representante del documento XML que utiliza la función \ti{XMLSERIALIZE}. 
+De igual manera, para almacenar datos XML en una columna de tipo de datos XML,
+los datos deben ser transformados usando la función \ti{XMLPARSE} \cite{ibm}.
+
+\noindent A las expresiones que tienen como resultado un valor de tipo de
+datos XML se les aplican restricciones especiales, estas expresiones y columnas
+no se encuentran permitidas:
+
+\begin{itemize}
+  \item Una lista SELECT precedida por la cláusula DISTINCT.
+  \item Una cláusula ORDER BY.
+  \item Un predicado BETWEEN, IN o LIKE básico y cuantificado.
+  \item Una cláusula GROUP BY.
+  \item Una subselección de un operador de conjunto que no sea UNION ALL.
+  \item Una función agregada con DISTINCT.
+\end{itemize}
+
+
+\par \noindent \tn{Consultas SQL/XML}
+
+\par \noindent Tal y como su nombre lo indica,
+SQL/XML sirve como puente entre los mundos SQL y XML. Evolucionó como parte del estándar SQL
+ que ahora incluye especificaciones para incrustar expresiones XQuery o XPath
+  dentro de instrucciones SQL. XPath es un lenguaje que permite navegar por un documento XML 
+  para realizar búsquedas de diferentes elementos y atributos. XQuery es
+  compatible con XPath.
+  Es relevante destacar que las expresiones XQuery (y XPath) distinguen
+  mayúsculas de minúsculas. Por ejemplo, una expresión XQuery que referencia al
+  elemento XML ``rar'' no se aplicará a los elementos XML denominados ``RAR'' o
+  ``Rar''. 
+
+\par \noindent DB2 suministra muchas otras funciones integradas para manipular
+tipos de datos XML. A partir de la versión 9, DB2 admite una nueva Tecnología
+llamada XML pure, cuyas características son: 
+
+\begin{itemize}
+  \item XML es un tipo de dato.
+  \item XML se indexa para apresurar búsquedas y recuperación de datos.
+  \item XML es gestionado y almacenado en un contenedor separado.
+  \item XML se valida con esquemas en la base de datos.  
+  \item Incorpora procedimientos para generar documentos XML en tablas.
+  \item Incluye funciones para transformar XML en SQL y viceversa.
+\end{itemize}
+
+\par \noindent Las principales funciones XML con sus respectivos ejemplos son
+especificadas en el anexo \ref{anexo32}.
+
+
+\section{Oracle}
+
+\noindent Una base de datos Oracle es una colección de datos en uno o más
+archivos. La base de datos contiene estructuras físicas y lógicas. En el proceso
+de crear una aplicación, se crean estructuras como tablas e índices para
+almacenar filas y acelerar su recuperación. Se pueden crear sinónimos por los
+nombres de objetos, ver objetos en diferentes bases de datos (a través de
+enlaces a base de datos), y se puede restringir el acceso a los objetos. Incluso
+se puede utilizar tablas externas para acceder archivos a fuera de la base de
+datos como si las filas en los archivos fueran filas en tablas.
+
+\noindent Debido a los requerimientos de las nuevas aplicaciones, desde su
+versión 8, Oracle ha sido significativamente extendido con conceptos del modelo de bases de datos orientadas a objetos. 
+De esta forma, aunque las estructuras de datos utilizadas para almacenar la
+información siguen siendo tablas, los usuarios pueden utilizar muchos de los mecanismos de orientación a objetos para definir y
+acceder a los datos. Por este motivo, se dice que se trata de un modelo de datos
+objeto relacional.
+
+\noindent Este motor suministra mecanismos para que el usuario pueda definir
+sus propios tipos de datos, cuya estructura puede ser compleja, y que pueden
+ser aplicados para asignar un tipo a una columna de una tabla. Además admite
+el concepto de objetos, por lo que un objeto tiene un tipo, se almacena en
+cierta fila de cierta tabla y posee un identificador único (OID). Dichos
+identificadores pueden ser utilizados para referenciar a otros objetos y de
+esta forma representar relaciones de asociación y de agregación. También
+se proporciona mecanismos para asociar métodos a tipos, y constructores para
+diseñar tipos de datos multivaluados (colecciones) y tablas anidadas. 
+La mayor deficiencia de este sistema es la imposibilidad de definir jerarquías 
+de especialización y herencia, lo cual es una importante desventaja con respecto
+a las bases de datos orientadas a objetos. 
+
+\par \noindent Ya que Oracle es el motor de base de datos escogido para la
+implementación y pruebas del presente estudio, como fue mencionado en los
+objetivos del proyecto, se profundizará en detalle sus
+funciones, tipos de datos, objetos, entre otros.
+
+\subsection{Tipos de datos colección}
+
+\par \noindent Para poder implementar relaciones 1:\ N, Oracle permite definir
+el tipo colección. Un dato de tipo colección está formado por un número indefinido de elementos, todos del mismo tipo. De esta
+manera, es posible almacenar en un atributo un conjunto de tuplas en forma de array (VARRAY), o en
+forma de tabla anidada.
+Los tipo colección también tienen por defecto funciones
+constructoras de colecciones cuyo nombre coincide con el del tipo. Los argumentos de entrada de
+estas funciones son el conjunto de elementos que forman la colección separados por comas y entre
+paréntesis, y el resultado es un valor del tipo colección.
+En Oracle es posible diferenciar entre un valor nulo y una colección vacía. Para construir una
+colección sin elementos se puede utilizar la función constructora del tipo seguida por dos paréntesis
+sin elementos dentro.
+
+\subsubsection{El tipo VARRAY}
+
+\par \noindent Un array es un conjunto ordenado de elementos del mismo tipo. Cada elemento tiene asociado un
+índice que indica su posición dentro del array. Oracle permite que los VARRAY sean de longitud
+variable, aunque es necesario especificar un tamaño máximo cuando este es
+declarado. Se puede utilizar el tipo VARRAY para:
+
+\begin{itemize}
+  \item Definir el tipo de dato de una columna de una tabla relacional.
+  \item Definir el tipo de dato de un atributo de un tipo de objeto.
+  \item Para definir una variable PL/SQL, un parámetro, o el tipo que devuelve
+  una función.
+\end{itemize}
+
+\par \noindent Cuando se declara un tipo VARRAY no se produce ninguna reserva de espacio. Si el espacio que
+requiere lo permite, se almacena junto con el resto de columnas de su tabla, pero si es demasiado
+largo (más de 4000 bytes) se almacena aparte de la tabla como un BLOB.
+\noindent La principal limitación del tipo VARRAY es que en las consultas es imposible poner condiciones
+sobre los elementos almacenados dentro. Desde una consulta SQL, los valores de un VARRAY
+solamente pueden ser accedidos y recuperados como un bloque. Es decir, no se puede acceder
+individualmente a los elementos de un VARRAY. Sin embargo, desde un programa PL/SQL si que es
+posible definir un bucle que itere sobre los elementos de un VARRAY.
+
+\subsubsection{Tablas anidadas}
+
+\par \noindent Una tabla anidada es un conjunto de elementos del mismo tipo sin ningún orden predefinido. Estas
+tablas solamente pueden tener una columna que puede ser de un tipo de datos básico de Oracle, o de
+un tipo de objeto definido por el usuario. En este último caso, la tabla anidada también puede ser
+considerada como una tabla con tantas columnas como atributos tenga el tipo de objeto.
+\noindent Para relacionar las tuplas de una tabla
+anidada con la tupla a la que pertenecen, se utiliza una columna oculta que aparece en la tabla
+anidada por defecto. Todas las tuplas de una tabla anidada que pertenecen a la misma tupla tienen el
+mismo valor en esta columna (\tn{NESTED\_TABLE\_ID}).
+A diferencia de los \tn{VARRAY}, los elementos de las tablas anidadas
+(\tn{NESTED\_TABLE}) sí pueden ser accedidos individualmente, y es posible poner
+condiciones de recuperación sobre ellos. En el anexo A.2.1 se muestra una forma
+conveniente de acceder individualmente a los elementos de una tabla anidada mediante un cursor anidado. Además, las tablas anidadas pueden estar indexadas. 
+
+\noindent En la tabla \ref{tablavarray} se muestra una comparación de
+ ambos tipos de colección.
+
+\begin{table}[H]
+\begin{center}
+    \begin{tabular}{|l|l|l|} \hline
+    ~                             & \tn{Varray}  & \tn{Nested table} \\ \hline
+    Tamaño máximo                 & Si      & No           \\ \hline
+    Borrado elementos individual  & No      & Si           \\ \hline
+    Almacenamiento datos          & In-line & Out-of-line  \\ \hline
+    Mantenimiento del orden       & Si      & No           \\ \hline
+    \end{tabular}
+    \caption{\label{tablavarray}Tipos colección: Varray versus Nested Table}
+    \end{center}
+\end{table}
+
+\subsection{Tipos de objetos}
+
+\par \noindent El modelo relacional fue diseñado para representar datos como una
+serie de tablas con sus respectivas columnas y atributos. Oracle Database
+11g es una base de datos objeto relacional, por lo que incorpora las tecnologías
+orientadas al objeto. Gracias a esto, permite construir tipos de objetos
+complejos, tales como:
+
+\begin{itemize}
+  \item Definir objetos dentro de objetos.
+  \item Encapsular o asociar métodos con dichos objetos.
+\end{itemize}
+
+\subsubsection{Estructura de un tipo de objeto}
+
+\par \noindent Un tipo objeto se compone de dos partes: especificación y cuerpo.
+La especificación organiza la interface a las aplicaciones; es donde se declaran
+las estructuras de datos (grupo de atributos) y las operaciones (métodos) que
+son necesarios para la manipulación de los datos. Por otro lado, el cuerpo es
+lugar donde se definen los métodos, por lo que es quien implementa la
+especificación. La estructura de un tipo de objeto es representa de forma
+gráfica en la figura \ref{Figura 24}.
+
+\noindent En la especificación se encuentra toda la información necesaria para
+utilizar los métodos. Es apropiado pensar que el cuerpo es como una caja negra y
+la especificación como la interface operacional. Y por esto mismo es posible
+realizar cambios, optimizar o depurar el cuerpo sin la necesidad de modificar la
+especificación y con esto no afectar las aplicaciones cliente.
+
+\noindent En la especificación de tipo objeto los atributos se deben declarar
+antes que cualquiera de los métodos. Por lo que si la especificación solamente
+declara atributos, el cuerpo no es necesario. No es posible hacer declaraciones
+de atributos en el cuerpo del tipo objeto.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.7]{capitulo2/images/estructura_tipo_objeto.png}
+  \end{center}
+ \caption[Estructura de un tipo de objeto]{\label{Figura 24}Estructura de un
+ tipo de objeto \cite{ora2}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent Todas las declaraciones en la especificación del tipo son públicas,
+por tanto, son visibles fuera del tipo objeto. No obstante, el cuerpo puede
+tener declaraciones privadas, que definan métodos necesarios para el
+funcionamiento interno del objeto. El entorno de las declaraciones privadas es
+local al cuerpo del objeto.
+\noindent En el código \ref{codigo40} se presenta un ejemplo para comprender
+mejor esta estructura, en donde se define un tipo objeto para manipular números complejos
+con algunas operaciones, en el código \ref{codigo41} se encuentra la creación
+del cuerpo del objeto y la definición de cada función previamente declarada en
+la especificación.\\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo creación especificación de
+tipo objeto ORACLE}, label=codigo40] 
+CREATE TYPE Complejo AS OBJECT (
+	parte_real	REAL,	parte_imaginaria	REAL,
+	MEMBER FUNCTION mas	(x Complejo) RETURN Complejo,
+	MEMBER FUNCTION menos	(x Complejo) RETURN Complejo,
+	MEMBER FUNCTION veces	(x Complejo) RETURN Complejo,
+	MEMBER FUNCTION div_por	(x Complejo) RETURN Complejo);
+\end{lstlisting}
+
+%\newpage
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo creación cuerpo de tipo objeto
+ORACLE}, label=codigo41] 
+CREATE TYPE BODY Complejo AS MEMBER FUNCTION mas(x Complejo) RETURN Complejo IS
+	BEGIN
+		RETURN Complejo(parte_real + x.parte_real, parte_imaginaria +
+		x.parte_imaginaria);
+	END mas;
+	
+	MEMBER FUNCTION menos (x Complejo) RETURN Complejo IS
+	BEGIN
+		RETURN Complejo(parte_real - x.parte_real, parte_imaginaria -
+		x.parte_imaginaria);
+	END menos;
+	
+	MEMBER FUNCTION veces (x Complejo) RETURN Complejo IS
+	BEGIN
+		RETURN Complejo(parte_real * x.parte_real - parte_imaginaria *
+		x.parte_imaginaria, parte_real * x.parte_imaginaria + parte_imaginaria *
+		x.parte_real);
+	END veces;
+	
+	MEMBER FUNCTION div_por	(x Complejo) RETURN Complejo IS
+	z REAL := x.parte_real**2 + x.parte_imaginaria**2;
+	BEGIN
+		RETURN Complejo((parte_real * x.parte_real + parte_imaginaria *
+		x.parte_imaginaria) / z, (parte_imaginaria * x.parte_real - parte_real *
+		x.parte_imaginaria) / z); 	END div_por;
+\end{lstlisting}
+
+\subsubsection{Componentes de un tipo objeto}
+
+\par \noindent Un tipo objeto encapsula datos y operaciones, por este motivo en
+la especificación solamente se puede declarar atributos y métodos, pero no
+excepciones, constantes, tipos o cursores. Es requerido al menos un atributo,
+pero los métodos son opcionales.
+
+\par \noindent Así como las variables, un atributo debe ser declarado mediante
+un nombre y un tipo. El nombre tiene que ser único dentro del tipo objeto (pero
+puede ser reutilizado en otros objetos) y el tipo puede ser cualquier tipo
+excepto los siguientes:
+
+\begin{itemize}
+  \item LONG y LONG RAW.
+  \item NCHAR, NCLOB y NVARCHAR2.
+  \item MLSLABEL y ROWID.
+  \item Los tipos específicos de \tn{PL/SQL}: BINARY\_INTEGER (y todos sus
+  subtipos), BOOLEAN, PLS\_INTEGER, RECORD, REF CURSOR, \ \%TYPE y \ \%ROWTYPE.
+  \item Los tipos definidos en paquetes \tn{PL/SQL}.
+\end{itemize}
+
+\par \noindent No se puede inicializar un atributo en la declaración utilizando
+el operador de asignación o cláusula DEFAULT, de igual forma que no se permite
+la restricción NOT NULL. Sin embargo, los objetos pueden ser almacenados en
+tablas de la base de datos en que las que sí es posible imponer este tipo de
+restricciones.
+\noindent Se puede llegar a crear estructuras de datos muy complejas, por
+ejemplo, el tipo de un atributo puede ser otro tipo de objeto (lo que sería un
+tipo de objeto anidado).
+
+\par \noindent Una definición simple para el concepto método sería que es un
+subprograma declarado en una especificación de tipo mediante la palabra clave
+\ti{MEMBER}. Un método no puede tener el mismo nombre que el tipo de objeto ni
+el de ninguno de sus atributos.
+\noindent Muchos métodos se componen de dos partes: especificación y cuerpo. La
+especificación consta de nombre del método, una lista opcional de parámetros y
+en el caso de funciones de un tipo de retorno. El cuerpo es el código que
+ejecuta las operaciones especificadas. Para cada especificación de método de una
+especificación de tipo tiene que existir el correspondiente cuerpo del método.
+
+
+
+%\newpage
+\subsubsection{Parámetro SELF}
+\par \noindent Todos los métodos de un tipo de objeto reciben como primer
+parámetro una instancia predefinida del mismo tipo denominada
+SELF. Indistintamente de que SELF sea declarado explícita o
+implícitamente, siempre es el primer parámetro pasado a un método. 
+
+\noindent El modo de acceso de SELF cuando no se declara explícitamente es:
+
+\begin{itemize}
+  \item En procedimientos, si SELF no es declarado, su modo por omisión
+es IN OUT.
+\item En funciones miembro el acceso de SELF es IN.
+\end{itemize}
+
+\noindent En el cuerpo de un método, SELF señala al objeto a partir del cual se
+invocó el método. Los métodos pueden hacer referencia a los atributos de SELF
+sin necesidad de utilizar un cualificador.
+
+
+\subsubsection{Sobrecarga}
+\par \noindent Los métodos del mismo tipo (funciones y procedimientos) pueden
+ser sobrecargados, es  posible utilizar el mismo nombre para
+métodos distintos si sus parámetros formales difieren en número, orden o tipo de
+datos. Cuando uno de los métodos es invocado, PL/SQL encuentra el cuerpo
+adecuado comparando la lista de parámetros actuales con cada una de las listas
+de parámetros formales. Sin embargo, la sobrecarga no es posible en el caso de
+las siguientes situaciones:
+
+\begin{itemize}
+  \item Si los parámetros formales difieren sólo en el modo.
+  \item Si las funciones solamente difieren en el tipo de retorno.
+\end{itemize}
+
+\subsubsection{Constructores}
+\par \noindent Cada tipo de objeto tiene un constructor que es una función
+definida por el sistema con el mismo nombre que el objeto. El constructor es
+utilizado para inicializar y retornar una instancia de ese tipo de objeto.
+Oracle genera un constructor por defecto para cada tipo de objeto. Los
+parámetros del constructor coinciden con los atributos del tipo de objeto, es
+decir, los parámetros y atributos son declarados en el mismo orden y poseen el
+mismo nombre y tipo. Por otro lado, PL/SQL jamás invoca al constructor
+implícitamente, por lo que el usuario debe llamarlo explícitamente.
+
+
+
+
+\subsection{Declaración e inicialización de objetos}
+\par \noindent Una vez que un tipo de objeto ha sido definido y se ha instalado
+en el esquema de la base de datos, este puede ser utilizado en cualquier bloque
+PL/SQL.
+Las instancias de los objetos son creadas en tiempo de ejecución. En un bloque o subprograma, 
+los objetos locales son instanciados
+cuando se entra al bloque o subproprograma y estos dejan de existir cuando
+sale del bloque o subprograma.
+Por otro lado en un paquete, los objetos se instancian cuando se referencia por
+primera vez al paquete y dejan de existir cuando finaliza la sesión. 
+\noindent Los tipos de objetos se declaran del mismo modo que cualquier tipo interno. 
+
+\par \noindent Además es posible declarar objetos como parámetros formales de
+funciones y procedimientos, por lo que es posible pasar objetos a los
+subprogramas almacenados y de un subprograma a otro. 
+
+\par \noindent Hasta que se inicializa un objeto, invocando al constructor para ese tipo de objeto, el objeto es
+atómicamente nulo. Esto significa que el objeto es nulo, no sólo sus atributos.
+Un objeto nulo siempre es diferente a cualquier otro objeto. De hecho, la
+comparación de un objeto nulo con otro objeto siempre resulta NULL. Del mismo
+modo, si se asigna un objeto con otro objeto atómicamente nulo, el primero se convierte a su vez en un 
+objeto atómicamente nulo (y para poder utilizarlo debe ser reinicializado).
+En resumen, si se asigna el no-valor NULL a un objeto, éste se convierte en
+atómicamente nulo, una buena
+práctica de programación consiste en inicializar los objetos en su declaración.
+
+\par \noindent PL/SQL se comporta del siguiente modo cuando accede a objetos sin
+inicializar:
+
+\begin{itemize}
+  \item La operación de comparación IS NULL siempre produce TRUE cuando se
+  aplica a un objeto no inicializado o a cualquiera de sus atributos.
+  \item Los atributos de un objeto no inicializado se evalúan en cualquier
+  expresión como NULL.
+  \item Intentar asignar valores a los atributos de un objeto sin inicializar
+  provoca la excepción predefinida ACCESS\_INTO\_NULL.
+\end{itemize}
+
+\noindent La invocación de los métodos de un objeto no inicializado está
+permitida, pero en este caso:
+
+\begin{itemize}
+  \item SELF toma el valor NULL.
+  \item Cuando los atributos de un objeto no inicializado son pasados como
+  parámetros OUT o IN OUT, se produce una excepción si se intenta asignarles un
+  valor.
+\item Cuando los atributos de un objeto no inicializado se pasan como
+parámetros IN, se evalúan como NULL.
+\end{itemize}
+
+\par \noindent Para poder acceder o cambiar los valores de un atributo se
+utiliza la notación punto ('.').  Los nombres de los atributos pueden encadenarse, lo que permite
+acceder a los atributos de un tipo de objeto anidado. 
+
+\subsection{Invocación de constructores y métodos}
+
+\noindent La invocación de un constructor está permitida en cualquier punto en donde se puede invocar una función.
+Como las funciones, un constructor se invoca como parte de una expresión.
+
+\par \noindent La especificación de un método se hace junto a la creación de su
+tipo y debe llevar siempre asociada una directiva de compilación (PRAGMA
+RESTRICT\_REFERENCES), para evitar que los métodos manipulen la base de datos o
+las variables del paquete PL/SQL. Se tienen las siguientes
+directivas y su significado:
+
+\begin{itemize}
+\item WNDS: no se permite al método modificar las tablas de la base de datos
+\item WNPS: no se permite al método modificar las variables del paquete PL/SQL
+\item RNDS: no se permite al método leer las tablas de la base de datos
+\item RNPS: no se permite al método leer las variables del paquete PL/SQL
+\end{itemize}
+
+\subsubsection{Paso de parámetros a un constructor}
+\par \noindent Cuando los parámetros son enviados a un constructor la
+invocación asigna valores iniciales a los atributos del objeto que se está
+instanciando. Es necesario proveer parámetros para cada uno de los atributos ya
+que, a diferencia de las constantes y variables, los atributos no poseen la
+cláusula DEFAULT.
+Además es posible invocar al constructor utilizando la notación con nombre en
+lugar de la notación posicional.
+
+\subsubsection{Invocación de métodos}
+\par \noindent Como los subprogramas de un paquete,
+los métodos son invocados utilizando la notación punto. 
+\par \noindent Es posible encadenar los llamados a los métodos, en donde la ejecución se realiza de
+izquierda a derecha.
+
+\par \noindent En las sentencias SQL el llamado de un métodos sin parámetros
+requiere la lista vacía de parámetros: '()'. En sentencias de procedimiento, 
+la lista vacíade parámetros es opcional, excepto cuando se encadenan
+llamados, en dicho caso es obligatoria para todas las llamados excepto la última.
+No es posible encadenar llamados a métodos adicionales a la derecha del
+llamado de un procedimiento, puesto que los procedimientos no se invocan como
+parte de una expresión. De la misma manera, cuando se encadenan dos llamados a una función, el
+resultado de la primera función debe ser un objeto que puede ser pasado a la segunda función.
+
+
+\subsection{Compartición de objetos}
+
+\par \noindent La mayoría de los objetos del mundo real son considerablemente
+más grandes y complejos que el tipo Relacional. Por ejemplo, considerar los
+tipos de objeto del código \ref{codigo59}, en donde los objetos tipo
+\ti{Dirección} poseen más del doble de atributos que los del tipo
+\ti{Relacional} y los objetos del tipo \ti{Persona} todavía tiene más atributos,
+incluyendo uno de tipo \ti{Dirección}.
+Cuando objetos grandes son utilizados, resulta ineficiente enviar copias de él
+entre subprogramas. En dichas circunstancias es más adecuado compartir el
+objeto. Esto es posible si el objeto cuenta con un identificador de objeto. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de objetos anidados en
+ORACLE}, label=codigo59] 
+CREATE TYPE Direccion AS OBJECT (
+	direccion_calle VARCHAR2(35) , ciudad VARCHAR2(15) ,
+	estado CHAR( 2 ) , cod_postal INTEGER) 
+	/
+CREATE TYPE Persona AS OBJECT (
+	nombre VARCHAR2(15) , apellido VARCHAR2(15) ,
+	fecha_nac DATE, direccion_casa Direccion, //Objeto anidado
+	telefono VARCHAR2(15) , numero_seg_soc INTEGER) ;
+\end{lstlisting}
+
+
+\par \noindent Para compartir objetos se utilizan referencias. Una referencia es un puntero al objeto. 
+\noindent La compartición de objetos proporciona dos ventajas importantes:
+
+\begin{itemize}
+  \item Cuando un objeto compartido es actualizado, el cambio se produce sólo en
+  un lugar y cualquier referencia al objeto puede recuperar los valores actualizados inmediatamente.
+\item La información no se duplica innecesariamente.
+\end{itemize}
+
+\par \noindent En el código \ref{codigo60} se visualizan las ventajas de 
+compartir objetos, definiendo el tipo de objeto \ti{Hogar} y creando una tabla
+que almacena las instancias de ese tipo. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo tabla que almacena objetos en
+ORACLE}, label=codigo60] 
+CREATE TYPE Hogar AS OBJECT (
+	direccion VARCHAR2(35), dueno VARCHAR2(25),
+	estilo VARCHAR(15), precio REAL(9,2)) 	/
+CREATE TABLE hogares OF Hogar;
+\end{lstlisting}
+
+
+\subsubsection{Utilización de referencias}
+
+\par \noindent Con el objeto de tipo \ti{Persona} del ejemplo del código
+\ref{codigo59}, se puede diseñar una comunidad que pueda compartir
+la misma casa (Hogar). Para ello se puede utilizar el modificador de tipo REF,
+ver código \ref{codigo61}, el cual declara una referencia (almacena un
+puntero al objeto). Es relevante destacar cómo las referencias entre personas y
+Hogares y entre personas entre sí definen relaciones que existen en el mundo
+real. \\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de modificador REF en objetos
+en ORACLE}, label=codigo61] 
+CREATE TYPE Persona AS OBJECT (
+	nombre VARCHAR2(15) ,
+	apellido VARCHAR2(15) ,
+	fecha_nac DATE,
+	direccion_casa REF Home, //Compartido con la familia
+	telefono VARCHAR2(15) ,
+	numero_seg_soc INTEGER
+	madre REF Persona , // Miembros de la familia
+	padre REF Persona ,
+	...) ;
+/
+\end{lstlisting}
+
+\par \noindent 
+Es posible declarar referencias como variables, parámetros, campos o atributos.
+También, se pueden utilizar referencias como parámetros IN y OUT en funciones y
+procedimientos. Sin embargo, no es posible navegar a través de referencias. En
+el ejemplo del código \ref{codigo62} se muestra un intento ilegal de navegar a
+través de una referencia a un objeto. Para poder realizar esta
+operación es preciso utilizar el operador DEREF, a través del cual se puede
+acceder al objeto. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización errónea de REF
+en objetos ORACLE}, label=codigo62] 
+DECLARE
+	persona_ref REF Persona;
+	num_telefono VARCHAR2(15) ;
+BEGIN
+	...
+	num_telefono = persona_ref.telefono; // es Ilegal!
+\end{lstlisting}
+
+
+\subsubsection{Limitaciones en la definición de tipos}
+
+\par \noindent En la creación de un tipo solamente es posible hacer referencia a
+objetos que existen en el esquema de objetos. Para poder solucionar este problema se emplea una sentencia \ti{CREATE TYPE}
+especial denominada \ti{definición previa} de tipo, la cual permite la creación
+de tipos de objetos mutuamente dependientes. Para resolver el problema
+mencionado previamente, basta con crear el objeto antes de hacer la referencia.
+El tipo creado a través de una definición previa de tipo tiene como nombre \ti{tipo de objeto incompleto}, ya que carece
+de atributos y métodos hasta que se defina por completo.
+
+\par \noindent Un tipo incompleto impuro posee atributos, pero compila con
+errores semánticos (no sintácticos) al hacer referencia a un tipo indefinido.
+
+
+\subsection{Manipulación de objetos}
+\par \noindent Es posible utilizar un tipo de objeto en la sentencia \ti{CREATE
+TABLE} para especificar el tipo de una columna. Cuando la tabla se ha
+creado, se pueden utilizar las sentencias SQL para insertar un objeto,
+seleccionar sus atributos, invocar los métodos definidos y actualizar su estado.
+Ese preciso utilizar un alias de la tabla cuando se hace referencia a un atributo o método. Cuando se
+crea un objeto de esta forma, este carece de identidad fuera de la tabla de la
+base de datos. Sin embargo, el tipo de objeto existe independientemente de
+cualquier tabla y puede ser utilizado para crear objetos mediante otros
+métodos.
+
+
+
+\par \noindent En el código \ref{codigo67} se puede observar como se crea una
+tabla que almacena en sus filas objetos del tipo \ti{Relacional}. Este tipo de tablas, en
+las que sus filas contienen un tipo de objetos, son llamadas tablas de objetos, donde cada columna en una fila corresponde con un atributo del tipo de
+objeto. Cada fila en una tabla de objetos cuenta con un identificador de objeto,
+que identifica de forma única al objeto almacenado en esa fila y sirve como una
+referencia al objeto. \\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo creación de tabla de objetos
+ORACLE}, label=codigo67] 
+CREATE TABLE numeros_relacionales OF Racional ;
+\end{lstlisting}
+
+
+\subsubsection{Selección de objetos}
+
+\par \noindent En el código \ref{codigo68} se crea un tipo de objeto denominado
+\ti{Persona} y una tabla de objetos Personas junto con algunos valores. Por otro
+lado la subconsulta del código \ref{codigo69} produce como resultado un conjunto
+de filas que tienen solamente atributos de los objetos \ti{Persona}. \\
+
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo tabla de objetos ORACLE},
+label=codigo68] 
+CREATE TYPE Persona AS OBJECT (
+	nombre VARCHAR2(15), apellido VARCHAR2(15),
+	fecha_nac DATE, direccion_casa Direccion, telefono VARCHAR2(15)) ; /
+	
+CREATE TABLE Personas OF Persona; /
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de selección de objetos
+ORACLE}, label=codigo69] BEGIN
+	INSERT INTO Empleados //Otra tabla de objetos de tipo Persona
+	SELECT * FROM Personas per WHERE per.apellido LIKE '% Tarantino';
+\end{lstlisting}
+
+
+\subsubsection{El operador VALUE}
+\par \noindent Como su nombre lo dice, este operador devuelve el valor de un
+objeto. VALUE requiere como argumento una variable de correlación (para este
+contexto, sería una fila o alias de tabla asociado a una fila en una tabla de
+objetos). Para obtener un conjunto de objetos se puede
+utilizar el comando VALUES. Las reglas de integridad, de clave primaria, y el resto de propiedades que se definan sobre una tabla, 
+sólo afectan a los objetos de esa tabla, es decir no se refieren a todos los objetos del tipo asignado a 
+la tabla. 
+
+
+\subsubsection{El operador REF}
+\par \noindent Los identificadores únicos asignados por Oracle a los objetos que se almacenan en una tabla, 
+permiten que éstos puedan ser referenciados desde los atributos de otros objetos o desde las 
+columnas de tablas. El tipo de datos proporcionado por Oracle para soportar esta facilidad se 
+denomina REF. Un atributo de tipo REF almacena una referencia a un objeto del tipo definido, e 
+implementa una relación de asociación entre los dos tipos de objetos. Estas referencias se pueden 
+utilizar para acceder a los objetos referenciados y para modificarlos; sin embargo, no es posible 
+operar sobre ellas directamente. Para asignar o actualizar una referencia se debe utilizar siempre REF
+o NULL. 
+
+\noindent Cuando se define una columna de un tipo a REF, es posible restringir su dominio a los objetos que se 
+almacenen en cierta tabla. Si la referencia no se asocia a una tabla sino que sólo se restringe a un tipo 
+de objeto, se podrá actualizar a una referencia a un objeto del tipo adecuado con independencia de la 
+tabla donde se almacene. En este caso su almacenamiento requerirá más espacio y su acceso será 
+menos eficiente. 
+
+
+\subsubsection{Referencias colgadas (\ti{dangling refs})}
+
+\par \noindent
+Cuando se borran objetos de la base de datos, puede ocurrir que
+otros objetos que referencien a los borrados queden en estado inconsistente. 
+Estas referencias se denominan dangling references, y Oracle 
+proporciona el predicado llamado IS DANGLING que permite comprobar cuándo sucede esto.
+
+
+\subsubsection{El operador DEREF}
+\par \noindent No es posible navegar a través de referencias en procedimientos
+SQL. Debido a esto se hace necesario emplear el operador DEREF (derreferenciar
+un puntero es obtener el valor al cual este apunta). Este operador tiene
+como argumento una referencia a un objeto y retorna el valor de dicho objeto. Si
+la referencia está pendiente, DEREF devuelve el valor NULL.
+En esta situación no es obligatorio especificar una tabla de objetos ni un criterio de
+búsqueda, ya que cada objeto almacenado en una tabla de objetos cuenta con un
+identificador de objeto único y estático que es parte de cada referencia a un
+objeto. 
+
+\par \noindent Además es posible la utilización del operador DEREF en sentencias
+SQL sucesivas para derreferencias referencias.
+
+\par \noindent En procedimientos SQL la utilización del operador DEREF es ilegal. En sentencias SQL se puede utilizar
+la notación punto para navegar a través de referencias. 
+
+
+\subsubsection{Inserción de objetos}
+\par \noindent Para almacenar objetos en una tabla de objetos se utiliza el
+comando UPDATE.  Por otro lado, además es posible utilizar la cláusula RETURNING,
+la cual almacena una referencia a un objeto en una variable local. Es
+necesario recalcar como esta cláusula simula una sentencia SELECT. La claúsula
+RETURNING puede ser utilizada también en sentencias UPDATE y DELETE. Para
+ingresar objetos en una tabla de objetos se puede emplear una consulta que retorne un objeto del
+mismo tipo.
+
+
+\subsubsection{Actualización de objetos}
+\par \noindent Para poder modificar los atributos de un objeto en una tabla de
+objetos se debe utilizar la sentencia UPDATE.
+
+
+\subsubsection{Eliminación de objetos}
+
+\par \noindent Para la eliminación de objetos (filas) en una tabla de objetos se
+utiliza la sentencia SQL DELETE. Para eliminar objetos selectivamente se utiliza la
+cláusula WHERE.
+
+\subsection{Herencia}
+
+\par \noindent Desde la versión 9i de Oracle se incorpora la herencia simple de
+tipos, sin embargo aún no se soporta la herencia de tablas, lo cual si posee
+soporte en el standard SQL 2003. El tipo raíz de una jerarquía se crea empleando 
+la sentencia CREATE TYPE y debe ser declarado como NOT FINAL. La opción por 
+defecto es FINAL (indicando así, que pueden derivarse subtipos de él). En la
+figura \ref{herencia1} se muestra un ejemplo típico de una persona que se
+especiliza en estudiante y empleado, su implementación se encuentra detallada en
+el código \ref{codher1}.
+
+
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.5]{capitulo2/images/herencia.png} \end{center}
+ \caption{\label{herencia1}Ejemplo de herencia}
+ \end{figure}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de implementación de herencia
+de objetos en ORACLE}, label=codher1] 
+CREATE TYPE tPersona AS OBJECT (
+	rut		VARCHAR(9),
+	nombre	VARCHAR(25),
+	fecha_nac	DATE,
+	direccion	VARCHAR(1000),
+	MEMBER FUNCTION edad RETURN NUMBER)
+	NOT INSTANTIABLE NOT FINAL 	/
+CREATE TYPE tEstudiante UNDER tPersona (estudios VARCHAR(50));/
+CREATE TYPE tEmpleado UNDER tPersona (empresa VARCHAR(50)); /
+\end{lstlisting}
+
+\par \noindent La herencia simple de tipos que contempla Oracle implica que
+cualquier subtipo herede de su padre los métodos y atributos que este posea.
+Es así como para el ejemplo presentado en el código \ref{codher1}, los subtipos
+tEstudiante y tEmpleado poseen la función edad(). Por lo tanto, esta función
+podrá ser llamada sobre cualquier instancia de estos tipos, es decir, 
+cuando se defina una tabla de cualquiera de los 
+dos subtipos, se podrá invocar a la función 
+edad() sobre cualquiera de las filas de la tabla. 
+
+\par \noindent Es sumamente importante tener en cuenta que Oracle
+no soporta la herencia de tablas; es decir, la definición de jerarquías de tablas sobre tipos 
+que están integrados en una jerarquía de tipos. Oracle sólo permite asegurar que los atributos y 
+métodos del supertipo de la tabla padre se heredarán en las tablas definidas sobre los 
+subtipos. Sin embargo, las restricciones, disparadores, etc. definidos para una tabla no podrán ser 
+heredados por otras tablas, aunque sus tipos subyacentes pertenezcan a la misma
+jerarquía. En el código \ref{codher2} se muestran las sentencias para 
+crear las tablas del tipo padre y de los dos 
+subtipos, como se observa es necesario definir en cada tabla sus propias 
+restricciones, ya que éstas no se propagan.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de creación de tabla del tipo
+padre y de subtipos ORACLE}, label=codher2] 
+CREATE TABLE Persona OF tPersona
+	(PRIMARY KEY (rut),
+	 CHECK(direccion like (‘%Tocopilla%’)));
+	 
+CREATE TABLE Estudiante OF tEstudiante
+	(PRIMARY KEY (nombre));
+	
+CREATE TABLE Empleado OF tEmpleado
+	(PRIMARY KEY (rut));
+\end{lstlisting}
+
+\par \noindent Las tablas Estudiante y Empleado definidas sobre 
+subtipos del tipo tPersona no deben cumplir en 
+absoluto las restricciones impuestas para la tabla 
+Persona definida sobre el tipo padre tPersona. Así, por ejemplo, se puede
+insertar en la tabla Empleado una fila en la que el valor del atributo
+dirección no contenga la cadena ``Tocopilla'', mientras que en la tabla 
+Persona eso sería imposible. Del mismo modo, se puede definir el campo nombre
+como clave primaria en la tabla Estudiante, aunque en la tabla 
+padre Persona la clave primaria se definió sobre el 
+campo rut.
+
+\noindent Pero, además de que las tablas no hereden las 
+restricciones de la tabla definida para el supertipo, existe 
+un problema aun mayor y este se presenta en el ejemplo del código \ref{codher2},
+ya que no se puede rescatar el hecho implícito que existe en toda jerarquía, de
+que todo estudiante es persona y de que todo empleado es persona. Esto se debe a que no existe relación alguna entre las 
+tablas, no hay nada que le indique al SABD que un 
+empleado o un alumno es además una persona. Por 
+ello, al realizar una consulta a persona, se obtendría 
+sólo aquellas personas que no fueran ni estudiantes ni 
+empleados.
+
+\noindent De esta forma, para la implementación de 
+una jerarquía en Oracle, aunque es posible apoyarse en ocasiones en la
+utilización de la herencia de tipos, se necesita 
+además recurrir a los clásicos 
+mecanismos empleados en las bases de datos relacionales (claves foráneas, o
+referencias, entre las tablas, restricciones, vistas, entre otros.).
+
+
+
+\subsection{Valores y funciones XML}
+
+\par \noindent La base de datos XML de Oracle, referencia a una colección de
+tecnologías XML nativas en el servidor de base de datos. Sin embargo, el soporte nativo XML 
+es sólo una parte de la infraestructura XML en Oracle. La infraestructura XML general proporciona soporte XML nativo 
+de alto rendimiento y una plataforma extensible en el que los usuarios pueden crear y desplegar sus propias soluciones.
+En el motor nativo XML, las tablas y vistas XMLType ofrecen el
+almacenamiento de datos XML. El repositorio de base de datos XML proporciona un
+repositorio de documentos XML que se ha optimizado para el manejo de documentos
+XML. PL/SQL y las funciones SQL/XML permiten operaciones de XML en datos SQL 
+y contenido XML. 
+
+\subsubsection{Tipo de dato XML}
+
+\par \noindent Este mapeado de la estructura XML a la estructura de la base de datos en Oracle se 
+realiza con el tipo XMLType, que es un tipo abstracto. El tipo XMLType se almacena en un 
+tipo CLOB, aunque puede asociarse a un esquema XML para la definición de su
+estructura lo que obliga que cualquier documento sea validado con este esquema. En este segundo caso el 
+esquema del documento se modela en la estructura objeto relacional de la base de
+datos.
+La ventaja de hacerlo de la primera manera es que todo tipo de documentos XML 
+pueden almacenarse en ese elemento XMLType. La segunda obliga a que el elemento sea 
+válido frente al esquema asociado, aunque su mapeado en la estructura objeto
+relacional permite tratar el documento de manera más eficiente y flexible.
+
+\subsubsection{Mapeado de XMLType dado un esquema XML}
+
+\par \noindent Los elementos del esquema XML son mapeados como objetos en los
+que cada elemento anidado de tipo simple es representado por un atributo de un tipo nativo lo más acorde 
+posible con el tipo del esquema por ejemplo si es un número con NUMBER, si es
+texto con VARCHAR, etc. Aun así es posible forzar la representación del elemento
+a un tipo de Oracle mediante el atributo SQLType utilizado en el elemento del esquema.
+\noindent Cuando un elemento contiene un elemento complejo, este es modelado con un objeto 
+y el elemento padre establece una referencia a él con tipos referencia. Es posible forzar que 
+el mapeado de los tipos complejos se realice en CLOB, NCLOB o VARCHAR (sin ser
+representados en el modelo objeto relacional) mediante el atributo SQLType
+(=CLOB) utilizado en el elemento del esquema.
+\noindent Cuando la ocurrencia de un elemento, ya sea simple o complejo, es
+mayor que uno el elemento es representado en el objeto padre con un array variable si el número de 
+ocurrencias máximas es finito o con un tabla anidada si es infinito.
+
+\subsubsection{Crear tables y/o columnas XMLType}
+
+\par \noindent Para crear columnas o tablas XMLType se hace de la misma
+forma que al definir columnas o tablas de objetos. Para definir una columna o tabla XMLType 
+asociada a un esquema se debe registrar 
+primero el esquema en la base de datos. Esto se realiza mediante la librería 
+DBMS\_XMLSCHEMA que posee dos funciones: registerSchema para registrar el
+esquema y deleteSchema para eliminar el registro. Una vez registrado el esquema
+se puede crear columnas y tablas XMLType asociadas empleando el comando
+XMLSCHEMA.
+
+\subsubsection{Insertar documentos XML}
+
+\par \noindent Si se tratan a los tipos XMLType como objetos se puede utilizar
+el constructor de dichos objetos para instanciar nuevos elementos XMLType, tomando como parámetro la 
+cadena que representa al documento XML. En el código \ref{xmlora1} se presenta
+un ejemplo de utilización. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de inserción de
+datos utilizando XMLTYPE en ORACLE}, label=xmlora1] 
+INSERT INTO warehouses VALUES
+	( 100, XMLType(
+		'<Warehouse whNo="100">
+		<Building>Owned</Building>
+		</Warehouse>'),	'Tower Records', 1003);
+	
+UPDATE warehouses SET warehouse_spec = XMLType
+	('<Warehouse whono="200">
+	<Building>Leased</Building>
+	</Warehouse>');
+\end{lstlisting}
+
+\subsubsection{Consultar documentos XML}
+
+\par \noindent Es posible rescatar un documento en forma de CLOB, VARCHAR o
+NUMBER mediante los métodos de XMLType: getClobVal, getStringVal, getNumberVal. Con estas funciones 
+simplemente se obtiene el documento XML convertido en un tipo nativo. 
+Las consultas no sólo son de recuperación de documentos completos, es posible
+además recuperar partes del documento y efectuar predicados de selección en
+partes del documento.
+Estas partes están basadas en la estructura DOM de XML y se señalan haciendo uso
+de XPath.
+Las funciones incluidas con este propósito son extract y existsNode: el primero devuelve el nodo 
+del documento XML (de la estructura DOM) solicitado y el segundo devuelve verdadero (1) 
+cuando existe el nodo solicitado. 
+
+\par \noindent El comando extract siempre devuelve el nodo en un tipo XMLType,
+si se desea recuperar el valor del nodo de texto de ese nodo se puede utilizar
+getNumberVal o getStringVal sobre el elemento XMLType retornado. También se
+puede utilizar extractValue que tiene una sintaxis idéntica a extract pero que devuelve el valor del nodo de texto y no el 
+elemento XMLType. Estas funciones sólo son válidas para nodos que tengan un solo y único 
+nodo de texto. El comando updateXML permite actualizar el valor de algunos nodos señalados del 
+documento XML, para evitar de esa manera modificar todo el documento cuando sólo varía 
+parte de el. Sus parámetros son parejas de rutas XPath y valores, donde la ruta
+señala el nodo a modificar y los valores sustituirán a los antiguos de ese nodo.
+
+\par \noindent El comando XMLTransform toma como parámetros dos instancias de XMLtype siendo la 
+primera el documento de origen y la segunda un documento XSLT de
+transformaciones XML y devuelve el documento resultante de la transformación XML. Un sinónimo de este comando 
+es el método XMLTransform de la clase XMLType.  
+\noindent Es posible validar documentos XML frente a esquemas XML mediante el comando 
+XMLisValid y el método de XMLType isSchemaValidated. Ambos devuelven verdadero (1) si el 
+documento se valida correctamente. 
+
+\subsubsection{SQLX}
+
+\par \noindent Al igual que en el modelado objeto relacional, en el que no es
+necesario convertir los datos en el modelo plano relacional al modelo objeto
+relacional para trabajar con ellos en este último modelo, es posible
+mediante comandos y vistas representar datos del modelo relacional u objeto
+relacional como documentos XML sin la necesidad de modificarlos.
+
+\noindent Oracle soporta cinco comandos del estándar SQLX (SQL to XML, SQL/XML)
+para la representación de datos relacionales con XML: XMLElement, XMLForest, XMLConcat, 
+XMLAttributes y XMLAgg. También soporta XMLColAttVal como comando SQLX propio, pero 
+aún no aceptado en el estándar. Estos comandos permiten representar datos como un 
+documento XML cuya estructura de ese documento es definida por los
+desarrolladores.
+
+\noindent Oracle, también, soporta las funciones SYS\_XMLGEN, SYS\_XMLAGG, 
+XMLSEQUENCE y XMLFormat con el mismo propósito que las anteriores pero sin ser parte del estándar SQLX o 
+de su propuesta. 
+Es posible además crear vistas del tipo XMLType para representar tablas y vistas 
+relacionales como documentos XML de forma transparente para la consulta, como si de una 
+consulta a un XMLType se tratase.
+
+\par \noindent XMLElement es una función que devuelve un tipo XMLType dados como parámetros el 
+nombre del elemento XML, una serie de atributos y el contenido del nodo. El XMLType 
+retornado es un nodo con el nombre del primer parámetro, los atributos del
+segundo y el contenido de los últimos parámetros. El contenido puede ser un valor o un nuevo elemento 
+XMLType para poder formar la estructura anidada de los documentos XML.
+
+\noindent Los atributos se definen mediante la función XMLAttributes que toman como método el 
+listado de atributos a asignar al elemento XML. Si no se especifica la cláusula AS en cada 
+atributo se deja como nombre de atributo el inferido de la estructura
+relacional, si se utiliza AS se deja el indicado.
+
+\noindent La función XMLForest crea un árbol XML de los parámetros que toma. Un árbol XML 
+son nodos situados a la misma altura, esto significa nodos que partirían del
+mismo nodo raíz, salvo que no se haya definido este nodo raíz. Cuando el
+parámetro es acompañado de la cláusula AS, se éste es utilizado como nombre de
+elemento XML, cuando no se infiere de la estructura de los datos.
+
+\noindent La función XMLConcat, concatena los parámetros dados uno tras otro en el orden en que aparecen como 
+parámetros, estos pueden
+ser una secuencia de elementos XMLTYPE o datos tipo XMLType. Mientras que en
+XMLForest los parámetros son datos relacionales, en XMLConcat son tipos XMLType.
+
+\noindent La función XMLAgg es una función de agregado que produce un bosque de elementos 
+XML dada una colección de elementos. Se usa normalmente con consultas con cláusulas de 
+agrupación como GROUP BY.
+
+\noindent La función XMLColAttVal crea un árbol de XML donde cada elemento es de tipo column
+y posee un atributo tipo name con el nombre del elemento, especificado por AS en los 
+parámetros o inferido de los datos.
+
+\noindent La función SYS\_XMLAGG engloba todos los documentos XML o fragmentos
+de una expresión en un solo documento XML. La etiqueta que engloba es por defecto ROWSET, pero 
+puede ser definida con XMLFormat. 
+
+\noindent XMLSEQUENCE devuelve una secuencia (array variable) de XMLType dado un 
+XMLType. En consecuencia, toma los nodos hijo directos del XMLType y devuelve un
+nodo XMLType por cada uno de ellos en un objeto XMLSequenceType. 
+
+\noindent La función SYS\_XMLGEN toma un tipo nativo, un tipo abstracto o un
+tipo XMLType y genera con él un documento XML. Si es un tipo nativo forma una etiqueta con el valor 
+dentro, si es un tipo abstracto mapea los atributos del tipo abstracto a un documento XML y 
+si es un XMLType engloba a este elemento en otro elemento de nombre por defecto ROW. Es 
+posible indicar el nombre de la etiqueta principal del documento XML generado mediante la 
+función XMLFormat.
+
+\noindent El objeto XMLFormat es un parámetro de SYS\_XMLGEN y SYS\_XMLAGG. Este
+objeto define las características del documento generado por estas dos funciones mediante sus 
+atributos. Si se desea cambiar el formato del documento XML generado tan solo
+se tendrá que dar el valor adecuado al correspondiente atributo de XMLFormat.
+
+\subsubsection{Vistas XMLType}
+
+\noindent Las vistas XMLType permiten tomar elementos relacionales u objeto
+relacionales de la base de datos, sin modificar ni los datos ni su estructura
+para poder mostrarlos como si fuesen documentos XML.
+Mediante la creación de vistas habitual se crea una vista indicando que es de
+tipo XMLType (OF XMLTYPE), la cláusula OBJECT ID indica que columna será el
+identificador único de cada elemento y que el tipo XMLType se almacenará en la columna
+sys\_nc\_rowinfo\$.
+
+\noindent Además es posible crear vistas XMLType mapeando los datos relacionales
+mediante un esquema y no con el comando SELECT de la definición de la vista. El esquema define el 
+mapeado de cada elemento a la columna de datos mediante el atributo xdb:SQLName en el 
+elemento del esquema, de tal manera que el elemento contendrá el valor de la columna 
+indicada en ese atributo.
+
+\par \noindent En el anexo \ref{anexo42} se presentan ejemplos de cada sección
+vista de XML.
+
+\subsubsection{Diseñando la base de datos XML}
+
+\par \noindent Cuando se comienza a diseñar aplicaciones con Oracle XML DB, se
+necesita tomar varias decisiones, incluyendo como almacenar los datos XML en la
+base de datos, cuál es la estrategia para recuperar o generar los datos XML, y
+cómo crear índices apropiados para buscar el contenido en documentos XML. \\
+%\newpage
+\par \noindent \tn{Cómo almacenar datos XML}
+
+\par \noindent Existen tres caminos diferentes para almacenar documentos dentro
+Oracle, y cada uno de ellos ofrece compensaciones en rendimiento y
+funcionalidad. En la figura \ref{flow} se presenta un diagrama de flujo que
+sirve de ayuda para simplificar la selección. En el anexo \ref{anexo421} se
+detalla en profundidad los pasos mencionados en dicho diagrama.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[!hbtp]
+ \begin{center}
+  \includegraphics [scale=0.485]{capitulo2/images/diagrama_deciciones_xml.png}
+  \end{center} \caption[Diagrama de flujo de decisión para almacenar XML en
+ Oracle]{\label{flow}Diagrama de flujo de decisión para
+  almacenar XML en Oracle \cite{wang}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \newpage
+% \section{Mapeo objeto relacional (ORM)}
+
+
+
+%\subsubsection{Hibernate}
+
+

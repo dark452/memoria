@@ -1,0 +1,632 @@
+\chapter{INTRODUCCIÓN} \label{capitulo1}
+
+\noindent El presente capítulo tiene por objetivo entregar una pequeña base
+teórica, en lo que respecta a los conceptos básicos de bases de datos, además de
+entregar los detalles del problema a resolver, justificación de la realización
+de la investigación, objetivo general y específico(s), descripción del
+problema, los resultados esperados, metodología que se aplicará en la
+investigación y los recursos a utilizar como hardware, software y humanos.
+
+\section{Conceptos básicos}
+
+% \noindent Las bases de datos y los sistemas de bases de datos son un componente
+% esencial de la vida cotidiana en la sociedad moderna.
+
+\noindent Las bases de datos y la tecnología de bases de datos tienen mucha
+culpa del uso creciente de los computadores. Es justo decir que las bases de datos juegan un papel fundamental
+en la mayoría de las áreas en las que se utilizan computadores, como en el sector empresarial,
+en el comercio electrónico, ingeniería, medicina, justicia, educación y
+bibliotecas \cite{navathe}.
+\par
+\noindent Una base de datos es un repositorio para datos. En otras palabras, se
+puede almacenar una gran cantidad de información en éstas. Una base de datos
+relacional utiliza estructuras llamadas tablas, las cuales están unidas entre sí
+mediante lo que se denominan relaciones.
+Se puede construir tablas con relaciones entre las tablas, no sólo para organizar los datos, sino que 
+también permite una recuperación posterior de la información desde la base de
+datos \cite{powell}.
+\par
+\noindent Un sistema de administración de datos (SABD) es un conjunto de
+programas que posibilita a los usuarios a crear y mantener una base de datos. El SABD es
+un software que simplifica los procesos de definición, construcción, manipulación y compartición de bases de datos 
+entre varias aplicaciones y usuarios. %Definir una base de datos implica
+% especificar los tipos de datos, estructuras y restricciones de los datos que se almacenarán en la base de datos. 
+% La definición o información descriptiva de una base de datos además se almacena
+% en esta última en forma de catálogo o diccionario de la base de datos; esto es
+% conocido como metadatos.
+La construcción de la base de datos es el proceso estable y permanente en
+almacenar los datos en algún medio de almacenamiento controlado por el SABD. La
+manipulación de ésta incluye funciones como consultas para
+recuperar datos específicos, actualización para reflejar los cambios
+introducidos en el mini mundo y la generación de reportes a través de los datos.
+Compartir una base de datos posibilita que varios usuarios y programas accedan  
+de forma simultánea \cite{navathe}.
+\par
+\noindent Una aplicación accede a la base de datos enviando solicitudes o
+consultas de datos al SABD. Una consulta generalmente ocasiona la recuperación
+de datos; en cambio una transacción puede provocar la escritura o lectura de
+datos.
+\par
+\noindent La Figura \ref{Figura 11} muestra algunos
+de los conceptos que se han explicado, cómo los usuarios realizan consultas a la
+base de datos y el SABD se encarga de procesar dichas consultas, accediendo a
+los datos almacenados.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.45]{capitulo1/images/figura1-1.png} \end{center}
+ \caption[Entorno de un sistema de bases de datos
+ simplificado]{\label{Figura 11}Entorno de un sistema de bases de datos
+ simplificado \cite{navathe}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{La evolución del modelado de bases de datos}
+% 
+% \noindent Existieron dos modelos de datos antes del modelo relacional de base
+% de datos, el modelo jerárquico y modelo de red, que  
+% fueron soluciones parciales de problemas interminables de como almacenar datos y cómo 
+% hacerlo eficientemente. El modelo relacional de base de datos es actualmente la mejor 
+% solución tanto para almacenamientos como recuperación de datos.
+% 
+% \noindent La evolución de los modelos de base de datos tuvo lugar cuando cada
+% modelo de base de datos mejoró del anterior. La solución inicial no fue una base de datos 
+% si no que un sistema de archivos, dependiente del sistema operativo.
+% Se pueden examinar archivos en el sistema de archivos del sistema operativo
+% ejecutando el comando ``dir'' en DOS, un comando ``ls'' en UNIX, o buscando a través del
+% Explorador de Windows en Microsoft Windows. El problema que se presenta utilizando un sistema de archivos es que 
+% no existe una estructura de base de datos.
+% 
+% \par
+% 
+% \noindent La figura \ref{Figura 12} muestra el proceso de evolución en el tiempo
+% desde los finales de 1940.
+% 
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \begin{figure}[H]
+%  \begin{center}
+%   \includegraphics [scale=0.8]{capitulo1/images/figura1-2.png} \end{center}
+%  \caption{\label{Figura 12}La evolución de las técnicas de modelos de bases de datos.}
+%  \end{figure}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subsection{Bases de datos relacionales}
+% 
+% \noindent Las bases de datos relacionales mejoraron en la restricción de la
+% estructura jerárquica, no abandonando completamente la jerarquía de datos, 
+% como se muestra en la figura \ref{Figura 13}, en donde un tipo de empleado tiene
+% muchos empleados asociados o dentro de una compañía existen muchos departamentos.
+% Cualquier tabla puede ser accedida directamente sin tener que acceder a todos los objetos padres \cite{powell}.
+% 
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \begin{figure}[H]
+%  \begin{center}
+%   \includegraphics [scale=0.7]{capitulo1/images/figura1-51.png} \end{center}
+%  \caption{\label{Figura 13}Modelo relacional}
+%  \end{figure}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% \par
+% \noindent El modelo de datos relacional introdujo lenguajes de consulta
+% de alto nivel que suministraban una alternativa a las interfaces de lenguaje de programación; 
+% por lo que era mucho más rápido escribir consultas nuevas. La representación relacional de los 
+% datos se parece al ejemplo presentado en la figura \ref{Figura 14}. Los sistemas
+% relacionales estaban destinados inicialmente a las mismas aplicaciones que los primitivos sistemas, pero estaban pensados para 
+% ofrecer flexibilidad en el desarrollo de nuevas consultas y para reorganizar la base de datos 
+% cuando cambiaran los requisitos. Su rendimiento mejoró con el desarrollo de nuevas técnicas de almacenamiento e 
+% indexación y unas técnicas mejores de procesamiento y optimización. Eventualmente, las bases de 
+% datos relacionales se convirtieron en el tipo de sistema de bases de datos predominante para las 
+% aplicaciones de bases de datos tradicionales \cite{navathe}.
+% 
+% 
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \begin{figure}[H]
+%  \begin{center}
+%   \includegraphics [scale=0.9]{capitulo1/images/figura1-5.png} \end{center}
+%  \caption{\label{Figura 14}Base de datos que almacena la información de
+%  estudiantes y cursos}
+%  \end{figure}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% 
+% \subsection{Bases de datos objeto relacional}
+% 
+% \noindent El modelo de bases de datos objeto relacional fue creado como respuesta a las capacidades 
+% conflictivas de los modelos relacionales y orientado a objetos.
+% Esencialmente las capacidades que posee el modelo orientado a objetos ya se
+% encuentran incluidos en las bases de datos relacionales, sin embargo las
+% capacidades de una base de datos relacional no están incorporadas en las bases
+% de datos orientadas al objeto.
+% El modelo objeto relacional intenta incluir los aspectos más eficientes del modelo orientado a objetos en 
+% la estructura del modelo relacional, con variados grados de éxito \cite{powell}.
+% 
+% \noindent Algunos sistemas de administración de base de datos como Oracle,
+% añadieron algunas capacidades orientadas a objetos a sus productos, resultando 
+% en bases de datos híbrida objeto-relacionales. El modelo objeto-relacional extiende 
+% al modelo relacional agregando algunos tipos de datos complejos y métodos. En vez 
+% de atomicidad y valores simples en los atributos que requiere el modelo relacional, 
+% este modelo permite atributos estructurados y tienen conjuntos de arreglos de valores. 
+% También permite métodos y herencia. El lenguaje SQL fue extendido en 1999 para crear y 
+% manipular los tipos de datos más complejos que soporta este modelo, como la especificación 
+% de tipos de datos abstractos (denominados TDA o tipos definidos por el usuario)
+% \cite{navathe}. 
+% 
+% %%%%%%%%%%%%%%%%%%%
+% 
+% \subsection{Datos semi estructurados}
+% 
+% \noindent En palabras simples son datos sin esquema o auto descriptibles, la
+% información sobre la estructura está junto con los datos. En la actualidad es
+% una necesidad integrar los datos muy estructurados con los poco estructurados.  
+% La principal diferencia entre ambos es la forma de manejar los constructores 
+% del esquema (nombres de atributos, relaciones y tipos de entidades, entre
+% otros.).
+% %En
+% % el caso de los poco estructurados, la información del esquema se mezcla con los
+% %  valores de los datos ya que un objeto de datos puede tener diferentes atributos 
+% %  no conocidos por adelantado. Por eso, estos tipos de datos se conocen como datos auto descriptivos.
+%  
+%  \noindent La mayor parte de los modelos de base de datos requiere que los tipos
+%  de entidades (u objetos o registros, dependiendo del modelo) posean la misma estructura. 
+%  La estructura se define en el esquema y permanece sin modificaciones a menos que el 
+%  administrador de la base de datos cambie dicho esquema. A diferencia, el modelo semi 
+%  estructurado posibilita una colección de nodos, cada uno conteniendo datos, posiblemente 
+%  con diferentes esquemas. El nodo tiene información sobre la estructura de su contenido. 
+%  
+% %  \noindent Algunas características de los datos semi estructurados son:
+% %  
+% %  \begin{itemize}
+% %    \item No existe necesariamente una diferencia entre un identificador de un
+% %    campo y el valor mismo de este.
+% %    \item Un atributo de un registro puede ser otro registro.
+% %    \item Un registro no necesariamente tiene que tener todos sus atributos
+% %    definidos. Mientras por ejemplo en una base de datos relacional un campo 
+% %    debe establecerse como NULL cuando no se tiene, en un ambiente de datos semi 
+% %    estructurados basta con omitir dicho atributo.   
+% %  \end{itemize}
+% %  \par
+%  \noindent A pesar de poder representarse de distintas formas, como por ejemplo
+%  documentos SGML (Standard Generalized Markup Language) y XML, actualmente la
+%  mejor manera de hacerlo es a través del lenguaje XML.\\
+% 
+% \par 
+% \noindent \tn{XML} (eXtensible Markup Language)
+% 
+% \noindent El lenguaje XML es el estándar para estructurar e intercambiar datos
+% por la Web, el cual se puede utilizar para suministrar información sobre la estructura y el 
+% significado de ciertos componentes de los datos visualizados en una página web, 
+% en vez de especificar cómo se debe visualizar la información, trabajo que realiza 
+% % el lenguaje HTML. El formateo de la visualización se puede especificar por separado, 
+% % por ejemplo mediante XSL (Lenguaje de hojas de estilo extensible, Extensible Stylesheet Language). 
+% Recientemente, también se ha propuesto a XML como un posible modelo para el almacenamiento y la 
+% recuperación de datos, aunque hasta el momento sólo se han desarrollado unos pocos sistemas de 
+% bases de datos experimentales basados en XML.
+% 
+% \noindent Posee las siguientes características principales:
+% 
+% \begin{itemize}
+%   \item \tn{Sencillo}: Fácil de aprender y de usar.
+%   \item \tn{Versátil}: Separa contenido, estructura y presentación.
+%    \item \tn{Abierto}: Independiente de plataformas, empresas, lenguajes de
+%   programación o entornos de desarrollo.
+%   \item \tn{Extensible}: Se pueden definir nuevas etiquetas.
+%   \item \tn{Validable}: Cada documento se puede validar frente a un esquema  o
+%   definición de tipo de documento (\tn{DTD}), o se puede declarar bien formado.
+%     \item \tn{Estructurado}: Se pueden modelar datos a cualquier nivel de
+%   complejidad.
+% 
+% 
+% \end{itemize}
+%  
+% % \par
+% % \noindent El objeto básico en XML es el documento XML. En la construcción de un
+% % documento XML se utilizan dos conceptos de estructuración principales: elementos 
+% % y atributos. Los atributos en XML proporcionan información adicional que
+% % describe a los elementos \cite{navathe}.
+% 
+% % \par
+% % \noindent Es posible distinguir tres tipos principales de documentos XML: 
+% % 
+% % \begin{itemize}
+% %   \item \tn{Documentos XML centrados en los datos}: Estos documentos tienen
+% %   muchos elementos de datos pequeños que respetan una estructura específica y, por tanto, 
+% %   pueden extraerse de una base de datos estructurada. Se formatean como documentos 
+% %   XML para intercambiarlos o visualizarlos por la Web. 
+% %   \item \tn{Documentos XML centrados en el documento}: Son documentos con
+% %   grandes cantidades de texto, como los artículos y los libros. En estos documentos 
+% %   hay pocos o ningún elemento de datos estructurado.
+% %   \item \tn{Documentos XML híbridos}: Estos documentos pueden tener partes que
+% %   contienen datos estructurados y otras partes que son principalmente 
+% %   textuales o no estructuradas.
+% % \end{itemize}
+% 
+% 
+% 
+% 
+% % \noindent \tn{Documentos XML bien formados}
+% % 
+% % \noindent Un documento XML está bien formado sólo
+% % si existe una raíz y todas las etiquetas de comienzo poseen su correspondiente
+% % etiqueta de cerrado, con su correspondiente anidación \cite{wang}. Por ejemplo,
+% % el Código  \ref{codigo1} del documento no está bien formado. Es posible trabajar
+% % con documentos no asociados a ninguna DTD y que en consecuencia jamás podrán ser
+% % validos. El Código \ref{codigo3} representa un documento que se encuentra
+% % bien formado.
+% % 
+% % \newpage
+% % 
+% % %\belowcaptionskip=-10pt
+% % 
+% % \begin{lstlisting}[language=xml, caption={Código de documento XML
+% % que no se encuentra bien formado}, label=codigo1] 
+% % <bookcatalog>
+% % <book>
+% % <title>History of Interviews</ti>
+% % <author>
+% % <firstname>Juan</firstname>
+% % <lastname>Smith</author></lastname>
+% % <ISBN>99999-99999</ISBN>
+% % <publisher>Oracle Press</publisher>
+% % <publishyear>2003</publishyear>
+% % <price type="US">10.00</price>
+% % </book>
+% % </bookcatalog>
+% % <bookcatalog2>
+% % …
+% % </bookcatalog2>
+% % \end{lstlisting}
+% % 
+% % \par 
+% % \noindent Las razones por las que no es bien formado son:
+% % 
+% % \begin{itemize}
+% %   \item Existen dos raíces, 'bookcatalog' y 'bookcatalog2'.
+% %   \item La etiqueta <title> \ no posee su etiqueta de término correspondiente,
+% %   la que sería </title>.
+% %   \item La etiqueta de término </author> \ no se encuentra correctamente
+% %   anidada, ya que la etiqueta de termino </lastname> \ está posicionada después de la
+% %   </author>, en vez de ubicarse antes de ella. Los analizadores XML rechazarán
+% %   este documento sin procesamiento adicional.
+% % \end{itemize}
+% % 
+% % 
+% % 
+% % 
+% % \begin{lstlisting}[language=xml, caption={Código de documento XML
+% % bien formado}, label=codigo3] 
+% % <bookcatalog>
+% % 	<book>
+% % 		<title>History of Interviews</title>
+% % 		<author>
+% % 			<firstname>Juan</firstname>
+% % 			<lastname>Smith</author></lastname>
+% % 		</author>
+% % 		<ISBN>99999-99999</ISBN>
+% % 		<publisher>Oracle Press</publisher>
+% % 		<publishyear>2003</publishyear>
+% % 		<price type="US">10.00</price>
+% % 	</book>
+% % </bookcatalog>
+% % \end{lstlisting}
+% 
+% \noindent \tn{Documentos XML Válidos}
+% \par
+% \noindent Un documento XML válido es el que está conformado por un esquema XML o
+% definición de tipo de documento (\tn{DTD}), esto significa que los elementos, atributos, relacionales estructurales y secuencias
+% en el documento XML son los mismos que los previamente especificados en el
+% esquema XML o definición de tipo de documento (\tn{DTD}) \cite{wang}. Por ejemplo, el código \ref{codigo2} documento
+% XML es válido con respecto al DTD. 
+% 
+% \noindent En el código \ref{codigo4} se representa el
+% DTD, donde la declaración DOCTYPE especifica el elemento raíz, en
+% este caso el elemento \ <bookcatalog>. Un elemento simple se compone de una etiqueta de
+% inicio, por ejemplo, \ <title>; todo el texto ``History of Interviews'' entre
+% medio de la etiqueta de inicio y la término \ </title>. Sin embargo, sólo un 
+% elemento raíz existe en un documento XML. El elemento raíz marca el inicio del
+% documento y es considerado el padre de todos los otros elementos, los cuales se
+% encuentran anidados con sus respectivas etiquetas de inicio y término. Para que
+% los documentos XML sean considerados válidos con respecto a su DTD, el elemento
+% raíz \tn{bookcatalog} debe ser el primer elemento para empezar el cuerpo del
+% documento XML.
+% 
+% \noindent Así, un analizador XML de validación, al analizar el documento XML de
+% acuerdo con las reglas especificadas en el DTD, intenta
+% determinar si el documento se ajusta a la DTD (si es válido), lo que significa
+% que todos los elementos requeridos, atributos, relaciones estructurales y
+% secuencias están según lo declarado. \\
+% 
+% 
+% 
+% 
+% \begin{lstlisting}[language=xml, caption={Código de documento XML
+% validamente formado}, label=codigo2] 
+% <bookcatalog>
+% <book>
+% <title>History of Interviews</title>
+% <author>
+% <firstname>Juan</firstname>
+% <lastname>Smith</lastname>
+% </author>
+% <ISBN>99999-99999</ISBN>
+% <publisher>Oracle Press</publisher>
+% <publishyear>2003</publishyear>
+% <price type="US">10.00</price>
+% </book>
+% </bookcatalog>
+% 
+% \end{lstlisting}
+% 
+% 
+% \newpage
+% 
+% \begin{lstlisting}[language=xml, caption={Código DTD}, label=codigo4] 
+% <!-- DTD bookcatalog may have a number of book entries -->
+% <!DOCTYPE bookcatalog [
+% <!ELEMENT bookcatalog (book)*>
+% <!-- Each book element has a title, 1 or more authors, etc. -->
+% <!ELEMENT book (title, author+, ISBN, publisher, publishyear, price)>
+% <!ELEMENT title (#PCDATA)>
+% <!ELEMENT author (firstname, lastname)>
+% <!ELEMENT firstname (#PCDATA)>
+% <!ELEMENT lastname (#PCDATA)>
+% <!ELEMENT ISBN (#PCDATA)>
+% <!ELEMENT publisher (#PCDATA)>
+% <!ELEMENT publishyear (#PCDATA)>
+% <!ELEMENT price (#PCDATA)>
+% <!ATTLIST price type (US | CAN | UK | EURO) #REQUIRED>
+% ]>
+% 
+% \end{lstlisting}
+% 
+% \noindent Existen dos caminos primarios para almacenar XML contenido en una base
+% de datos relacional:
+% 
+% \begin{itemize}
+%   \item \tn{Estructurado}: El almacenamiento estructurado descompone el
+%   contenido del documento XML dentro de un juego de objetos. Un beneficio es que los datos pueden ser
+% accesados por aplicaciones que entiendan solamente base de datos relacionales.
+%   \item \tn{No estructurado}: Con el almacenamiento no estrucurado, el documento
+%   XML es almacenado de forma nativa como un character large object (CLOB) dentro de la base de
+% datos.
+% \end{itemize}
+
+
+\section{Problema a resolver}
+
+\noindent %Existen falencias en ciertas guías, por ende es preciso determinar
+%cual es la mejor estrategia de base de datos a utilizar y para eso se realizará
+%esta comparación. 
+El estudio que se realizará estará centrado 
+en la implementación de un caso de estudio propuesto en una base de datos
+relacional, una base de datos objeto relacional y el manejo de datos semi
+estructurados con XML, con el fin de generar una guía para seleccionar el tipo
+de base de datos más adecuada según la aplicación a
+desarrollar y de esta forma tener claro las ventajas y desventajas de cada
+implementación, por lo que se realizarán pruebas en cada una de
+éstas, con el propósito de analizar los resultados obtenidos.
+
+\section{Justificación}
+
+
+\noindent La realización de esta investigación tiene como propósito adquirir la
+capacidad de examinar los conceptos de bases de datos relacional, bases de datos
+objeto relacional y datos semi estructurados, sin embargo, implica mucho más que
+la utilización de dichos conceptos, ya que consiste en poder seleccionar el
+modelo de datos más apropiado a implementar en un sistema y / o aplicación en
+particular. Y de esta forma lograr responder la pregunta ¿Por qué este modelo
+de base de datos es más adecuado para el desarrollo de mi software?
+
+\noindent Es sumamente importante para los desarrolladores sacarle provecho a
+las capacidades que se han ido incorporando a los servidores de base de datos,
+ya que es relevante modelar según las aptitudes de las bases de datos, 
+puesto que tienen más semántica y los datos no están fragmentados como en una base de datos 
+relacional pura, por lo que no se restringe a la primera forma normal y a causa de esto 
+pueden existir atributos no atómicos.
+
+\noindent Es válido acotar que la capa de persistencia de datos del software que
+se desea desarrollar, puede variar según la implementación seleccionada de
+la guía a generar mediante los resultados obtenidos en esta investigación.
+
+\noindent Cabe mencionar que el obtener resultados efectivos permitirá cooperar
+con documentación y casos de estudio para la asignatura de base de datos.
+
+\noindent A modo personal del tesista, se busca adquirir experiencia y
+conocimientos de avanzada para el desarrollo profesional en el área de base de datos, 
+específicamente en las áreas relacionadas con los sistemas de administración de base de datos, 
+bases de datos objeto relacional y datos semi estructurados como XML. Así mismo, adquirir un 
+mayor nivel de conocimiento en las capacidades que poseen los servidores de base de datos, 
+como es la implementación de procedimientos almacenados utilizando lenguajes de programación 
+sin tener que implementar fuera del servidor del sistema de administración de base de datos.
+
+
+\section{Objetivos}
+
+\noindent \tn{Objetivo general}
+
+\noindent Evaluar y comparar la implementación de una base de datos relacional
+con respecto a una base de datos objeto relacional y datos semi estructurados 
+en el sistema de administración de base de datos Oracle, utilizando las 
+funciones disponibles en el servidor del SABD, con el fin de generar una guía que en base a 
+criterios claros permita determinar cuál es el tipo de base de datos más 
+adecuada a utilizar bajo ciertas características.\\
+
+\noindent \tn{Objetivos Específicos}
+
+\begin{itemize}
+\item Estudiar, seleccionar y utilizar funciones del sistema de administración
+de base de datos relacional Oracle 11G, que permitan la implementación de bases
+de datos objeto relacional y XML.
+
+\item Comprender los múltiples métodos de implementación de los modelos
+mencionados con anterioridad para ser capaz de seleccionar adecuadamente entre
+ellos según la aplicación a desarrollar.
+
+
+\item Diseñar el caso de estudio para luego implementarlo con
+Oracle 11G en una base de datos relacional, objeto relacional y datos semi
+estructurados como XML.
+
+
+\item Definir criterios de comparación para las implementaciones tales como: facilidad de modelamiento, complejidad de aprendizaje 
+por parte del desarrollador y/o DBA, entre otros.
+
+\item Realizar un análisis de resultados, en donde se compare cada una de las
+implementaciones, con el fin de
+estructurar una guía con los beneficios y desventajas dependiendo de la
+aplicación a desarrollar, según los criterios de comparación.
+
+
+\end{itemize}
+
+
+\section{Descripción}
+
+\noindent El problema a dar solución es generar la capacidad de comprender los
+múltiples conceptos y métodos de implementación relacionados con bases de datos
+relacionales, objeto relacional y datos semi estructurados como XML y poder
+justificar la selección del modelo más adecuado para diferentes aplicaciones. 
+Para lograr este objetivo se pretende implementar
+dichos modelos sólo utilizando las características
+nativas presentes en el servidor del SABD Oracle 11G, con el fin de crear una
+guía para seleccionar el tipo de base de datos más adecuada según la aplicación a desarrollar.
+
+\noindent La primera etapa contempla hacer una investigación
+exhaustiva de los sistemas de administración de base de datos que tengan soporte para implementar bases de datos objeto relacional y datos semi 
+estructurados como XML. A continuación en su segunda etapa, se diseñará un caso de 
+estudio, el cual será implementado en una base de datos relacional en Oracle. \\
+\noindent Posteriormente en la tercera etapa, se implementará el caso de estudio
+en una base de datos objeto relacional y datos semi estructurados como XML. En la cuarta etapa, se 
+realizarán pruebas con una cierta cantidad de datos en cada versión, para luego
+analizar los resultados obtenidos bajo ciertos criterios que serán definidos.
+Por último se generará un documento guía con la información recolectada.
+
+
+\section{Resultados esperados}
+
+\noindent Se obtendrán tres productos finales:
+
+\begin{itemize}
+  \item \tn{Documento con marco teórico}: El documento de memoria contendrá
+  todo el marco teórico asociado a la creación de una base de datos relacional,
+  base de datos objeto relacional, el manejo de datos semi estructurados como
+  XML desde el punto de vista del intercambio de información.
+  \item \tn{Caso de estudio implementado}: Implementar un caso de estudio en una
+  base de datos relacional, objeto relacional y datos semi estructurados como XML en Oracle.
+  \item \tn{Comparación de implementaciones}: Generar un documento que indique
+  las ventajas y desventajas de cada implementación considerando facilidad de modelamiento, facilidad de aprendizaje por parte del desarrollador, entre otros.
+  Y con esto poder tomar mejores decisiones en cuanto a la elección del tipo de
+  SABD a seleccionar y el manejo de datos semi estructurados dependiendo del
+  tipo de aplicaciones a desarrollar.
+\end{itemize}
+
+
+\section{Metodología}
+
+\noindent A continuación se describirá de forma cronológica la metodología que
+se realizará en esta investigación:
+
+\begin{itemize}
+\item \tn{Metodología de investigación}
+
+\noindent En un inicio para lograr establecer el estado del arte del tema de
+investigación, se hará una revisión de la literatura sobre los diversos 
+SABD con la capacidad de implementar bases de
+datos objeto relacional y XML.
+Para luego explorar en profundidad  los métodos y / o funciones imprescindibles para
+crear cada implementación en Oracle 11G.
+
+\item \tn{Metodología de diseño de modelo de datos}
+
+\noindent Para el diseño del caso de estudio que se implementará en cada base de
+datos se aplicarán los métodos adquiridos en la asignatura. A continuación se
+detalla cada paso a realizar:
+
+\begin{itemize}
+  \item Diseñar un caso de estudio.
+  \item Modelar la base de datos relacional y hacer la documentación asociada
+  incluyendo el modelo relacional.
+  \item Modelar la base de datos objeto relacional y documentar utilizando UML.
+\end{itemize}
+
+\item \tn{Metodología de implementación y comparación}
+
+
+\begin{itemize}  
+  
+  \item Implementación del caso de estudio utilizando una base de datos
+  relacional pura.
+  
+  \item Implementación del caso de estudio utilizando una base de datos objeto
+  relacional y datos semi  estructurados como  XML, disponibles en el
+  SABD Oracle.
+  
+  \end{itemize}
+  
+\noindent Primero se definirán criterios para realizar la
+comparación, estos pueden ser:
+
+\begin{itemize}
+ % \item Desempeño en consultas.
+  %diseñadas para medir tiempos de respuesta. Este tipo de prueba ayudará a
+  %medir y conocer la velocidad que tiene el SABD durante la ejecución de
+  %cada una de las pruebas.
+  \item Facilidad de modelamiento.
+  \item Complejidad de aprendizaje por parte del desarrollador y/o DBA.
+\item Utilización de recursos.
+\end{itemize}
+
+\noindent Procedimientos iniciales para la realización de las comparaciones: 
+
+\begin{itemize}
+  \item Ingreso de datos.
+  \item Consulta de datos.
+  \item Eliminación de datos.
+  \item Actualización de datos.
+  
+\end{itemize}
+
+  
+\noindent Luego de realizar las comparaciones se procederá a estudiar 
+y analizar los resultados obtenidos para generar la guía, en donde se detallen 
+los beneficios y desventajas de cada implementación de acuerdo al tipo de 
+aplicación que se desea desarrollar.  
+
+\end{itemize}
+
+\section{Recursos necesarios}
+
+\par \noindent \tn{Hardware}
+
+\begin{itemize}
+  \item Servidores del DISC.
+  \item Laptop personal con las siguientes características.
+  \begin{itemize}
+    \item Marca: Dell
+    \item Modelo: XPS 15
+    \item Procesador: Intel \textregistered  \ Core \texttrademark \ i7 CPU Q740
+    @1.73 GHz
+    \item Memoria Ram: 8 GB.
+    \end{itemize} 
+\end{itemize}
+
+\par \noindent \tn{Software}
+
+\begin{itemize}
+  \item \tn{Sistema de administración de bases de datos}: Oracle 11g Enterprise
+  Edition.
+  \item \tn{Software de modelado}: Dia.
+  \item \tn{Cliente base de datos}: Oracle Sql*Plus, Oralce Sql Developer.
+  \item \tn{Sistemas operativos a utilizar}: GNU/Linux / Windows.
+\end{itemize}
+
+
+\par \noindent \tn{Recursos Humanos}
+
+\begin{itemize}
+  \item Alumno: Ingeborg Muñoz Carnot.
+  \item Profesor Guía: Lotero Telgie Bendek.
+  \item Profesor Guía: Luis Lobos Flores.
+\end{itemize}

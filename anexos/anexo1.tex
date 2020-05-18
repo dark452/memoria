@@ -1,0 +1,1931 @@
+\chapter{Detalles, sintaxis y ejemplos de algunos motores de base de datos con
+soporte objeto relacional}
+\section{PostgreSQL}
+\subsection{Sintaxis y ejemplos O-R} \label{anexo11}
+\noindent \tn{Sintaxis de CREATE TYPE}
+
+\par \noindent Existen diferentes formas de crear un tipo en PostgreSQL, en el
+código \ref{codigo5} se muestra la sintaxis para crear un tipo simple con sólo
+un atributo, un tipo como ENUM y un tipo RANGE. En el código \ref{codigo5.1} se
+visualiza una sintaxis mucho más compleja utilizando declarando funciones de
+entrada y salida.
+\\
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis CREATE TYPE en PostgreSQL},
+label=codigo5] 
+CREATE TYPE name AS
+    ( [ attribute_name data_type [ COLLATE collation ] [, ... ] ] )
+
+CREATE TYPE name AS ENUM  ( [ 'label' [, ... ] ] )
+
+CREATE TYPE name AS RANGE (
+    SUBTYPE = subtype
+    [ , SUBTYPE_OPCLASS = subtype_operator_class ]
+    [ , COLLATION = collation ][ , CANONICAL = canonical_function ]
+    [ , SUBTYPE_DIFF = subtype_diff_function ])
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis CREATE TYPE en PostgreSQL},
+label=codigo5.1] 
+CREATE TYPE name (
+    INPUT = input_function,
+    OUTPUT = output_function
+    [ , RECEIVE = receive_function ]
+    [ , SEND = send_function ]
+    [ , TYPMOD_IN = type_modifier_input_function ]
+    [ , TYPMOD_OUT = type_modifier_output_function ]
+    [ , ANALYZE = analyze_function ]
+    [ , INTERNALLENGTH = { internallength | VARIABLE } ]
+    [ , PASSEDBYVALUE ]
+    [ , ALIGNMENT = alignment ]
+    [ , STORAGE = storage ]
+    [ , LIKE = like_type ]
+    [ , CATEGORY = category ]
+    [ , PREFERRED = preferred ]
+    [ , DEFAULT = default ]
+    [ , ELEMENT = element ]
+    [ , DELIMITER = delimiter ]
+    [ , COLLATABLE = collatable ]
+)
+
+CREATE TYPE name
+\end{lstlisting}
+
+\noindent \tn{Parámetros}
+
+\begin{itemize}  
+  \item \tn{name:} El nombre (opcionalmente calificado por el esquema) de un
+  tipo a ser creado.  
+  \item \tn{attribute\_name:} El nombre de un atributo (columna) para el tipo compuesto.
+  \item \tn{data\_type:} El nombre de un tipo de dato existente para convertirse en una columna del tipo compuesto.
+  \item \tn{collation:} El nombre de una recopilación existente asociada con una columna de un tipo compuesto, o con tipo range.
+  \item \tn{Label:} Una cadena literal que representa la etiqueta textual asociada a un valor de un tipo enum.
+  \item \tn{subtype:} El nombre de un tipo elemento que el tipo range representa.
+  \item \tn{subtype\_operator\_class:} El nombre de una clase de operadores árbol B para el subtipo.
+  \item \tn{canonical\_function:} El nombre de la función de canonización para el tipo range.
+  \item \tn{subtype\_diff\_function:} El nombre de una función de diferencia para el subtipo.
+  \item \tn{input\_function:} Nombre de la función de entrada del nuevo tipo.
+  Esta función debe ya debe estar definida mediante \tn{CREATE FUNCTION}, y debe
+  actuar para convertir los datos de la forma de tipos externos a la forma de tipos internos.
+  \item \tn{output\_function:} Nombre de la función de salida del nuevo tipo.
+  Esta función debe convertir los datos de la forma de tipos internos en su forma visualizable.
+  \item \tn{receive\_function:} El nombre de una función que convierte los
+  datos del tipo de forma binaria externa a su forma interna.
+  \item \tn{send\_function:} El nombre de una función que convierte los datos
+  del tipo de la forma interna a su forma binaria externa.
+  \item \tn{type\_modifier\_input\_function:} El nombre de una función que
+  convierte del modificador de un array por el tipo de forma interna.
+  \item \tn{type\_modifier\_output\_function:} El nombre de una función que
+  convierte la forma interna del modificador del tipo a la forma textual
+  externa.
+  \item \tn{analyze\_function:} El nombre de una función que realiza análisis
+  estadísticos para el tipo de dato.
+  \item \tn{internallength:} Longitud interna del nuevo tipo, en bytes.
+  \item \tn{alignment:} El requisito de alineación de almacenamiento del tipo
+  de datos. Si se especifica, debe ser chan, int2, int4 o double; el
+  predeterminado es int4.   
+  \item \tn{storage:} La estrategia de almacenamiento para el tipo de datos. 
+  \item \tn{like\_type:} El nombre de un tipo de datos existente que del cual el
+  nuevo tipo tendrá la misma representación. Los valores de \ti{internallength}, \ti{passedbyvalue}, \ti{alignment} y \ti{storage} son copiados desde ese tipo, a menos que exista una especificación explícita del comendo \tn{CREATE TYPE} en otros lugares.
+  \item \tn{category:} El código de categoría para este tipo (un sólo carácter ASCII). El predeterminado es 'U' para ``tipos definidos por usuarios´´.  
+  \item \tn{externallength:} Longitud externa opcional del nuevo tipo. 
+  \item \tn{element:} El tipo de dato de elementos individuales de un array. 
+  \item \tn{delimiter:} El carácter delimitador a ser utilizado entre los   valores en un array hechas de este tipo.
+  \item \tn{default:} El valor por defecto para el tipo de dato. Si esto es omitido, el valor por defecto es null. 
+\end{itemize}
+
+\par \noindent \tn{Ejemplos}
+
+\par \noindent En el código \ref{codigo12} se define un tipo compuesto, en donde
+el tipo complex posee dos atributos y el tipo inventory\_item tres. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de definición de tipos
+compuestos en PostgreSQL}, label=codigo12] 
+CREATE TYPE complex AS (
+    r       double precision,
+    i       double precision
+);
+
+CREATE TYPE inventory_item AS (
+    name            text,
+    supplier_id     integer,
+    price           numeric
+);
+\end{lstlisting}
+
+\par \noindent La sintaxis es comparable a la sentencia \tn{CREATE TABLE},
+excepto que solamente pueden ser especificados nombre de campos y tipos; sin
+restricciones que se puedan incluir (tales como \ti{NOT NULL}). Una vez
+definidos los tipos, estos pueden ser utilizados para crear tablas, tal como se
+visualiza en el ejemplo del código \ref{codigo13}.\\ 
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de creación de tablas
+utilizando tipos compuestos en PostgreSQL}, label=codigo13] 
+CREATE TABLE on_hand (
+    item      inventory_item, count  integer);
+
+INSERT INTO on_hand VALUES (ROW('fuzzy dice', 42, 1.99), 1000);
+\end{lstlisting}
+
+\noindent En el código \ref{codigo14} se aprecia como se utilizan los tipos
+compuestos en funciones. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización de 
+tipos compuestos con funciones en PostgreSQL}, label=codigo14] 
+CREATE FUNCTION price_extension(inventory_item, integer) RETURNS numeric
+AS 'SELECT $1.price * $2' LANGUAGE SQL;
+
+SELECT price_extension(item, 10) FROM on_hand;
+\end{lstlisting}
+
+\\
+
+
+
+
+\par \noindent En el código \ref{codigo181} se crea un tipo \ti{ENUM}, que posee
+los estados de error de algún error y luego se crea una tabla \ti{error} la cual tiene una
+columna del tipo \ti{estado\_error}. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo utilización de un tipo como
+columna de tabla en PostgreSQL}, label=codigo181]
+
+CREATE TYPE estado_error AS ENUM ('nuevo', 'abierto', 'cerrado');
+
+CREATE TABLE error (
+    id serial,
+    descripcion text,
+    estado estado_error
+);
+\end{lstlisting}
+
+
+\par
+\noindent Una vez que las funciones de entrada / salida se hayan escrito y
+compilado en una librería compartida, se puede definir el tipo \ti{Complejo} en
+SQL mediante la sentencia \tn{CREATE TYPE} como se ilustra en el código
+\ref{codigo15}, para luego crear sus funciones ver \ref{codigo16}. Por otro
+lado en el código \ref{codigo17} se realizó una definición del tipo
+\ti{Complejo} en donde se declaran las funciones creadas en el código
+\ref{codigo16}.
+\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo declaración del tipo shell
+en PostgreSQL}, label=codigo15]
+ CREATE TYPE Complejo;
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo declaración de funciones en
+PostgreSQL}, label=codigo16]
+ CREATE FUNCTION complejo_in(cstring)
+    RETURNS complejo
+    AS 'filename'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION complejo_out(complejo)
+    RETURNS cstring
+    AS 'filename'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION complejo_recv(internal)
+   RETURNS complejo
+   AS 'filename'
+   LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION complejo_send(complejo)
+   RETURNS bytea
+   AS 'filename'
+   LANGUAGE C IMMUTABLE STRICT;
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo declaración de funciones de
+un Tipo en PostgreSQL}, label=codigo17]
+CREATE TYPE Complejo ( internallength = 16,
+   input = complejo_in,
+   output = complejo_out,
+   receive = complejo_recv,
+   send = complejo_send,
+   alignment = double
+);
+\end{lstlisting}
+
+\subsection{Sintaxis y ejemplos XML} \label{anexo12}
+
+\par \noindent En el código \ref{codigo18} se muestra la sintaxis para generar
+un valor del tipo XML. \\
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis XMLPARSE en PostgreSQL },
+label=codigo18]
+XMLPARSE ( { DOCUMENT | CONTENT } value)
+\end{lstlisting}
+
+\par \noindent Un ejemplo de utilización se visualiza en el código
+\ref{codigo19}.\\
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis XMLPARSE en PostgreSQL },
+label=codigo19]
+XMLPARSE (DOCUMENT '<?xml version="1.0"?><book><title>Manual</title><chapter>...</chapter></book>')
+XMLPARSE (CONTENT 'abc<foo>bar</foo><bar>foo</bar>')
+\end{lstlisting}
+
+\par \noindent En el código \ref{codigo20} describe como convertir
+caracteres a cadena en valores XML. \\
+
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis conversión carácter a cadena
+en PostgreSQL }, label=codigo20]
+xml '<foo>bar</foo>'
+'<foo>bar</foo>'::xml
+\end{lstlisting}
+
+\par \noindent Para convertir un valor carácter desde XML se debe utilizar la
+función \ti{xmlserialize}, ver código \ref{codigo21}.\\
+
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis conversión de un carácter
+desde XML en PostgreSQL }, label=codigo21] 
+XMLSERIALIZE ( { DOCUMENT | CONTENT }
+value AS type )
+\end{lstlisting}
+
+\par \noindent La sintaxis estándar de configuración de sesión XML OPTION, se
+detalla en el código \ref{codigo22}, esto sirve al momento de castear desde o un
+tipo XML sin tener que utilizar XMLPARSE o XMLSERIALIZE.
+\\
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis estándar configuración XML
+option }, label=codigo22] 
+SET XML OPTION { DOCUMENT | CONTENT };
+\end{lstlisting}
+
+\par \noindent También se puede utilizar la sintaxis de PostgreSQL descrita en
+el código \ref{codigo23}.\\
+
+
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis PostgreSQL configuración XML
+option }, label=codigo23] 
+SET xmloption TO { DOCUMENT | CONTENT };
+\end{lstlisting}
+
+\par \noindent La sintaxis del código \ref{codigo24} sirve para crear un valor
+XML conteniendo un comentario XML con un texto específico como contenido. En el
+ejemplo del código \ref{codigo25} se agrega un comentario con el contenido
+``hello''.\\
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis xmlcomment en PostgreSQL },
+label=codigo24] 
+xmlcomment(text)
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo xmlcomment en PostgreSQL},
+label=codigo25] 
+SELECT xmlcomment('hello');
+\end{lstlisting}
+
+\newpage
+
+\section{SQLServer}
+\subsection{Sintaxis y ejemplos O-R} \label{anexo21}
+\par \noindent \tn{Sintaxis CREATE TYPE}
+
+\par \noindent En el código \ref{codigo36} se visualiza la sintaxis detallada
+para crear un tipo definido por el usuario. \\
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis CREATE TYPE en SQLServer },
+label=codigo36] 
+CREATE TYPE [ schema_name. ] type_name
+{   FROM base_type 
+    [ ( precision [ , scale ] ) ] [ NULL | NOT NULL ] 
+  | EXTERNAL NAME assembly_name [ .class_name ] 
+  | AS TABLE ( { <column_definition> | <computed_column_definition> }
+        [ <table_constraint> ] [ ,...n ] )  } [ ; ]
+<column_definition> ::= 
+column_name <data_type>
+    [ COLLATE collation_name ] [ NULL | NOT NULL ]
+    [ DEFAULT constant_expression ] | [ IDENTITY [ ( seed ,increment ) ] ]
+    [ ROWGUIDCOL ] [ <column_constraint> [ ...n ] ] 
+<data type> ::= [ type_schema_name . ] type_name 
+    [ ( precision [ , scale ] | max | [ { CONTENT | DOCUMENT } ] xml_schema_collection ) ] 
+<column_constraint> ::= 
+{     { PRIMARY KEY | UNIQUE } 
+        [ CLUSTERED | NONCLUSTERED ] 
+        [ WITH ( <index_option> [ ,...n ] ) ]  | CHECK ( logical_expression ) } 
+<computed_column_definition> ::= 
+column_name AS computed_column_expression [PERSISTED[ NOT NULL ]]
+[   { PRIMARY KEY | UNIQUE }
+        [ CLUSTERED | NONCLUSTERED ]
+        [ WITH ( <index_option> [ ,...n ] )] | CHECK ( logical_expression ) ] 
+<table_constraint> ::=
+{   { PRIMARY KEY | UNIQUE } 
+        [ CLUSTERED | NONCLUSTERED ] 
+                              ( column [ ASC | DESC ] [ ,...n ] ) 
+        [ WITH ( <index_option> [ ,...n ] )] | CHECK ( logical_expression ) } 
+<index_option> ::=
+{   IGNORE_DUP_KEY = { ON | OFF }  }
+\end{lstlisting}
+
+\par \noident Los argumentos que recibe son:
+
+\begin{itemize}
+  \item \tn{Nombre del esquema}: Es el nombre del esquema al cual pertenece el
+ alias de tipo de datos o tipo definido por el usuario.
+  \item \tn{Nombre de tipo}: Es el nombre del alias de tipo de datos o el tipo
+  definido por el usuario. Los nombres de tipo deben cumplir con las reglas de
+  los identificadores.
+  \item \tn{Tipo base}: Es el tipo de datos suministrado por SQL Server en el
+  que se basa el alias de tipo de dato. Los tipos de datos pueden ser los
+  presentados en la tabla \ref{tabla21}.
+  
+  \begin{table}[H]
+  \begin{center}
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    bigint             & binary( n )      & bit                 & char( n )     
+    \\\hline
+    date               & datetime         & datetime2           & datetimeoffset
+    \\\hline
+    decimal            & float            & image               & int           
+    \\\hline
+    money              & nchar( n )       & ntext               & numeric       
+    \\\hline
+    nvarchar( n | max) & real             & smalldatetime       & smallint      
+    \\\hline
+    smallmoney         & sql\_variant      & text                & time         
+    \\\hline
+    tinyint            & uniqueidentifier & varbinary( n | max) & varchar( n |
+    max) \\\hline
+    \end{tabular}
+    \caption{\label{tabla21}Valores que puede tener el tipo base en SQLServer}
+    \end{center}
+\end{table}
+  
+  \item \tn{Precisión}: Indica el total máximo de números de dígitos decimales
+  que pueden ser almacenados.
+  \item \tn{Escala}: Indica el número de dígitos decimales máximos que pueden
+  ser almacenados a la derecha del punto decimal, y debe ser menor o igual a la
+  precisión.
+  \item \tn{NULL | NOT NULL}: Especifica si el tipo puede contener un valor
+  nulo. Si no se especifica, el valor predeterminado es NULL.
+  \item \tn{Nombre ensamblado}: Especifica el ensamblado de SQL SERVER que
+  referencia la implementación del tipo definido por el usuario en el CLR.
+  Debería coincidir con un ensamblado existente en la base de datos actual.
+  \item \tn{[.class\_name]}: Especifica la clase del ensamblado que implementa
+  el tipo definido por el usuario.
+  \item \tn{<column\_definition>}: Define las columnas del tipo tabla
+definida por el usuario.
+  \item \tn{<data\_type>}: Define el tipo de dato en una columna del tipo tabla
+definida por el usuario.
+  \item \tn{<column\_constrait>}: Define las restricciones de la columna del
+  tipo tabla definida por el usuario. Las restricciones soportadas incluyen
+  PRIMARY KEY, UNIQUE, y CHECK.
+  \item \tn{<computed\_column\_definition>}: Define una expresión de columna
+  calculada como columna del tipo tabla definido por el usuario.
+  \item \tn{<table\_constraint>}: Define las restricciones de una tabla en
+  un tipo tabla definida por el usuario. Las restricciones soportadas incluyen
+  PRIMARY KEY, UNIQUE, y CHECK.
+  \item \tn{<index\_option>}: Especifica el error de respuesta para valores de
+  claves duplicadas en una operación de inserción de multiples filas.
+\end{itemize}
+
+\subsection{Sintaxis y ejemplos XML}\label{anexo22}
+\par \noindent Para crear una tabla que posee una columna del tipo xml, se debe
+seguir la sintaxis del código \ref{xmlss1}. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo creación una tabla con una
+columna XML en SQLServer}, label=xmlss1] 
+CREATE TABLE XMLEjemplo1 (
+  Columna1 int NOT NULL PRIMARY KEY IDENTITY(1,1),
+  Columna2 varchar(20) NULL,
+  Columna3 xml NULL)
+GO
+\end{lstlisting}
+
+\par \noindent También como se muestra en el código \ref{xmlss2} se puede
+especificar un valor por defecto utilizando un CAST. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo creación tabla con una columna
+XML y un valor por defecto usando un CAST a XML en SQLServer}, label=xmlss2] 
+CREATE TABLE XMLEjemplo2 ( Columna1 int NOT NULL PRIMARY KEY IDENTITY(1,1),
+  Columna2 varchar(20) NULL,
+  Columna3 xml NULL DEFAULT CAST('' AS xml))
+GO
+\end{lstlisting}
+
+\par \noindent Para simplemente declarar una variable del tipo XML, se debe
+realizar como aparece en el código \ref{xmlss3}. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo declaración de una variable
+usando el tipo de datos XML en SQLServer}, label=xmlss3] 
+DECLARE @documento xml
+SELECT @documento = ''
+GO
+\end{lstlisting}
+
+\par \noindent En el código \ref{xmlss4} se muestra un ejemplo de cómo asignar
+directamente valores a un tipo XML.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo asignación directa en
+SQLServer}, label=xmlss4] 
+DECLARE @directorXML xml
+SET @directorXML = CAST('1234567890Ridley, Scott' + 'Director de ciencia ficción' AS xml) 
+SELECT @directorXML AS DatosDirectores
+\end{lstlisting}
+
+\par \noindent En el código \ref{xmlss5} se visualiza como utilizar FOR XML
+y recuperar datos como XML.
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo utilización FOR XML
+en SQLServer}, label=xmlss5] 
+DECLARE @empleadoXML xml
+SET @empleadoXML = (SELECT TOP 3 IdCliente,
+                   Nombre,
+                   Pais, Departamento
+               FROM Clientes 
+               FOR XML AUTO, ELEMENTS, ROOT ('Clientes'))
+SELECT @empleadoXML AS DatosClientes
+\end{lstlisting}
+
+\par \noindent En el ejemplo del código \ref{xmlss6} detalla como cargar
+datos desde un archivo XML mediante OPENROWSET.
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo cargando datos utilizando
+OPENROWSET en SQLServer}, label=xmlss6] 
+DECLARE @productoXML xml
+SET @productoXML = (SELECT *
+                	FROM OPENROWSET( BULK 'C:\SQLServer\consolas.xml', 
+                	SINGLE_BLOB) AS xmlDatosProductos) 
+SELECT @productoXML AS DatosProductos
+\end{lstlisting}
+
+\par \noindent En el código \ref{xmlss7} se crea una tabla en donde se
+almacenará un archivo XML y luego se inserta el contenido de dicho archivo.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo cargando datos utilizando
+OPENROWSET en SQLServer}, label=xmlss7] 
+CREATE TABLE XMLBicicletas (
+  Codigo int NOT NULL PRIMARY KEY IDENTITY(1,1), BiciXML xml NULL)
+GO
+
+INSERT INTO XMLBicicletas(BiciXML)
+SELECT * FROM OPENROWSET(
+    BULK 'C:\SQLServer\Bicicletas.xml', SINGLE_BLOB) AS xmlProdData
+GO
+\end{lstlisting}
+
+\par \noindent En el código \ref{xmlss8} se muestra la estructura del archivo
+XML ``Bicicletas.xml''. \\
+
+
+\begin{lstlisting}[language=SQL, caption={Estructura de archivo xml Bicicletas
+SQLServer}, label=xmlss8] 
+SELECT * FROM XMLBicicletas
+<Bicycles><Product>
+    <ProductID>791</ProductID>
+    <Name>Road-250 Red, 52</Name>
+    <ProductNumber>BK-R89R-52</ProductNumber>
+    <MakeFlag>1</MakeFlag>
+    <FinishedGoodsFlag>1</FinishedGoodsFlag>
+    <Color>Red</Color>
+    <SafetyStockLevel>100</SafetyStockLevel>
+    <ReorderPoint>75</ReorderPoint>
+    <StandardCost>1518.7864</StandardCost>
+    <ListPrice>2443.3500</ListPrice><Size>52</Size>
+    <SizeUnitMeasureCode>CM </SizeUnitMeasureCode>
+    <WeightUnitMeasureCode>LB </WeightUnitMeasureCode>
+    <Weight>15.42</Weight>
+    <DaysToManufacture>4</DaysToManufacture>
+    <ProductLine>R </ProductLine><Class>H</Class><Style>U</Style>
+    <ProductSubcategoryID>2</ProductSubcategoryID>
+    <ProductModelID>26</ProductModelID>
+    <SellStartDate>2002-07-01T00:00:00</SellStartDate>
+    <SellEndDate>2003-06-30T00:00:00</SellEndDate>
+    <rowguid>C9FD1DF4-9512-420A-B379-067108033B75</rowguid>
+    <ModifiedDate>2004-03-11T10:01:36.827</ModifiedDate>
+  </Product> </Bicycles>
+\end{lstlisting}
+
+\par \noindent OPENXML entrega una vista de un conjunto de filas de un documento
+XML, en el código \ref{xmlss9} se detalla su sintaxis. \\
+
+\begin{lstlisting}[language=SQL, caption={Sintaxis OPENXML en SQLServer},
+label=xmlss9]
+OPENXML( idoc int [ in] , rowpattern nvarchar [ in ] , [ flags byte [ in ] ] ) 
+[ WITH ( SchemaDeclaration | TableName ) ]
+\end{lstlisting}
+
+\par \noindent OPENXML tiene como argumentos:
+
+\begin{itemize}
+  \item \tn{idoc}: Es el identificador del documento de la representación
+  interna de un documento XML.
+  La representación interna de un documento XML se crea llamando a la función 
+  sp\_xml\_preparedocument (Transact-SQL).
+  \item \tn{rowpattern}: Es el patrón XPath utilizado para identificar los nodos
+  (en el documento XML cuyo identificador se pasa en el parámetro idoc) que se van a procesar como filas.
+  \item \tn{flags}: Señala la asignación que debe utilizarse entre los datos XML
+  y el conjunto de filas relacional, y cómo debe llenarse la columna de
+  desbordamiento; flags es un parámetro de entrada opcional y puede tomar uno de
+  los valores que se mencionan en la tabla 
+  
+  \begin{table}[H]
+  \begin{center}
+    \begin{tabular}{|l|p{12cm}|}
+    \hline
+    \tn{Valor del byte}             & \tn{Descripción}      
+     \\\hline
+    0               & Establece como valor predeterminado la asignación attribute-centric.       
+    \\\hline
+    1            & Usa la asignación attribute-centric. Se puede combinar con 
+    XML\_ELEMENTS. En ese caso, primero se aplica la asignación attribute-centric y,  
+    a continuación, la asignación element-centric en todas las columnas que
+    todavía no se han visto afectadas.
+    \\\hline
+    2              & Usa la asignación element-centric. Se puede combinar con 
+    XML\_ATTRIBUTES. En ese caso, primero se aplica la asignación
+    attribute-centric y, 
+    a continuación, la asignación element-centric en
+    todas las columnas que todavía no se han visto afectadas.
+    \\\hline
+    8			 & Puede combinarse (OR lógico) con XML\_ATTRIBUTES o XML\_ELEMENTS.
+    Si se trata de una recuperación, esta marca informa de que los datos
+    consumidos no se deberían copiar a la propiedad de desbordamiento
+    @mp:xmltext.
+    \\\hline
+    
+    \end{tabular}
+    \caption[Valores del parámetro flags de OPENXML en SQLServer]{\label{tabla22}Valores que puede tener el parámetro flags de
+    OPENXML en SQLServer}
+    \end{center}
+\end{table}
+
+\item \tn{SchemaDeclaration}: Es la definición de esquema de la forma:
+ColNameColType ``[ColPattern | MetaProperty] [,ColNameColType [ColPattern |
+MetaProperty]...]''
+\item \tn{TableName}: Es el nombre de tabla que puede proporcionarse (en lugar
+de SchemaDeclaration) si ya existe una tabla con el esquema deseado y no se requiere patrones de columna.
+   
+\end{itemize}
+
+\par \noindent Un ejemplo de su utilización es presentado en el código
+\ref{xmlss10}, donde se crea una representación interna de la imagen XML
+utilizando sp\_xml\_preparedocument.
+A continuación se ejecuta una instrucción SELECT que usa un proveedor del conjunto de 
+filas OPENXML contra la representación interna del documento XML. El proveedor
+del conjunto de filas OPENXML crea un conjunto de filas de 2 columnas (CustomerID y ContactName) 
+desde el que la instrucción SELECT recupera las columnas necesarias (en este
+caso, todas las columnas). \\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo OPENXML en SQLServer},
+label=xmlss10]
+DECLARE @idoc int, @doc varchar(1000);
+SET @doc ='
+<ROOT>
+<Customer CustomerID="VINET" ContactName="Paul Henriot">
+   <Order CustomerID="VINET" EmployeeID="5" OrderDate="1996-07-04T00:00:00">
+      <OrderDetail OrderID="10248" ProductID="11" Quantity="12"/>
+      <OrderDetail OrderID="10248" ProductID="42" Quantity="10"/>
+   </Order>
+</Customer>
+<Customer CustomerID="LILAS" ContactName="Carlos Gonzlez">
+   <Order CustomerID="LILAS" EmployeeID="3" OrderDate="1996-08-16T00:00:00">
+      <OrderDetail OrderID="10283" ProductID="72" Quantity="3"/>
+   </Order>
+</Customer>
+</ROOT>';
+//Create an internal representation of the XML document.
+EXEC sp_xml_preparedocument @idoc OUTPUT, @doc;
+// Execute a SELECT statement that uses the OPENXML rowset provider.
+SELECT    *
+FROM       OPENXML (@idoc, '/ROOT/Customer',1)
+            WITH (CustomerID  varchar(10),
+                  ContactName varchar(20));
+\end{lstlisting} 
+\newpage
+\section{DB2}
+
+\subsection{Sintaxis y ejemplos O-R}\label{anexo31}
+
+\par \noindent En el ejemplo del código \ref{codigo34} se crea un tipo
+para DEPARTAMENTO, el código \ref{codigo35} se crea una jerarquía de tipos
+compuesta de un tipo para empleados y de un subtipo directores.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo CREATE TYPE estructurado en
+DB2}, label=codigo34] 
+ CREATE TYPE DEPT AS
+      (DEPT NAME     VARCHAR(20),
+         MAX_EMPS INT)
+         REF USING INT
+      MODE DB2SQL
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo CREATE TYPE estructurado
+jerarquía compuesta en DB2}, label=codigo35] 
+ CREATE TYPE EMP AS
+     (NAME      VARCHAR(32),
+     SERIALNUM INT,
+     DEPT      REF(DEPT),
+     SALARY    DECIMAL(10,2))
+     MODE DB2SQL
+
+   CREATE TYPE MGR UNDER EMP AS
+     (BONUS     DECIMAL(10,2))
+     MODE DB2SQL
+\end{lstlisting}
+
+\par \noindent En el ejemplo del código \ref{codigo35} además, se puede observar
+que el empleado hace referencia al departamento que pertenece.
+
+\par \noindent Un ejemplo de creación de tipo matriz se describe en
+el código \ref{codigo29}. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo CREATE TYPE MATRIX en DB2},
+label=codigo29] 
+CREATE TYPE
+	 PHONENUMBERS AS DECIMAL(10,0)
+     ARRAY[50]
+\end{lstlisting}
+\newpage
+\par \noindent En el código \ref{codigo33} se crea un tipo
+fila según las columnas de la tabla existen DEPARTAMENTO.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemeplo CREATE TYPE FILA en DB2},
+label=codigo33] 
+CREATE TYPE DEPTROW AS ROW (DEPTNO   VARCHAR(3),
+                            DEPTNAME VARCHAR(29),
+                            MGRNO    CHAR(6),
+                            ADMRDEPT CHAR(3),
+                            LOCATION CHAR(16)) 
+\end{lstlisting}
+
+\par \noindent En el código \ref{codigo30} se aprecia un ejemplo de
+creación de cursores.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo CREATE TYPE CURSOR en DB2},
+label=codigo30] 
+CREATE TYPE EMPCURSOR AS CURSOR
+\end{lstlisting}
+
+\subsection{Sintaxis y ejemplos XML}\label{anexo32}
+
+\par \noindent Algunas de las funciones que provee DB2 para XML son:
+
+\begin{itemize}
+  \item \tn{XMLATTRIBUTES}: construye atributos XML a partir de los argumentos.
+  Esta función puede ser utilizada como argumento de la
+  función XMLELEMENT.  El resultado es una secuencia XML que contiene un nodo de atributo XQuery para cada valor de entrada que no sea nulo.  
+  \item \tn{XMLCOMMENT}: entrega un valor XML con un único nodo de comentario XQuery con el argumento de entrada como contenido.
+  \item \tn{XMLCONCAT}: devuelve una secuencia que contiene la concatenación de
+  un número variable de argumentos de entrada de XML.
+  \item \tn{XMLDOCUMENT}: retorna un valor XML con un único nodo de documento
+  XQuery que puede tener o no nodos hijo.
+  \item \tn{XMLELEMENT}: entrega un valor XML que es un nodo de elemento XQuery.
+  \item \tn{XMLFOREST}: devuelve un valor XML que es una secuencia de nodos de
+  elemento XQuery. Además esta función es capaz de tomar un conjunto opcional de
+  declaraciones de espacios de nombres y uno o varios argumentos que forman el
+  contenido de nombre y elemento para uno o varios nodos de elementos.
+  \item \tn{XMLNAMESPACES}: construye declaraciones de espacios de nombres
+  mediante los argumentos. Esta declaración únicamente puede emplearse como
+  argumento de funciones específicas como XMLELEMENT, XMLFOREST y XMLTABLE. El resultado es una o 
+  varias declaraciones de espacios de nombres XML que contienen espacios de nombres con ámbito para cada uno de los valores de entrada no nulos
+  \item \tn{XMLPARSE}: examina el argumento como un
+  documento XML y devuelve un valor XML.
+  \item \tn{XMLPI}: entrega un valor XML con un nodo de
+  instrucción de proceso XQuery.
+  \item \tn{XMLQUERY}: devuelve un valor XML mediante la
+  evaluación de una expresión XQuery utilizando posiblemente los argumentos de entrada especificados como variables XQuery.
+  \item \tn{XMLROW}: retorna un valor XML con un único nodo de documento XQuery que contiene un nodo de elemento de nivel superior.
+  \item \tn{XMLSERIALIZE}: entrega un valor XML serializado de los tipos de datos especificados, generados a partir del argumento expresión-XML.
+  \item \tn{XMLTEXT}: devuelve un valor XML que posee un único nodo
+  					de texto XQuery cuyo contenido es el argumento de entrada.
+  \item \tn{XMLVALIDATE}: retorna una copia del valor de entrada XML aumentado con la información 
+  			conseguida mediante la validación del esquema XML, incluyendo los valores
+  			por omisión.
+
+\end{itemize}
+
+\par \noindent \tn{Ejemplos}
+
+\par \noindent En el ejemplo del código \ref{xmldb21} se genera un elemento con
+atributos, cuya consulta da como resultado el código \ref{xmldb22}. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo XMLATTRIBUTES en DB2},
+label=xmldb21]
+SELECT E.rut, XMLELEMENT(
+	NOMBRE "Emp",
+	XMLATTRIBUTES(
+		E.rut, E.nombre	||'	'||	E.apellido	AS	"nombre"
+	)
+)
+AS "Resultado"
+FROM Empleado E	WHERE E.edlevel = 14
+\end{lstlisting} 
+
+
+\begin{lstlisting}[language=SQL, caption={Resultado de utilización
+de XMLATTRIBUTES en DB2}, label=xmldb22] 
+RUT				Resultado
+19990909	<Emp	RUT="19990909"	nombre="Claire Redfield"></Emp>
+18928283	<Emp	RUT="18928283"	nombre="Regina George"></Emp>
+14033230	<Emp	RUT="14033230"	nombre="Anakin Skywalker"></Emp>
+\end{lstlisting} 
+
+
+\par \noindent En el código \ref{xmldb23} se presenta un ejemplo de utilización
+de la función XMLPARSE.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización
+de XMLPARSE en DB2}, label=xmldb23] 
+INSERT INTO PRODUCTO VALUES	('111-111-11','Reproductor
+Bluray',30.000,NULL,NULL,NULL,XMLPARSE	(	DOCUMENT
+	'<producto	xmlns="http://ejemplos.info"	pid="111-111-11">
+		<descripcion>
+			<nombre>Reproductor Bluray</nombre>
+			<detalles>
+				Reproductor de bluray LG:
+				-	tecnología 3D
+				-	reproducción de archivos MKV vía USB
+				-	Wifi incorporado
+			</detalles>
+			<precio>30.000</precio>
+			<peso>1.5 kg</peso>
+		</descripcion>
+	</producto>'	PRESERVE WHITESPACE	));
+\end{lstlisting} 
+
+
+\par \noindent Primero en la tabla \ref{tabladb} se muestran la estructura con
+datos de la tabla empleado, para luego en el código \ref{xmldb24} utilizar la
+función XMLROW, el resultado obtenido se visualiza en el código \ref{xmldb25}.\\
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+ \hline
+rut &	nombre	&	apellido &	edad \\ \hline 
+14123230	&	Milla	& Jovovich	&	37	\\	\hline
+12334355	&	Robert	&	Rodriguez	& 	42	\\	\hline
+10349529	&	Billy	&	Corgan		&	
+\\ \hline
+\end{tabular}
+\caption{\label{tabladb}Tabla empleado con datos de ejemplo}
+\end{center}
+\end{table}
+\newpage
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización
+de XMLROW en DB2}, label=xmldb24] 
+SELECT XMLROW(rut,apellido,edad) FROM empleado
+\end{lstlisting} 
+
+\begin{lstlisting}[language=SQL, caption={Resultado de utilización
+de XMLROW en DB2}, label=xmldb25] 
+<row><rut>14123230</rut><apellido>Jovovich</apellido><edad>37</edad></row>
+<row><rut>12334355</rut><apellido>Rodriguez</apellido><edad>42</edad></row>
+<row><rut>10349529</rut><apellido>Corgan</apellido></row>
+\end{lstlisting} 
+
+
+
+\section{Oracle}
+\subsection{Sintaxis y ejemplos O-R}\label{anexo41}
+\noindent \tn{Ejemplos de tipo colección}
+
+\par \noindent En el ejemplo del código \ref{varray1} se presenta la definición
+orientada a objetos y en el código \ref{varray2} su definición en ORACLE, se
+define un tipo de datos para almacenar una lista ordenada de teléfonos: el tipo list (ya que en el tipo set no existe orden). 
+Este tipo se utiliza después para asignárselo a un atributo del tipo de objeto
+cliente\_t. \\
+
+
+
+\begin{lstlisting}[language=C,caption={Definición orientada a
+objetos en C de ejemplo para Varray}, label=varray1] 
+define type Lista_Tel_T:
+	list(string);
+	
+define class Cliente_T:
+	tuple [clinum: integer,	clinomb:string,
+			direccion:Direccion_T,
+			lista_tel: Lista_Tel_T];
+\end{lstlisting} 
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de definición VARRAY},
+label=varray2]
+CREATE TYPE lista_tel_t AS 	VARRAY(10) OF VARCHAR2(20);
+
+CREATE TYPE cliente_t AS OBJECT (clinum NUMBER,	clinomb VARCHAR2(200), direccion direccion_t,	lista_tel lista_tel_t );
+\end{lstlisting} 
+
+\par \noindent El ejemplo del código \ref{nt1} y \ref{nt2} en C y SQL
+respectivamente, se declara una tabla que después será anidada en el tipo
+ordenes\_t. \\
+
+
+\begin{lstlisting}[language=C,caption={Definición orientada a
+objetos en C de ejemplo para Nested Table 1}, label=nt1] 
+define type Linea_T:
+	tuple [linum:integer,
+			item:string,
+			cantidad:integer,
+			descuento:real];
+\end{lstlisting} 
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo 1 de tabla para utilizar
+Nested Table}, label=nt2]
+CREATE TYPE linea_t AS OBJECT (
+	linum NUMBER,
+	item VARCHAR2(30),
+	cantidad NUMBER,
+	descuento NUMBER(6,2));
+\end{lstlisting} 
+
+\par \noindent En el código \ref{nt2} se define el tipo de objeto linea\_t para
+las filas de la tabla anidada. Se define el tipo colección tabla lineas\_pedido\_t para después
+anidarla como se visualiza en el código \ref{nt3}.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de Nested
+Table 1}, label=nt3]
+CREATE TYPE lineas_pedido_t AS TABLE OF linea_t ;
+\end{lstlisting} 
+
+\par \noindent Esta definición permite utilizar el tipo colección
+lineas\_pedido\_t para:
+
+\begin{itemize}
+  \item Definir el tipo de dato de una columna de una tabla relacional.
+  \item Definir el tipo de dato de un atributo de un tipo de objetos.
+  \item Para definir una variable PL/SQL, un parámetro, o el tipo que devuelve
+  una función.
+\end{itemize}
+
+\noindent Otro ejemplo es presentado en el código \ref{nt4} y \ref{nt5}
+respectivamente, en donde se define el tipo objeto ordenes\_t y su atributo
+pedido almacena una tabla anidada del tipo lineas\_pedido\_t.\\
+
+\newpage
+\begin{lstlisting}[language=C,caption={Definición orientada a
+objetos en C de ejemplo para Nested Table 2}, label=nt4] 
+define class Ordenes_T:
+	tuple [ordnum:integer,
+		   cliente:Clientes_T,
+		   fechpedido:date,
+		  fechentrega:date,
+		  pedido:set (Linea_T),
+		  direcentrega:Direccion_T];
+\end{lstlisting} 
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo 2 de tabla para utilizar
+Nested Table}, label=nt5]
+CREATE TYPE ordenes_t AS OBJECT (
+	ordnum NUMBER,
+	cliente REF cliente_t,
+	fechpedido DATE,
+	fechentrega DATE,
+	pedido lineas_pedido_t,
+	direcentrega direccion_t) ;
+\end{lstlisting} 
+
+\noindent Luego en el código \ref{nt6} se define la tabla de objetos
+ordenes\_tab y se especifica la tabla anidada del tipo lineas\_pedido\_t. Es
+necesario realizarlo de esta forma porque la declaración de una tabla
+anidada no reserva ningún espacio para su almacenamiento. Lo que se hace es
+indicar en qué tabla (pedidos\_tab) se deben almacenar todas las líneas de pedido 
+que se representen en el atributo pedido de cualquier objeto de la tabla
+ordenes\_tab. Es decir, todas las líneas de pedido de todas las órdenes se 
+almacenan externamente a la tabla de órdenes, en otra tabla especial. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de Nested
+Table 2}, label=nt6]
+CREATE TABLE ordenes_tab OF ordenes_t
+		(ordnum PRIMARY KEY,
+SCOPE FOR (cliente) IS clientes_tab)
+NESTED TABLE pedido STORE AS pedidos_tab) ;
+\end{lstlisting} 
+
+%%%%%%%%componentes tipo objeto
+
+\par \noindent En los códigos \ref{codigo42} y \ref{codigo43} se visualiza que
+en un tipo de objeto, los métodos pueden hacer referencia a los atributos y a los otros
+métodos.\\
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo objeto para referencia de
+atributos en ORACLE}, label=codigo42] 
+CREATE TYPE Pila AS OBJECT (
+	top INTEGER,	
+	MEMBER FUNCTION llena RETURN BOOLEAN,
+	MEMBER FUNCTION insertar (n IN INTEGER)
+	);
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo referencia de atributos de la
+especifiación en el cuerpo de método en ORACLE}, label=codigo43] 
+CREATE TYPE BODY
+Pila AS ....
+	MEMBER FUNCTION insertar (n IN INTEGER)IS
+	BEGIN
+		IF NOT llena THEN
+			top := top + 1;
+			...
+	END insertar;
+END;
+\end{lstlisting}
+
+
+%%%%%% SELF
+
+\par \noindent En el código \ref{codigo44} se observa un ejemplo del método
+\ti{transformar} que declara SELF como un parámetro IN OUT.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo parámetro SELF en ORACLE},
+label=codigo44] 
+CREATE TYPE Complejo AS OBJECT (
+MEMBER FUNCTION transformar (SELF IN OUT Complejo ) . . .
+END;
+\end{lstlisting}
+
+\noindent Como muestra el ejemplo del código \ref{codigo45}, los métodos
+pueden hacer referencia a los atributos de SELF sin necesidad de utilizar un
+cualificador. Este método encuentra el máximo común divisor de x e y.\\
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo referencia a parámetro SELF
+desde método en ORACLE}, label=codigo45] 
+CREATE FUNCTION gcd ( x INTEGER, y INTEGER) RETURN INTEGER AS
+ans INTEGER;
+BEGIN
+IF x < y THEN ans := gcd (x,y) ;
+ELSE ans := gcd (y,x MOD y) ;
+ENDIF; RETURN ans;
+END; /
+
+CREATE TYPE Rational AS num INTEGER, den INTEGER,
+MEMBER PROCEDURE normalize ,...) ; /
+CREATE TYPE BODY Rational AS 
+MEMBER PROCEDURE normalize IS g INTEGER;
+BEGIN
+	// Estas dos sentencias son equivalentes
+	g:= gcd (SELF.num,SELF.den);
+	g:= gcd (num,den);
+	num:= num / g ;
+	den:= den / g ;
+	END normalize ;
+	...
+END;
+\end{lstlisting}
+
+%%%%%%%% constructores
+
+\par \noindent En el bloque
+del código \ref{codigo46} se declara un objeto r de tipo Racional y se invoca al
+constructor para asignar su valor.
+El llamado asigna los valores 6 y 8 a los atributos num y den respectivamente.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo declaración e inicialización
+de objeto en ORACLE}, label=codigo46] 
+DECLARE
+	r Racional ;
+BEGIN
+	r := Racional(6,8) ;
+	DBMS_OUTPUT.PUT_LINE(r.num); // muestra 6
+\end{lstlisting}
+
+
+\par \noindent En el ejemplo del código \ref{codigo47}, se emplea un objeto de
+tipo Cuenta para especificar el tipo de dato de un parámetro formal. Y en el código
+\ref{codigo48} se declara una función que retorna un objeto de tipo Cuenta. \\
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo especificación de parámetro
+del tipo objeto 'Cuenta' en ORACLE}, label=codigo47] 
+DECLARE
+	...
+	PROCEDURE cuenta_abierta ( nueva_cuenta IN OUT Cuenta ) IS ...
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo declaración de función que
+retorna un objeto del tipo 'Cuenta' en ORACLE}, label=codigo48] 
+DECLARE
+	...
+	FUNCTION get_cuenta ( id_cuenta IN INTEGER ) RETURN Cuenta IS ...
+\end{lstlisting}
+
+
+\par \noindent Como se ilustra en el código \ref{codigo49} si se asigna el
+no-valor NULL a un objeto, éste se convierte en atómicamente nulo. Por otro lado una buena práctica de programación se observa
+en el código \ref{codigo50} en donde se inicializan los objetos en su
+declaración.\\
+%\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo inicialización de objeto -
+atómicamente nulo en ORACLE}, label=codigo49] 
+DECLARE
+	r Racional ;
+BEGIN
+	r Racional := Racional (1,2) ; // r = 1/2
+	r : = NULL; // r atomicamente nulo
+	IF r IS NULL THEN ... // la condicion resulta TRUE
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo inicialización de objetos
+ORACLE}, label=codigo50] 
+DECLARE
+	r Racional := Racional (2,3) ; //r = 2/3
+\end{lstlisting}
+
+\noindent Existe una pequeña diferencia entre objetos nulos y objetos con
+atributos nulos. El código \ref{codigo51} ejemplifica dicha diferencia. \\
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo diferencia de objetos
+nulos y atributos nulos en ORACLE}, label=codigo51] 
+DECLARE
+	r Relacional ; // es atomicamente nulo
+BEGIN
+	IF r IS NULL THEN ... //TRUE
+	IF r.num IS NULL THEN ... // TRUE
+	r := Racional (NULL, NULL); // Inicializar
+	r.num = 4; // Exito : r ya no es atomicamente nulo aunque sus atributos son nulos 
+	r := NULL; // r es de nuevo atomicamente nulo
+	r.num := 4; //Provoca la excepcion ACCESS_INTO_NULL
+EXCEPTION
+	WHEN ACCESS_INTO_NULL THEN
+	...
+END;
+/
+\end{lstlisting}
+
+\par \noindent El ejemplo del código \ref{codigo52} ilustra
+la notación punto ('.'), que sirve para poder acceder o cambiar los
+valores de un atributo. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de acceso a los atributos de
+un objeto en ORACLE}, label=codigo52] 
+DECLARE
+	r Racional := Racional (NULL, NULL) ;
+	numerador INTEGER;
+	denominador INTEGER;
+BEGIN
+	...
+	denominador := r.den;
+	r.num := numerados;
+END;
+\end{lstlisting}
+
+\par \noindent Otro ejemplo es presentado en
+el código \ref{codigo53}, en donde se definen los tipos de objeto Dirección
+y Estudiante, como se observa cod\_postal es un atributo de tipo
+Dirección y Dirección es el tipo de dato del atributo direccion\_casa del tipo
+de objeto Estudiante. Si este es un objeto Estudiante, para poder acceder al
+valor de su cod\_postal se utiliza la notación
+\ti{est.direccion\_casa.cod\_postal}. 
+
+\newpage
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización de objetos como
+tipo de datos de atributos en ORACLE}, label=codigo53] CREATE TYPE Direccion AS
+OBJECT ( calle VARCHAR2(30) ,
+	ciudad VARCHAR2(20) ,
+	estado CHAR( 2 ) ,
+	cod_postal VARCHAR2(5)
+) ;
+/
+
+CREATE TYPE Estudiante AS OBJECT (
+	nombre VARCHAR2(20) ,
+	direccion_casa Direccion ,
+	telefono VARCHAR2(10) ,
+	estatusVARCHAR2(10) ,
+	nombre_consejero VARCHAR2(20) ,
+	...
+) ;
+/
+\end{lstlisting}
+
+%%%%%%%%Invocación de constructores y métodos
+
+\par \noindent En el código \ref{codigo54}, se muestra como se permite invocar
+al constructor en cualquier punto en donde se puede invocar una función.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo invocación de constructor en
+ORACLE}, label=codigo54] 
+DECLARE
+	r1 Racional := Racional (2,3) ;
+	FUNCTION promedio ( x Racional , y Racional ) RETURN Racional IS
+	BEGIN
+		...
+	END;
+BEGIN
+	r1 := promedio (Racional(3,4) , Racional (7,11)) ;
+	IF ( Racional (5,8) > r1 ) THEN
+		...
+	END IF ;
+END;
+/
+\end{lstlisting}
+
+
+%%%paso de parametros a un contructor
+
+\par \noindent En el ejemplo del código \ref{codigo55} se muestra como es
+posible invocar al constructor empleando la notación con nombre en vez de la
+posición. \\
+
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de llamado al constructor por
+nombre de parámetros en ORACLE}, label=codigo55] 
+BEGIN
+	 r := Racional( den => 6 ,num => 5); //asigna num = 5 y den = 6
+\end{lstlisting}
+
+
+%%%% Invocación de métodos
+
+
+%%%%% PRAGMA
+
+\par \noindent En el ejemplo del código \ref{codpragma}, pragma impide al método
+MAP convert leer el estado de la base de datos (rnds), modificar el estado de la
+base de datos (wnds), leer el estado de un paquete o módulo (rnps) y modificar
+el estado de un paquete (wnps).
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de PRAGMA REFERENCES en
+ORACLE}, label=codpragma] 
+CREATE TYPE Relacional AS OBJECT (numero	INTEGER, den	INTEGER,
+	MAP		MEMBER FUNCTION convert RETURN REAL,
+	....
+	PRAGMA RESTRICT_REFERENCES (convert, RNDS, WNDS, RNPS, WNPS));
+\end{lstlisting}
+
+
+
+\par \noindent En el ejemplo del código \ref{codigo56} se invoca
+al método normaliza, el cual divide los atributos num y den por el mayor
+común divisor.\\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de llamado de métodos de un
+objeto en ORACLE}, label=codigo56] 
+DECLARE
+	r Racional;
+BEGIN
+	r := Racional (6,8);
+	r.normaliza;
+	DBMS_OUTPUT.PUT_LINE( r.num); // muestra 3
+\end{lstlisting}
+
+
+\par \noindent En el código \ref{codigo57}, se muestra como encadenar los
+llamados a los métodos, primero se llama a la función \ti{reciproco} y luego a la función \ti{normaliza}.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de llamado encadenado de
+métodos de un objeto en ORACLE}, label=codigo57]
+DECLARE
+	r Racional := Racional (6,8);
+BEGIN
+	r.reciproco( ).normaliza;
+	DBMS_OUTPUT.PUT_LINE(r.num); // muestra 4
+END;
+\end{lstlisting}
+
+
+\par \noindent Por ejemplo, la sentencia del código \ref{codigo58} es
+ilegal ya que o es posible encadenar llamados a métodos adicionales a la derecha del
+llamado de un procedimiento.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de llamado encadenado erróneo
+en ORACLE}, label=codigo58] 
+r.normaliza( ).reciproco; // ilegal
+\end{lstlisting}
+
+%%%%Limitaciones en la definición de tipos
+
+\par \noindent En el ejemplo del código \ref{codigo63}, la primera sentencia \ti{CREATE TYPE} es ilegal ya que hace
+referencia al objeto de tipo Departamento, el cual todavía no existe. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización errónea de REF
+en objetos en ORACLE}, label=codigo63] 
+CREATE TYPE Empleado AS OBJECT (
+	nombre VARCHAR2(20) ,
+	depto REF Departamento, // ilegal!
+	...); /
+CREATE TYPE Departamento AS OBJECT (
+	numero INTEGER ,
+	gerente REF Empleado ,
+	...); /
+\end{lstlisting}
+
+
+\par \noindent En el ejemplo del código \ref{codigo63}, cambiar el orden de las
+sentencias \ti{CREATE TYPE} no soluciona en nada el problema, ya que ambos tipos son
+dependientes mutuamente, en otras palabras dependen el uno del otro por medio de
+una referencia. Para resolver el problema mencionado previamente, basta con
+incluir la sentencia del código \ref{codigo64}.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización errónea de REF
+en objetos en ORACLE}, label=codigo64] 
+CREATE TYPE Departamento; // Definición previa de tipo, aquí Departamento es un
+tipo de objeto incompleto.
+\end{lstlisting}
+
+
+\par \noindent Por ejemplo, la sentencia \ti{CREATE TYPE} del código
+\ref{codigo65} compila con errores debido a que el tipo de objeto \ti{Direccion} todavía no se encuentra
+definido.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización errónea de REF
+en objetos en ORACLE}, label=codigo65] 
+CREATE TYPE Cliente AS OBJECT (
+	id NUMBER,nombre VARCHAR2(20),
+	dir Direccion, //todavía indefinido
+	telefono VARCHAR2(15)) ; /
+\end{lstlisting}
+
+
+%%%%% manipulacion de objetos
+
+\par \noindent En el código \ref{codigo66} la sentencia INSERT llama al
+constructor del tipo \ti{Racional} para insertar su valor. La sentencia SELECT rescata el valor del
+atributo \ti{numero} y la sentencia UPDATE llama al método \ti{reciproco}, el
+cual retorna un valor \ti{Relacional} después de invertir los valores de
+\ti{numero} y \ti{denominador}. \\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización errónea de REF
+en objetos en ORACLE}, label=codigo66] 
+CREATE TABLE numeros(rn Racional,...);
+INSERT INTO numeros (rn)VALUES(Racional(3,62));
+SELECT nu.rn.num INTO mi_numero FROM numeros nu WHERE ...
+UPDATE numeros nu SET nu.rn = nu.rn.reciproco WHERE ...
+\end{lstlisting}
+
+
+
+%%%% VALUE
+
+\par \noindent Por ejemplo, para obtener un conjunto de objetos \ti{Persona} se
+puede utilizar el comando VALUES como se detalla en el código \ref{codigo70}. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización de operador
+VALUE en sentencia INSERT INTO en ORACLE}, label=codigo70] 
+BEGIN
+	INSERT INTO Empleados SELECT VALUE(per) FROM Personas per WHERE per.apellido
+	LIKE '% Tarantino'
+\end{lstlisting}
+
+
+\par \noindent Por ejemplo en el código \ref{value1}, se puede ejecutar una de
+las dos instrucciones siguientes. En la primera instrucción, la tabla
+clientes\_año\_tab se considera como una tabla con varias columnas cuyos valores
+son los especificados. En el segundo caso, se la considera como con una tabla de objetos que en cada fila almacena un objeto. En esta instrucción la cláusula VALUE permite visualizar el
+valor de un objeto. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de utilización de operador
+VALUE en sentencia SELECT en ORACLE}, label=value1] 
+INSERT INTO clientes_año_tab VALUES( 
+		2347, 
+		‘Juan Pérez Ruíz’, 
+		direccion_t(‘Calle Castalia’, ‘Onda’, ‘Castellón’, ‘34568’), 
+		‘696-779789’, 
+		12/12/1981); 
+SELECT VALUE(c) FROM clientes_año_tab c 
+WHERE c.clinomb = ‘Juan Pérez Ruíz’;
+\end{lstlisting}
+
+
+%%%% REF
+
+\noindent En el ejemplo del código \ref{codigo71}, primero se recuperan una o
+más referencias a objetos de tipo Persona y luego se ingresan en la tabla
+\ti{persona\_refs}. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de inserción de objetos en una
+tabla de objetos utilizando operador REF en ORACLE}, label=codigo71] 
+BEGIN
+	INSERT INTO persona_refs SELECT REF(per) FROM Personas per WHERE per.apellido LIKE '% Scorsese';
+\end{lstlisting}
+
+
+\noindent El ejemplo del código \ref{ref1} define un atributo de tipo REF y
+restringe su dominio a los objetos de cierta tabla.\\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de definición de tipo REF y
+restricción de dominio a objetos de una tabla}, label=ref1] 
+CREATE TABLE clientes_tab OF cliente_t;
+
+CREATE TYPE ordenes_t AS OBJECT ( 
+		ordnum NUMBER, 	cliente REF clientes_t, fechpedido DATE, direcentrega direccion_t);
+
+CREATE TABLE ordenes_tab OF ordenes_t ( 
+		PRIMARY KEY (ordnum), 
+		SCOPE FOR (cliente) IS clientes_tab);
+\end{lstlisting} 
+
+
+%%%% dangling refs
+
+\noindent Por ejemplo, suponer que la columna gerente en la tabla relacional
+departamento contiene referencias a objetos Employee almacenados en una tabla de objetos. Para convertir todas las referencias colgadas en
+nulos, podemos utilizar la siguiente sentencia UPDATE del código
+\ref{codigo71.1}.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de DANGLING REF en ORACLE},
+label=codigo71.1] BEGIN
+	UPDATE departamento SET gerente = NULL
+	WHERE gerente IS DANGLING;
+\end{lstlisting}
+
+
+%%%%% DEREF
+\newpage
+\par \noindent En el ejemplo que se visualiza en el código \ref{codigo72} se
+derreferencia una referencia a un objeto Persona de la tabla DUAL2.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de derreferencia de objetos en
+ORACLE}, label=codigo72] DECLARE
+	per1 Persona;
+	per_ref REF Persona;
+	nombre VARCHAR2(15) ;
+BEGIN
+	...
+// Suponer que per_ref contiene una referencia valida a un objeto almacenado en una tabla de objetos 
+
+	SELECT DEREF( per_ref ) INTO per1 FROM DUAL;
+	nombre:= per1.apellido;
+\end{lstlisting}
+
+
+\par \noindent En el código \ref{codigo73} se muestra la
+utilización del operador DEREF en sentencias SQL sucesivas para derreferencias
+referencias. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo utilización de operador DEREF
+en ORACLE}, label=codigo73] 
+CREATE TYPE PersonaRef AS OBJECT (p_ref REF Persona) ;
+/
+DECLARE
+	nombre VARCHAR2(15) ;
+	pr_ref REF PersonaRef ;
+	pr PersonaRef ;
+	p Persona ;
+BEGIN
+	...	
+//Suponer que pr_ref contiene una referencia valida
+	SELECT DEREF( pr_r e f ) INTO pr FROM DUAL;
+	SELECT DEREF( pr . p_ref ) INTO p FROM DUAL;
+	nombre:= p.apellido;
+	...
+END;
+/
+\end{lstlisting}
+
+\par \noindent Por ejemplo, la
+sentencia del código \ref{codigo74} es legal, cn sentencias SQL se puede
+utilizar la notación punto para navegar a través de referencias. \\
+\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo de navegación entre
+referencias en ORACLE}, label=codigo74] alias_tabla.columna_objeto.ref_atributo
+alias_tabla.columna_objeto.ref_atributo.atributo alias_tabla. ref_columna.atributo
+\end{lstlisting}
+
+\par \noindent El código \ref{codigo75} crea los tipos de objeto Dirección y
+Persona y la tabla de objetos Personas, en donde el atributo
+\ti{direccion\_casa} es una referencia a una columna en la tabla de objetos
+Personas, que a la vez contiene referencias a objetos \ti{Direccion} que se
+encuentran almacenados en otra tabla indeterminada. Tras introducir algunos
+elementos en la tabla, es posible obtener una dirección particular derreferenciando su referencia, 
+como se muestra en el código \ref{codigo76}.\\ 
+\begin{lstlisting}[language=SQL, caption={Ejemplo de creación de objetos con
+referencia a otro objeto y tabla que lo contiene en ORACLE}, label=codigo75] 
+CREATE TYPE Direccion AS OBJECT (
+	direccion_calle VARCHAR2(35) ,
+	ciudad VARCHAR2(15) ,
+	estado CHAR( 2 ) ,
+	cod_postal INTEGER) ;
+/
+CREATE TYPE Persona AS OBJECT (
+	nombre VARCHAR2(15) ,
+	apellido VARCHAR2(15) ,
+	fecha_nac DATE,
+	direccion_casa Direccion, 
+	telefono VARCHAR2(15));
+/
+CREATE TABLE Personas OF Persona;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo obtención de dato de columna
+derreferenciando una referencia en ORACLE}, label=codigo76] DECLARE
+	dir1 Direccion,
+	dir2 Direccion,
+	...
+BEGIN
+	SELECT DEREF(direccion_casa) INTO dir1 FROM Personas p WHERE p.apellido = 'Lee';
+\end{lstlisting}
+
+\par \noindent En el caso del ejemplo del código \ref{codigo77}, se navega a
+través de la columna de referencias \ti{direccion\_casa} hasta el atributo
+\ti{direccion\_calle}, para este caso en particular se requiere de un alias a la
+tabla (per).\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de acceso a atributo mediante
+columna de un objeto en ORACLE}, label=codigo77] 
+DECLARE
+	mi_calle VARCHAR2(25),
+	...
+BEGIN
+	SELECT per.direccion_casa.direccion_calle INTO mi_calle FROM Personas per WHERE per.apellido = 'kubrick';
+\end{lstlisting}
+
+
+%%%%
+\par \noindent Por ejemplo, para insertar un objeto Persona en la tabla de
+objetos personas se emplea el código \ref{codigo78}. Además, es posible utilizar
+el constructor para el objeto de tipo Persona tal y como se observa en el
+código \ref{codigo79}.
+\\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de inserción de objetos en una
+tabla de objetos en ORACLE}, label=codigo78] 
+BEGIN INSERT INTO Personas VALUES ('George' , 'Lucas',...) ;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de inserción de objetos en una
+tabla de objetos utilizando constructor de objeto en ORACLE}, label=codigo79] 
+BEGIN
+	INSERT INTO Personas VALUES (Persona('Darren','Aronofsky' ,...));
+\end{lstlisting}
+
+
+\par \noindent En el código \ref{codigo80} se grafica un ejemplo de la cláusula
+RETURNING, la cual almacena una referencia a Persona en una variable local.
+En el código \ref{codigo81} se muestra como ingresar objetos a una tabla de
+objetos, las filas copiadas a la tabla de objetos \ti{Personas2} cuentan con
+identificadores de objeto nuevos, ya que los identificadores de objeto son únicos.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de inserción de objetos en una
+tabla de objetos utilizando cláusula RETURNING en ORACLE}, label=codigo80] 
+DECLARE
+	per1_ref REF Persona, per2_ref REF Persona, ...
+BEGIN
+	INSERT INTO Personas pers VALUES (Persona('Christopher','Nolan',...))
+	RETURNING REF(pers) INTO per1_ref; 
+	INSERT INTO Personas pers VALUES (Persona('Luc' ,'Besson',...)) RETURNING
+	REF(pers) INTO per2_ref;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de inserción de objetos en una
+tabla de objetos copiando filas desde objeto en ORACLE},
+label=codigo81] 
+BEGIN
+	INSERT INTO Personas2 
+		SELECT VALUE(pers) FROM Personas pers WHERE pers.apellido LIKE '% Potter';
+\end{lstlisting}
+
+
+\par \noindent Otro ejemplo puede ser apreciado en el código \ref{codigo82},
+donde se crea una tabla relacional \ti{Departamento}, la cual cuenta con una columna del tipo \ti{Persona}; luego se inserta una fila en la tabla. Cabe destacar cómo el
+constructor \ti{Persona()} suministra un valor para la columna \ti{Gerente}. El
+nuevo objeto Persona almacenado en la columna gerente no se puede referenciar,
+porque al estar almacenada en una columna (y no en una fila) carece de
+identificador de objeto.\\
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo tabla relacional con columna
+de un tipo de objeto en ORACLE}, label=codigo82] 
+CREATE TABLE Departmento (
+	depto_nombre VARCHAR2(20),
+	gerente Persona,
+	ubicacion VARCHAR2(20));
+	/
+	INSERT INTO Departmento VALUES ('Ventas',Persona('Ridley','Scott',...),'Los Angeles');
+\end{lstlisting}
+
+
+\par \noindent Como se ilustra en el código
+\ref{codigo83} para poder modificar los atributos de un objeto en una tabla de
+objetos se debe utilizar la sentencia UPDATE. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de actualización de objetos en
+ORACLE}, label=codigo83] 
+BEGIN
+	UPDATE Personas pers SET pers.direccion_casa = 'Prat 1313' WHERE pers.apellido=	'Skywalker'; ...
+	UPDATE Personas pers SET pers = Persona ('James','Cameron', ...) WHERE
+	pers.apellido = 'Spielberg'; ...
+END
+\end{lstlisting}
+
+\par \noindent Como se muestra en el ejemplo del código \ref{codigo85}, para
+eliminar objetos selectivamente se utiliza la cláusula WHERE. \\
+\newpage
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de eliminación de objetos en
+ORACLE}, label=codigo85] 
+BEGIN
+	DELETE FROM Personas pers WHERE pers.direccion_casa = '21 de Mayo 2121';
+	...
+END;
+\end{lstlisting} 
+
+\newpage
+
+\subsection{Sintaxis y ejemplos XML} \label{anexo42}
+
+\noindent Primero se creará un esquema de validación de documentos XML (XSD)
+con la finalidad de que todo documento XML ingresado cumpla cierta estructura y condiciones.
+Cualquier documento XML debe cumplir con dicha especificación y será validado al
+momento de ser insertado en la tabla RESERVA que se creará más adelante. \\
+\noindent En la figura \ref{esquemaxml1} se presenta el documento XSD que
+se registrará la base de datos. Luego en el código \ref{xml_ora00} se
+registra el documento XSD en la base de datos, esto se realiza a través del
+procedimiento DBMS\_XMLSCHEMA.REGISTERSCHEMA.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.9]{anexos/images/xmltype-database-3-1931043.jpg}
+  \end{center}
+ \caption[Ejemplo estructura de esquema XML (Documento
+ XSD)]{\label{esquemaxml1}Ejemplo estructura de esquema XML (Documento XSD)
+ \cite{xml_repo}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo de registro de esquema
+XML en ORACLE \cite{xml_repo}}, label=xml_ora00] 
+begin
+ DBMS_XMLSCHEMA.REGISTERSCHEMA(SCHEMAURL=>'pedidos.xsd', SCHEMADOC=>'<?xml version="1.0" encoding="utf-8"?>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	  <xs:element name="pedidos">
+	    <xs:complexType>
+	      <xs:sequence>
+	        <xs:element maxOccurs="unbounded" name="pedido">
+	          <xs:complexType>
+	            <xs:sequence>
+	              <xs:element name="fecha" type="xs:string" />
+        	              <xs:element name="pu" type="xs:decimal" />
+	              <xs:element name="cantidad" default="1">
+	                 <xs:simpleType>
+                                 <xs:restriction base="xs:unsignedByte">
+	                         <xs:minInclusive value="0"/>
+                                    <xs:maxInclusive value="50"/>
+                                </xs:restriction>
+	                 </xs:simpleType> </xs:element>
+	              <xs:element name="descripcion" type="xs:string"/>
+	              <xs:element name="tipo">
+	                 <xs:simpleType>
+                                 <xs:restriction base="xs:string">
+	                            <xs:enumeration value="A"/>
+                                    <xs:enumeration value="B"/>
+                                    <xs:enumeration value="C"/>
+                                </xs:restriction>
+	                 </xs:simpleType></xs:element>
+	            </xs:sequence>
+     		    <xs:attribute name="cod" type="xs:integer" use="required"/>
+	          </xs:complexType></xs:element>
+	      </xs:sequence>
+	    </xs:complexType> </xs:element>
+	</xs:schema>', LOCAL=>true, GENTYPES=>false, GENBEAN=>false, GENTABLES=>false, 
+    FORCE=>false, OPTIONS=>DBMS_XMLSCHEMA.REGISTER_BINARYXML, OWNER=>USER);
+ commit;
+end;/
+\end{lstlisting} 
+
+
+\noindent En el código \ref{xml_ora0} se muestra la creación de una tabla con
+una columna XMLTYPE. En donde se crea la tabla Reserva que se compone de un
+campo llamado pedido de tipo XMLTYPE al cual se le está especificando que
+será almacenado como Binary XML. También se indica que el campo pedido será
+validado por el esquema pedidos.xsd que previamente lo ha sido creado. Por otro
+lado en el código \ref{xml_ora01} se inserta una tupla en la tabla reserva.\\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de creación de tabla con
+columna XMLType en ORACLE \cite{xml_repo}}, label=xml_ora0] 
+CREATE TABLE FRICCIO.RESERVA(id number, pedido xmltype)
+XMLTYPE COLUMN pedido STORE AS BINARY XML
+XMLSCHEMA "http://xmlns.oracle.com/xdb/schemas/FRICCIO/pedidos.xsd"
+ELEMENT "pedidos";
+\end{lstlisting} 
+
+
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de inserción en tabla con
+columna XMLType en ORACLE \cite{xml_repo}}, label=xml_ora01] 
+INSERT INTO friccio.reserva values (1,'<?xml version="1.0"?>
+	<pedidos>
+		<pedido cod="1">
+			<fecha>01-01-2013</fecha>
+			<pu>45.5</pu>
+			<cantidad>2</cantidad>
+			<descripcion>Botella de Vino</descripcion>
+			<tipo>C</tipo>
+		</pedido>
+		<pedido cod="2">
+			<fecha>31-12-2012</fecha>
+			<pu>25</pu>
+			<cantidad>1</cantidad>
+			<descripcion>Menu Ejecutivo</descripcion>
+			<tipo>A</tipo>
+		</pedido>
+	</pedidos>');		
+\end{lstlisting} 
+
+\noindent Es posible insertar un documento a partir de un archivo XML existente
+en el Sistema Operativo o en el XML DB Repository, un ejemplo se describe en el
+código \ref{xml_ora02}. \\
+\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo de inserción en tabla con
+columna XMLType desde archivo existente \cite{xml_repo}}, label=xml_ora02] 
+INSERT INTO <tabla> VALUES 
+(XMLType(bfilename('<DIR>','<archivo.xml>'),nls_charset_id('AL32UTF8')));
+\end{lstlisting} 
+
+\noindent Existen algunas funciones que permiten dar mantenimiento a los
+elementos de un documento XML ya registrado. Se hará una demostración de tres de
+ellos. Para Agregar un nuevo elemento pedido sobre el documento XML se debe
+utilizar la función appendchildxml(), un ejemplo de uso en el código
+\ref{xml_ora03}. En el código \ref{xml_ora04}  se modifica el pu (precio
+unitario) del nuevo elemento pedido ingresado del valor de 30 a 20 y por último
+en el código \ref{xml_ora05} se elimina el último elemento ingresado. \\
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de función AppendChildxml en
+ORACLE \cite{xml_repo}}, label=xml_ora03] 
+UPDATE reserva set pedido=appendchildxml(pedido,'/pedidos',
+	'<pedido cod="3">
+		<fecha>31-12-2012</fecha>
+		<pu>30</pu>
+		<cantidad>1</cantidad>
+		<descripcion>xxx</descripcion>
+		<tipo>B</tipo>
+	</pedido>')
+where id=1;
+\end{lstlisting} 
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de UPDATE a columna XMLTYPE
+utilizando posiciones en ORACLE \cite{xml_repo}}, label=xml_ora04] 
+update reserva set pedido=updatexml(pedido,'/pedidos[1]/pedido[3]/pu/text()',20) 
+where id=1;
+\end{lstlisting} 
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de Actualización eliminando
+nodo en columna XMLTYPE ORACLE \cite{xml_repo}}, label=xml_ora05] 
+UPDATE reserva set pedido=deletexml(pedido,'/pedidos[1]/pedido[3]');
+\end{lstlisting} 
+
+\noindent En el código \ref{ora_xml06} se obtiene el documento XML como String,
+en cambio en el código \ref{ora_xml07} como CLOB y en el código \ref{ora_xml08}
+se crea un String o CLOB a partir de un contenido.
+\newpage
+\begin{lstlisting}[language=SQL, caption={Ejemplo de obtención de
+documento XML como String en ORACLE \cite{xml_repo}}, label=ora_xml06] 
+select id,r.PEDIDO.getStringVal() from reserva r;
+\end{lstlisting} 
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de obtención de
+documento XML como Clob en ORACLE \cite{xml_repo}}, label=ora_xml07] 
+select id,r.PEDIDO. getClobVal() from reserva r;
+\end{lstlisting} 
+
+\begin{lstlisting}[language=SQL, caption={Ejemplo de creación de String o Clob
+desde un contenido en ORACLE \cite{xml_repo}}, label=ora_xml08] 
+select xmlserialize(DOCUMENT|CONTENT r.PEDIDO as CLOB|VARCHAR|VARCHAR2) from reserva r;
+\end{lstlisting} 
+
+\noindent Para obtener nodos específicos de un documento se debe utilizar
+XPath. En el ejemplo de la figura \ref{xpath1} se obtienen todos los pu (precios unitarios) de la reserva con
+id=1.
+En la figura \ref{xpath2} se muestra un ejemplo de cómo obtener aquellos
+pedidos que han superado un precio unitario de 48 de tipo A. Y por último en el
+ejemplo descrito en la figura \ref{xpath3} obtiene aquellos pedidos
+cuyo atributo cod sea diferente del valor de 3.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1]{anexos/images/xmltype-database-16-1931069.jpg}
+  \end{center}
+ \caption[Ejemplo XPath 1]{\label{xpath1}Ejemplo XPath 1 \cite{xml_repo}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.8]{anexos/images/xmltype-database-17-1931070.jpg}
+  \end{center}
+ \caption[Ejemplo XPath 2]{\label{xpath2}Ejemplo XPath 2 \cite{xml_repo}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=1]{anexos/images/xmltype-database-18-1931072.jpg}
+  \end{center}
+ \caption[Ejemplo XPath 3]{\label{xpath3}Ejemplo XPath 3 \cite{xml_repo}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\subsection{¿Como almacenar XML en Oracle?} \label{anexo421}
+
+\subsubsection{¿XMLType o tablas relacionales?}
+
+\par \noindent Esta decisión inicial puede generalmente estar basada en el
+formato de los datos XML y la fidelidad en los requerimientos DOM (Document Object
+Model) en el contenido XML. Para el formato, los documentos XML generalmente
+pueden ser categorizados como documentos ``centrado en datos'' o ``centrados en
+documentos''.
+
+\noindent Los documentos centrados en datos son categorizados por la estructura
+regular de los datos, en donde la unidad más pequeña es un elemento XML con
+contenido simple o un atributo XML. En dicho documento XML, hay poca o ninguna
+mezcla de contenido (por ejemplo, etiquetas dentro del contenido de un elemento
+XML cadena). Además, la fidelidad DOM del documento no
+es requerida de conservar. El código \ref{xml_1} es un ejemplo de
+un documento XML centrado en datos.
+
+\noindent 
+
+\begin{lstlisting}[language=xml, caption={Ejemplo de documentos XML centrado
+en datos}, label=xml_1] 
+<?xml version="1.0"?>
+<purchaseOrder orderDate="1999-10-20">
+ <shipTo country="US">…</shipTo>
+  <billTo country="US">…</billTo>
+	<items>
+		<item partNum="872-AA">
+     		<productName>Lawnmower</productName>
+      		<quantity>1</quantity>
+       		<USPrice>148.95</USPrice>
+       		<comment>Confirm this is electric</comment>
+     	</item> …
+   </items>
+</purchaseOrder>
+\end{lstlisting}
+
+\noindent Todos los datos presentados en el código \ref{xml_1} son representados
+como elementos XML o como atributos para elementos XML.
+
+\noindent La mayoría de los documentos XML centrados en datos son creados
+basados en datos relacionales para intercambiar y compartir datos entre aplicaciones.
+
+\noindent Del mismo modo, para documentos centrados en datos, no existe una
+necesidad de mantener datos en XML una vez que estos son almacenados en la base
+de datos. Si elementos y atributos XML son almacenados correctamente en columnas
+de las tablas relacionales, se tiene el almacenamiento optimizado para su
+posterior procesamiento, lo que evita la sobrecarga de mantener y gestionar la estructura XML en la base de datos. 
+Siempre que se necesite, los datos en XML para el intercambio de datos y la
+publicación en la Web, se puede construir Vistas XMLType para envolver los datos
+en XML.
+
+\subsubsection{Modelos de almacenamiento XMLType}
+
+\noindent Este tipo de dato abstracto permite almacenar
+datos en formato XML, brindando la posibilidad de
+utilizar esquemas XML, XPath, XQuery, XSLT, indexación y particionamiento de documentos
+XML.
+En las versiones anteriores de Oracle Database 9i y 10g los
+documentos XML se almacenan como CLOB (Character Large Object) o como
+objetos. A partir de la versión Oracle Database 11g se
+agregó una nueva posibilidad, almacenarlos en formato
+binario (Binary XML), que desde la versión 11.2.0.2. es el formato por
+defecto \cite{almacenamientoxml}.
+
+\begin{itemize}
+  \item \tn{Almacenamiento no estructurado}
+  
+  Los datos XMLType son almacenados como un tipo CLOB. Los documentos XML son
+almacenados preservando el documento original,
+inclusive los espacios en blanco. De esta forma, se mantiene
+fidelidad de contenido o de documento. Además, Oracle
+brinda la posibilidad de asociar un esquema a dicha
+forma de almacenamiento. Entrega un muy
+bueno desempeño en las operaciones de inserción y recuperación de
+documentos completos.
+Es una opción que proporciona una gran
+flexibilidad, pero por otro lado, requiere una sobrecarga
+en el procesamiento cuando se necesita consultar su
+contenido, como por ejemplo cuando se utilizan
+funciones como XMLType.Extract y XMLType.ExistsNode.
+Evaluar estas funciones requiere construir el árbol XML
+DOM en memoria y sobre este evaluar las expresiones
+XPath. También, toda operación de actualización se debe
+realizar a nivel de documento \cite{almacenamientoxml}.
+\newpage
+\item \tn{Almacenamiento estructurado}
+
+Los datos XMLType son almacenados como
+un conjunto de objetos. Los documentos XML
+mantienen fidelidad DOM.
+Esta alternativa también es mencionada como
+almacenamiento Objeto Relacional (OR) \cite{xml2}.
+Es común y conveniente almacenarlos con un
+esquema asociado, puesto que permite acelerar las consultas y las actualizaciones de granularidad fina. Esto
+provoca que las aplicaciones que lo utilizan deban
+ajustarse a un esquema de datos bien estructurado y
+rígido.
+Por otro lado, presenta varias ventajas en comparación
+con el almacenamiento no estructurado. Se logra una
+optimización del manejo de memoria, se reducen los
+requerimientos de almacenamiento, y se pueden hacer
+actualizaciones a nivel de detalle.
+Es necesario mencionar que las mejoras de esta alternativa tiene su
+contrapartida, el incremento de la sobrecarga durante la
+inserción y la recuperación de los datos, además de la
+reducción de la flexibilidad en términos de estructura \cite{almacenamientoxml}. 
+
+\item \tn{Almacenamiento binario}
+
+Esta forma de almacenamiento provista por la
+versión 11g es introducida con la intención de compensar
+ventajas y desventajas de las dos alternativas anteriores.
+Así, provee una gran flexibilidad en cuanto a la
+estructura sin deteriorar el desempeño.
+Concretamente, mantiene un buen rendimiento en la
+actualización, indexación y extracción de fragmentos; así
+como en las consultas, puesto que parsea el documento
+antes de almacenarlo.
+La tabla \ref{tablaxml_a1} presenta una comparación muy ilustrativa entre
+las tres opciones de almacenamiento descriptas en Oracle 11g \cite{almacenamientoxml}.
+\end{itemize}
+
+\subsubsection{Elección de la estructura de almacenamiento}
+
+\begin{table}[H]
+    \begin{tabular}{|l|c|c|c|}
+    \hline
+    ~                          & \tn{CLOB}      & \tn{Objeto Relacional} &
+    \tn{XML Binario} \\ \hline Consulta                   & pobre     &
+    excelente & bueno / excelente \\ \hline DML                        & pobre     & bueno / excelente & excelente         \\ \hline
+    Recuperación de documentos & excelente & bueno / excelente & excelente         \\ \hline
+    Flexibilidad de esquema    & bueno     & pobre             & excelente         \\ \hline
+    Fidelidad de documento     & excelente & pobre             & bueno / excelente \\ \hline
+    \end{tabular}
+    \caption[Comparación de los diferentes modelos de
+    almacenamiento]{\label{tablaxml_a1}Comparación de los diferentes modelos de
+    almacenamiento \cite{almacenamientoxml}}
+\end{table}
+
+\noindent Cada modelo de almacenamiento posee un conjunto de
+características que lo hacen más o menos apropiado
+según el tipo de datos a manipular. Sin embargo, aunque
+la naturaleza de los datos es un aspecto fundamental a
+considerar, el uso que se les dará a esos datos también
+constituye un factor decisivo.
+
+\begin{itemize}
+  \item \tn{Datos Estructurados}
+  
+  Corresponde a aquellos datos que tienen una estructura
+regular y granularidad fina. Los datos contenidos en
+facturas de ventas y en cuentas de un banco son
+ejemplos de esta categoría.
+
+	\item \tn{Datos Semiestructurados o No Estructurados}
+	
+	Se caracterizan por tener una estructura menos regular,
+una granularidad más gruesa y con contenidos
+mezclados; tales como los datos contenidos en correos
+electrónicos, libros, currículos y advertencias. En
+general, los datos están organizados para ser usados por
+personas.
+Por otra parte, como se comentó con anterioridad, las
+aplicaciones que usan los datos también pueden ser de
+diferente naturaleza:
+\begin{itemize}
+\item \tn{Aplicaciones centradas en datos}
+
+Estas aplicaciones necesitan conocer la estructura de
+los datos. En general, los datos son altamente
+estructurados. Luego, la aplicación puede tomar ventaja
+en este sentido. Es común que los datos se ajustan a un
+esquema XML.
+
+\item \tn{Aplicaciones centrada en documentos}
+
+En este caso, es común que las aplicaciones necesiten
+mantener una copia exacta de los documentos, como
+sucede por ejemplo en el ámbito judicial, médico, etc.
+Luego, bajo la hipótesis de contar con datos
+estructurados, por un lado cabe la situación que las
+aplicaciones no necesiten conocer esa estructura, y por
+otro, que sí lo demanden. En el primer caso, el modelo
+de almacenamiento como CLOB será la alternativa más
+aconsejable, mientras que en el segundo, el modelo
+apropiado sería el binario.
+\end{itemize}
+\end{itemize}

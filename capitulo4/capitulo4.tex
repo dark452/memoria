@@ -1,0 +1,90 @@
+\chapter{ANÁLISIS E INTERPRETACIÓN DE RESULTADOS} \label{capitulo4}
+
+\section{Análisis de los resultados}
+
+\noindent En este capítulo se presentan los resultados de la investigación
+realizada, el cual comprende el análisis e interpretación de resultados
+y recomendaciones.
+
+\subsection{Criterios de comparación}
+
+\noindent Los criterios a evaluar en cada implementación, son los siguientes:
+
+\begin{itemize}
+  \item Facilidad de modelamiento
+  \item Complejidad de aprendizaje por parte del desarrollador y/o DBA
+\end{itemize}
+
+% \noindent Cabe destacar que el desempeño de consultas será
+% comparado con información adquirida de otras investigaciones, ya que para obtener resultados fidedignos es 
+% irrelevante el origen de los datos. Se quiso aprovechar el trabajo ya
+% realizado en dichas investigaciones y así concentrar el esfuerzo en la
+% implementación.
+
+
+
+\subsection{Comparación de resultados} \label{comparacion_resultados}
+
+
+
+
+
+
+
+\section{Recomendaciones}
+
+\noindent Si se desea crear un sistema desde cero, considerando que el
+desarrollo será bajo el paradigma orientación al objeto, es muy recomendable
+implementar la base de datos en el modelo objeto relacional. Es posible que esto
+tome mayor tiempo de implementación, ya que el desarrollador primero deberá
+interiorizarse con el modelo, cómo se crean los tipos de objetos, los
+relacionamientos, referencias, tablas de objetos, entre otros. Pero obtendrá
+una sintaxis más limpia al momento de realizar las consultas a la base de datos.
+Y por consecuencia, al momento de realizar mantenimiento de dicha aplicación,
+resultará sumamente sencillo de llevar a cabo porque existe una gran base de
+conocimiento en dicho paradigma.
+
+\noindent Por otro lado, si se desea migrar un sistema actual que se encuentra
+complemente implementado en el modelo relacional, es probable que sea muy
+complicado, puesto que habría que realizar una transformación tanto del
+código desarrollado como de la base de datos. Es
+posible que tome un tiempo elevado, pero con buenos resultados, ya que luego de la migración el código del sistema
+debería ser más sencillo de mantener gracias a la semántica del modelo
+implementado.
+
+\noindent Si se desea crear aplicaciones web donde no existan muchas inserciones
+y principalmente la base de datos será utilizada para la lectura de datos como
+por ejemplo un blog o una wiki, se propone implementar mediante datos semi
+estructurados XML, ya que es fácil de mantener y usar.
+Sólo se debe tener un cierto conocimiento en la extracción de datos XML.
+El desarrollo y puesta en marcha tomaría menos tiempo.
+
+\noindent En el caso de que se desee crear aplicaciones o sistemas que no están
+bajo el paradigma orientación al objeto, no tendría mucho sentido utilizar el
+modelo objeto relacional, ya que el desarrollo sería más estructural y bastaría
+con utilizar el modelo relacional que para ese tipo de sistema resulta ser el
+más apropiado.
+
+\noindent Si es una aplicación transaccional pequeña, como control de bodega o
+carrito de compras, lo más sencillo sería utilizar el modelo relacional, ya que
+generalmente ese tipo de aplicaciones son fáciles de modelar debido a su baja
+complejidad, por lo que resultaría innecesaria la creación de objetos complejos.
+
+\noindent En el caso de aplicaciones móviles sencillas, como por ejemplo:
+Lista de compras, notas personales, video juegos con puntajes locales, entre
+otros, en donde los datos son almacenados en el mismo dispositivo, se recomienda
+utilizar XML, pues no es necesario disponer de una base de datos para almacenar 
+información que sólo se visualizará en dicho dispositivo. 
+
+\noindent Para problemas muy complejos, con una gran cantidad tablas y/o
+relacionamientos y que deban ser implementados con urgencia en un tiempo muy
+corto, se recomienda emplear una base de datos relacional, puesto que su creación es mucho
+más rápida que la objeto relacional y no requiere aprendizaje
+extra.
+
+\noindent Para cualquier tipo de aplicación en donde se requiera de muchas
+consultas donde exista una gran cantidad de agrupamientos con un inmenso
+número de datos, es recomendable el uso del modelo objeto relacional, según
+los datos obtenidos en \ref{comparacion_resultados} este modelo es mucho
+más eficiente que el relacional y sencillo de escribir, ya que se utilizan
+punteros y no existen joins.

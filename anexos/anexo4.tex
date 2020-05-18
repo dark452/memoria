@@ -1,0 +1,142 @@
+\chapter{Desempeño de consultas SQL relacionales y objeto-relacionales en
+Oracle} \label{anexo4}
+
+\noindent Se presenta el comportamiento del modelo relacional y
+objeto relacional en consultas específicas, y se muestran así 
+los resultados de medir y a la vez se comparar la eficiencia
+(tiempo, utilización de recursos del sistema) de operaciones que involucraron
+cláusulas GROUP BY, subconsultas (con las cláusulas IN y EXISTS) y joins.
+
+
+\noindent El desempeño de cada consulta varía según el set de datos y el tipo
+de consulta, en algunos casos el modelo
+relacional es superior al modelo objeto relacional y viceversa. 
+Algunas de las tasas utilizadas en \cite{comparacion} para medir el desempeño
+de una consulta son:
+
+\begin{itemize}
+  \item Bloques leídos (f+g) sobre filas procesadas (h). Esta tasa
+indica de una manera general el costo relativo de la consulta.
+Mientras más bloques tienen que ser accedidos en relación
+en las filas retornadas, la fila traída será mucho
+más costosa. Una relación similar se puede deducir sobre
+la tasa de bloques leídos sobre ejecuciones (f+g)/e. El valor
+que se debe procurar para esta tasa debe ser menor a 10,
+sin embargo tasas con valores de 10 a 20 son aceptables.
+Tasas por encima de 20 pueden indicar alguna posibilidad
+de optimización en este campo.
+
+\item Lecturas de Disco (k) sobre lecturas lógicas (f+g). Esta
+es una tasa de error (miss rate) dentro del buffer de datos
+en la zona de caché, es decir, es una tasa que muestra el
+porcentaje de ocasiones en el que SGBD no ha encontrado
+las filas solicitadas en el buffer de la zona de caché y
+por lo tanto ha tenido que recurrir a traer los bloques
+desde disco.  Generalmente se busca que esta tasa no
+represente más de un 10\%.
+\end{itemize}
+
+
+
+ \noindent Las pruebas se realizaron con tablas con muchos y pocos datos para
+ ambos modelos, en consultas del tipo group by sencillo, se puede observar en la
+ figura \ref{grafico1}, que el modelo objeto relacional tiene un rendimiento inferior con respecto al modelo relacional, tanto con muchos como
+con pocos datos (aunque a medida que aumentan los datos,
+el rendimiento del modelo objeto relacional mejora).
+En la figura \ref{grafico2}, se puede visualizar que el modelo objeto relacional 
+es superior al modelo relacional en la tasa de lecturas de disco a lecturas lógicas, 
+cuando se efectúan sobre muchos datos, sin embargo, al disminuir su cantidad, 
+el modelo relacional supera al modelo objeto relacional.
+
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.95]{capitulo4/images/grafico1.jpg}
+  \end{center}
+ \caption[Tasa de bloques leidos para GROUP BY sencillo]{\label{grafico1}Tasa de bloques leidos a filas procesadas para
+GROUP BY sencillo \cite{comparacion}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.95]{capitulo4/images/grafico2.jpg}
+  \end{center}
+ \caption[Tasa de lecturas de disco para GROUP BY sencillo]{\label{grafico2}Tasa de lecturas de disco a lecturas lógicas para
+GROUP BY sencillo \cite{comparacion}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%
+
+\noindent En consultas del tipo GROUP BY con las
+cláusulas HAVING y ORDER BY, en la tasa de bloques leídos a filas
+procesadas, se observa en la figura \ref{grafico3} nuevamente la
+ventaja que posee el modelo relacional con respecto al modelo objeto relacional
+especialmente cuando se ejecuta sobre muchos datos. De forma contraria, en la
+tasa de lecturas de disco a lecturas lógicas, se observa en la figura
+\ref{grafico4} un comportamiento pobre en el modelo relacional, y muestra ser un
+modelo excesivamente costoso (para este caso) comparado con el
+modelo objeto relacional, el cual presenta valores bastante
+eficientes.
+
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.95]{capitulo4/images/grafico3.jpg}
+  \end{center}
+ \caption[Tasa de bloques leídos para GROUP BY HAVING y ORDER BY]{\label{grafico3}Tasa de bloques leídos a filas procesadas para
+GROUP BY con las cláusulas HAVING y ORDER BY \cite{comparacion}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.95]{capitulo4/images/grafico4.jpg}
+  \end{center}
+ \caption[Tasa de lecturas de disco en GROUP BY HAVING y ORDER
+ BY]{\label{grafico4}Tasa de lecturas de disco a lecturas lógicas para GROUP BY con las cláusulas HAVING y ORDER BY \cite{comparacion}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%
+
+\noindent Para las consultas que utilizan subconsultas, fueron probadas
+aquellas que se realizan con las cláusulas IN y EXISTS.
+Primero se mostrarán los resultados con las subconsultas
+cuando se utiliza la cláusula EXISTS, y luego los resultados
+cuando se utiliza la cláusula IN. En el primer caso se puede observar en la
+figura \ref{grafico5} que en la tasa de bloques leídos a filas procesadas,
+existe una diferencia bastante significativa entre ambos modelos donde se
+visualiza una ganancia bastante visible del modelo relacional sobre el modelo
+objeto relacional, que en este caso muestra una eficiencia baja. 
+De manera análoga a las pruebas realizadas sobre las subconsultas cuando se
+utiliza la cláusula EXISTS, las pruebas con la cláusula IN cuyos
+resultados son presentados en la figura
+\ref{grafico6}, muestran que en la tasa de bloques leídos a filas procesadas el
+modelo relacional ofrece de nuevo un rendimiento superior con respecto
+al modelo objeto relacional. Además de acuerdo con los resultados
+que, aunque la cláusula EXISTS debería ser más eficiente
+que la cláusula IN \cite{oratunning}, en
+este caso particular los dos tipos de subconsultas ofrecen un rendimiento
+exactamente igual. En las demás tasas, en ambos casos, los dos modelos se
+comportaron de manera eficiente.
+
+%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.95]{capitulo4/images/grafico5.jpg}
+  \end{center}
+ \caption[Tasa de bloques leídos para las subconsultas con EXISTS]{\label{grafico5}Tasa de bloques leídos a filas procesadas para las subconsultas cuando se utiliza la cláusula EXISTS \cite{comparacion}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+ \begin{center}
+  \includegraphics [scale=0.95]{capitulo4/images/grafico6.jpg}
+  \end{center}
+ \caption[Tasa de bloques leídos para las subconsultas con la cláusula
+ IN]{\label{grafico6}Tasa de bloques leídos a filas procesadas para las subconsultas cuando se utiliza la cláusula IN \cite{comparacion}}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%

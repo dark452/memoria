@@ -1,0 +1,155 @@
+\chapter{Mapeo objeto relacional (ORM)}\label{orm}
+
+\par \noindent Para poder acceder a una base de datos relacional desde
+una aplicación que haya sido desarrollada basada en los principios de la
+programación orientada a los objetos, se requiere de una interfaz que
+permita traducir representaciones de datos de los sistemas de bases
+de datos relacionales, a representaciones de objetos, a esta interfaz se le
+denomina mapeo objeto-relacional (ORM, Object-Relational Mapping). Como los sistema de
+administración de base de datos relacionales no poseen la flexibilidad para 
+representar datos no escalares, como lo son arreglos y sólo soportan tipos de datos simples, 
+haciéndose preciso la conversión de los objetos en un conjunto de valores simples, y viceversa, 
+de manera que el objeto, sus propiedades y relaciones puedan ser recuperados.
+
+\noindent La existencia de un ORM es primordial para el desarrollo de sistemas
+de software robustos y escalables. Típicamente los desarrolladores son quienes debían
+escribir el código asociado a la persistencia de la información, de forma que
+dicha información pudiera ser almacenada en las tablas de la base de datos. 
+
+\par \noindent Un principio universal en la mayoría de las aplicaciones es la
+independencia de los datos, teniendo en cuenta el gran número de ventajas que
+esto proporciona. Este principio propone que una base de datos debe ser
+administrada y mantenida de manera independiente de cualquier programa que haga
+uso de ella. No obstante, en el proceso de construcción de software esta
+independencia de datos ocasiona ciertos efectos negativos para los
+desarrolladores. Esto es debido a la mezcla de dos lenguajes incompatibles, como
+lo son el lenguaje de consulta para almacenar y recuperar los datos, y además el
+lenguaje de programación que deja a los usuarios interactuar con las bases de
+datos desde la aplicación. Entre estos dos modelos existe una brecha denominada
+desajuste por impedancia \cite{subieta}, dada por las diferencias entre uno y
+otro. Una de las principales diferencias se debe a que en los sistemas de bases
+de datos relacionales, los datos siempre son manejados en forma de tablas,
+constituidas por un conjunto de filas o tuplas; mientras que en los entornos
+orientados a objetos los datos son manipulados como objetos, formados a su vez por objetos y tipos elementales.
+
+\noindent Para disminuir los efectos del desajuste de impedancia entre ambos modelos, existen prácticas y técnicas como:
+
+\begin{itemize}
+  \item Objetos de acceso a datos (Data Acces Objects o DAOs).
+  \item Frameworks de persistencia (Persistence Frameworks).
+  \item Mapeadores objeto relacionales (Object relational mappers u ORM).
+  \item Consultas nativas (Native queries).
+  \item Lenguajes integrados como: PL/SQL (Oracle) y T-SQL(SQLServer).
+  \item Mediadores.
+  \item Repositorios virtuales.
+  \item Bases de datos orientadas al objeto.
+\end{itemize}
+
+\par \noindent A continuación se dará un mayor detalle en los tipos de
+mapeadores y los frameworks de persistencia, ya que son los conceptos más
+relevantes para el presente estudio.
+
+\section{Tipos de mapeadores}
+
+\par \noindent Se presentarán los tipos básicos de mapeadores por diseño de
+originado por entidades de negocio. Se comenzará por un enfoque simple que es
+utilizado en aplicaciones muy simples tales como un libro de visitas en páginas
+de internet.
+
+\subsection{Enfoque a tuplas}
+
+\par \noindent Cuando este enfoque es utilizado, es una pregunta válida si es
+que realmente se está hablando sobre mapeo objeto relacional, ya que las
+aplicaciones simplemente leen registros desde el SADB a un record set y luego
+trabajan con dichos record sets. Los datos no son leídos como objetos (entidades
+de negocio).
+Este enfoque no es apropiado para el desarrollo de sistemas de gran envergadura,
+porque la lógica de negocios se encuentra estrechamente unida con el formato de
+los datos en el almacén de datos. Cuando por ejemplo un atributo se mueve de una
+tabla a otra (por refactorización), todos los lugares en el código fuente de la
+aplicación, que trabajen con este atributo deben ser cambiados.
+
+\subsection{Enfoque a entidades}
+
+\par \noindent Como en el caso anterior, la aplicación lee datos a un record set
+en primera instancia. Luego de leer a un record set, las entidades de negocios
+son llenadas con los datos del record set. Estas entidades de negocio tienen
+forma de estructuras de datos, las cuales son muy similares a las tablas de una
+base de datos relacional. Por ejemplo en ADO.NET se utilizan \ti{DataSets} o
+\ti{DataTables}. De hecho una \ti{DataTable} de ADO.NET es una estructura
+tabular, la cual puede tener restricciones definidas como PK o FK. Por otro lado
+un \ti{DataSet} es un conjunto de \ti{DataTables}, entre los cuales se pueden
+definir relaciones, además posee soporte para actualización o eliminación en
+cascada. La desventaja de este enfoque se centra en que las entidades de
+negocios no poseen métodos, no tienen ningún comportamiento. Sólo se pueden
+observar métodos simples asociados con el procesamiento de bajo nivel de
+datos. %Existen métodos como \ti{CheckConstraints()}.
+\noindent La lógica de negocio está ubicada en lo que es llamado clases
+de gestión. Este tipo de diseño preserva el pensamiento relacional al nivel de
+objetos.
+
+\subsection{Enfoque a modelo de dominio}
+
+\par \noindent Este enfoque es similar al enfoque a entidades, la diferencia
+está en las entidades de negocio. En este enfoque las entidades de negocios son
+objetos reales con comportamiento. Los objetos no sólo son contenedores para
+imágenes de tablas de bases de datos. Se puede utilizar herencia, poliformismo y
+otros conceptos de la orientación al objeto. La lógica de negocio está ubicada
+en los métodos de las entidades de negocio. No existe necesidad de clases de
+gestión, tal como se mencionó anteriormente.
+
+\section{Frameworks de persistencia}
+
+\par \noindent La mayoría de las herramientas emplea un mapeo entre el mundo
+relacional y el mundo orientado a objetos. En este mapeo se declara como la
+herramienta que debe materializar o serializar el objeto desde o hacia la base
+de datos. Las herramientas normalmente también implementan un pseudo lenguaje 
+para hacer consultas sobre los datos, este lenguaje es normalmente basado 
+en objetos en vez de tablas y sus relaciones, la herramienta traduce 
+después al SQL nativo de la base de datos. Muchas herramientas ORM 
+también manejan conceptos como cache, connection pooling, entre otros. Las
+herramientas ORM tratan de esconder el mundo relacional 
+al desarrollador para que el pueda poner sus esfuerzos en la lógica de la
+aplicación.
+\par \noindent Utilizando herramientas ORM se acelera el proceso de desarrollo
+de software. Además se obtiene una independencia del motor de base de datos ya
+que el desarrollador no escribe SQL directamente sino que un pseudo leguaje que
+es traducido al SQL específico de la base de datos configurada.
+\noindent Por otro lado la traducción adicional es un paso extra que toma más
+tiempo y por lo cual en algunos casos, especialmente reportes, el redimiendo de
+las consultas puede disminuir.
+Muchas bases de datos optimizan sus consultas y pueden mejorar los tiempos de
+respuesta al emplease procedimientos almacenados, al generar SQL en ejecución se
+pierde esta oportunidad de optimización. Algunas herramientas ORM no optimizan la consulta para la base de datos 
+utilizada, sino que generan un SQL genérico lo cual resulta en una muy mala
+
+\noindent Existen diversas herramientas que realizan la transformación según el
+lenguaje de programación y el motor de base de datos, en la tabla \ref{tabla22} se muestran los productos
+de software ORM más destacados de la actualidad.
+
+ \begin{table}[H]
+  \begin{center}
+ \begin{tabular}{|p{5cm}|l|p{3.5cm}|}
+    \hline
+    \tn{Software} & \tn{Plataforma} & \tn{Disponibilidad}  \\ \hline 
+    Dapper     & .NET 4.0        & Open source   \\ \hline
+    ECO		&	.NET 4.0 		&	Comercial	\\ \hline
+    EntitySpaces	&	.NET 4.0 	& Open source \\ \hline
+    EclipseLink		&	Java Virtual Machine	&	Open source \\ \hline
+   	Hibernate 	&	Java Virtual Machine &	Open source \\ \hline
+   	iBATIS		&	Multiplataforma		&	Open source	 \\ \hline
+   	LLBLGen\_Pro		&	.NET 4.0	&	Comercial\\ \hline
+   	Microsoft ADO.NET Entity Framework	& .NET 4.5 	& Parte de .NET 4.5\\	\hline
+   	nHibernate		& .NET 4.0	&	Open source\\	\hline
+   	ODB		&	Multiplataforma C++		&	Licencia dual\\	\hline
+   	SQLAlchemy	&	Python	&	Open source\\	\hline
+   	SQLObject	&	Python	&	\\	\hline
+   	Storm		&	Python	&	Open source\\	\hline
+   	SubSonic	&	.NET 2.0	&	Open source	\\	\hline
+   	TopLink		&	Java Virtual Machine	&	Comercial\\	\hline
+   	WebORB Integration Server	&	.NET, Java, PHP		&	Open source \& comercial\\
+   	\hline
+    \end{tabular}
+    \caption{\label{tabla22}Herramientas ORM populares en la actualidad}
+    \end{center}
+\end{table}

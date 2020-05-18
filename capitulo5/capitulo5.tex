@@ -1,0 +1,268 @@
+\chapter{CONCLUSIONES}
+
+\noindent En este capítulo se exponen las conclusiones de este trabajo de
+titulación.
+Para ello, primero se menciona una serie de recomendaciones donde se detalla
+qué tipo de base de datos utilizar según la aplicación a desarrollar, luego se
+analiza el cumplimiento de los objetivos mencionados en el capítulo
+\ref{capitulo1} y se describen las propuestas que se pueden llevar a cabo en el futuro a partir del trabajo
+desarrollado en este trabajo de titulación.
+
+\section{Recomendaciones en la elección del tipo de base de datos para una
+aplicación particular}\label{recomendacion}
+
+\noindent Si se desea crear un sistema desde cero, considerando que el
+desarrollo será bajo el paradigma de la orientación al objeto, es muy
+recomendable implementar la base de datos en el modelo objeto relacional. Es posible que esto
+tome mayor tiempo de implementación, ya que el desarrollador primero deberá
+interiorizarse con el modelo, cómo se crean los tipos de objetos, los
+relacionamientos, referencias, tablas de objetos, entre otros. Pero obtendrá
+una sintaxis más limpia al momento de realizar las consultas a la base de datos.
+Y por consecuencia, al momento de realizar mantenimiento de dicha aplicación,
+resultará sumamente sencillo de llevar a cabo porque existe una gran base de
+conocimiento en dicho paradigma.
+
+\noindent Por otro lado, si se desea migrar un sistema actual que se encuentra
+complemente implementado en el modelo relacional, es probable que sea muy
+complicado, puesto que habría que realizar una transformación tanto del
+código desarrollado como de la base de datos. Es
+posible que tome un tiempo elevado, pero con buenos resultados, ya que luego de la migración el código del sistema
+debería ser más sencillo de mantener gracias a la semántica del modelo
+implementado.
+
+\noindent Si se desea crear aplicaciones web donde existe una comunicación con
+otras aplicaciones códificadas en otros lenguajes de programación, se
+propone implementar con datos semi estructurados XML para comunicar el lenguaje
+de la aplicación web con las otras aplicaciones. Resulta provechoso almacenar
+los datos en XML, ya que es fácil de mantener y utilizar. Sólo se debe tener un cierto conocimiento en la extracción de datos XML; el
+desarrollo y puesta en marcha tomaría menos tiempo.
+
+%no existan muchas inserciones y principalmente la base de datos será
+%utilizada para la lectura de datos como por ejemplo un blog o una wiki, se
+% propone implementar mediante datos semi estructurados XML, ya que es fácil de mantener y usar.
+
+
+\noindent En el caso de que se desee crear aplicaciones o sistemas que no están
+bajo el paradigma orientación al objeto, no tendría mucho sentido utilizar el
+modelo objeto relacional, ya que el desarrollo sería más estructural y bastaría
+con utilizar el modelo relacional que para ese tipo de sistema resulta ser el
+más apropiado.
+
+\noindent Si es una aplicación transaccional pequeña, como control de bodega o
+carrito de compras, lo más sencillo sería utilizar el modelo relacional, ya que
+generalmente ese tipo de aplicaciones son fáciles de modelar debido a su
+similitud con los objetos del mundo real, por lo que resultaría innecesaria la
+creación de objetos complejos.
+
+% \noindent En el caso de aplicaciones móviles sencillas, como por ejemplo:
+% Lista de compras, notas personales, video juegos con puntajes locales, entre
+% otros, en donde los datos son almacenados en el mismo dispositivo, se recomienda
+% utilizar XML, pues no es necesario disponer de una base de datos para almacenar 
+% información que sólo se visualizará en dicho dispositivo. 
+
+\noindent Para problemas muy complejos, con una gran cantidad tablas y/o
+relacionamientos y que deban ser implementados con urgencia en un tiempo muy
+corto, se recomienda emplear una base de datos relacional, puesto que su creación es mucho
+más rápida que la objeto relacional y no requiere aprendizaje
+extra.
+
+\noindent Para cualquier tipo de aplicación en donde se requiera de muchas
+consultas donde exista una gran cantidad de agrupamientos con un inmenso
+número de datos, es recomendable el uso del modelo objeto relacional, según
+los datos obtenidos en el anexo \ref{anexo4} y la sección 
+\ref{comparacion_resultados} este modelo es mucho más eficiente que el relacional y sencillo de escribir, ya que se utilizan
+punteros y no existen joins.
+
+
+\section{Cumplimiento de los objetivos}
+
+\noindent Al comienzo de este trabajo de titulación, se propusieron una serie de
+objetivos específicos que eran necesarios para alcanzar el objetivo
+general: ``Evaluar y comparar la implementación de una base de datos relacional
+con respecto a una base de datos objeto relacional y datos semi estructurados
+en el sistema de administración de base de datos Oracle, utilizando las
+funciones disponibles en el servidor del SABD, con el fin de generar una guía que en base a
+criterios claros permita determinar cuál es el tipo de base de datos más
+adecuada a utilizar bajo ciertas características''.
+
+\noindent A continuación, se analizarán en qué medida se ha conseguido alcanzar
+cada uno de ellos:
+
+\begin{itemize}
+  \item \tn{Objetivo 1}: Estudiar, seleccionar y utilizar funciones del sistema
+  de administración de base de datos relacional Oracle 11G, que permitan la implementación de bases
+de datos objeto relacional y XML.
+
+%\begin{itemize}
+\noindent Para satisfacer este objetivo, se ha llevado a cabo una labor de
+investigación y documentación sobre el SABD Oracle y cómo se implementan los objetos, métodos y
+columnas del tipo XML dentro de una base de datos objeto relacional.
+%\end{itemize}
+
+\item \tn{Objetivo 2}: Comprender los múltiples métodos de implementación de los
+modelos mencionados con anterioridad para ser capaz de seleccionar adecuadamente entre
+ellos según la aplicación a desarrollar.
+
+% \begin{itemize}
+
+\noindent Sin duda esta tarea fue la más compleja, ya que las restricciones del
+motor hicieron que la implementación del modelo objeto relacional no fuera como se
+planteaba en la teoría. Sin embargo, en la sección \ref{recomendacion} del
+presente capítulo se recomienda qué tipo de aplicaciones se deben o pueden
+desarrollar según cada modelo. 
+% \end{itemize}
+
+\item \tn{Objetivo 3}: Diseñar el caso de estudio para luego implementarlo con
+Oracle 11G en una base de datos relacional, objeto relacional y datos semi
+estructurados como XML.
+
+\begin{itemize}
+
+\item El caso de estudio fue un problema en el que la memorista se vió
+enfrentada en la vida real y quiso ver las múltiples ganancias de implementarlo
+en el modelo objeto relacional o utilizar datos semi estructurados. Pero, este resultó ser muy
+grande y complejo lo que repercutió en toda la fase de implementación, su gran
+cantidad de relacionamientos N a N, sirvió para detectar algunas falencias que
+existen en Oracle para implementar navegabilidad bidireccional en objetos con
+muchos relacionamientos N a N.
+
+\item Claramente al tener mayor familiaridad con el modelo relacional, se
+ hace muy simple implementar el caso de estudio según el algoritmo de
+ transformación de entidad relacionamiento a relacional \cite{navathe}, sin duda
+ es un modelo muy probado y confiable, pero a la vez se queda corto en muchas
+ funcionalidades que el objeto relacional si soluciona, la redundancia de datos
+ y la creación de tablas innecesarias que fragmenta aún más la información, le
+ resta puntos al momento de elegir un modelo.
+ 
+ \item De la teoría a la implementación del modelo objeto relacional existieron
+ muchos obstáculos y dificultades, como por ejemplo la utilización de tablas
+ anidadas, en la teoría esa era la opción correcta y más viable para los relacionamientos de 1 a N y N a N,
+ sin embargo, para el caso de estudio que era altamente complejo fue imposible
+ lograr utilizar dicha estructura de datos y mantener la navegabilidad bidireccional, ya que si la referencia
+ de un objeto es almacenada en una tabla anidada y su estructura cambia luego de ser almacenada, la tabla
+ anidada quedará en un estado inválido. En cambio, si la base de datos es
+ implementada con navegabilidad unidireccional tal como se presenta en
+ \cite{susan}, se puede llevar a cabo sin inconvenientes.
+ 
+ \item La mejor solución para dicho problema fue utilizar un varray para los
+ relacionamientos, considerando un tamaño máximo razonable e implementando un
+ método dentro del objeto, que verifique en cada inserción que el varray no ha
+ llegado al tope.
+ Esta solución es mucho más sencilla de implementar y fácil de entender, ya que su
+ sintaxis es más limpia y menos compleja que una tabla anidada. Sin embargo, se
+ presentó el mismo problema descrito con anterioridad al momento de mantener la
+ navegabilidad bidireccional en relacionamientos de N a N. Para solucionar este
+ inconveniente se creó un nuevo tipo intersección, el cual posee una referencia
+ a cada objeto con el que se tiene un relacionamiento, para luego crear un
+ listado (varray) de referencias a ese nuevo objeto intersección y es dicho
+ listado el que se agrega a cada objeto del relacionamiento.
+  
+\item No existieron mayores inconvenientes al implementar columnas del tipo XML,
+aunque se requiere poseer una expertiz en la utilización de las funciones
+ligadas a la extracción de información en XML, ya que estas funciones son
+distintas a las que se manejan en SQL tradicional.
+
+ \end{itemize}
+
+\item \tn{Objetivo 4}: Definir criterios de comparación para las
+implementaciones tales como:
+Desempeño en consultas, facilidad de modelamiento, complejidad de aprendizaje
+por parte del desarrollador y/o DBA, entre otros.
+
+% \begin{itemize}
+\noindent En la sección \ref{comparacion_resultados} fueron presentados los criterios de
+comparación que se utilizaron para realizar el análisis de resultados. 
+% \end{itemize}
+
+\item \tn{Objetivo 5}: Realizar un análisis de resultados, en donde se compare
+cada una de las implementaciones, con el fin de
+estructurar una guía con los beneficios y desventajas dependiendo de la
+aplicación a desarrollar, según los criterios de comparación.
+
+\begin{itemize}
+\item Al igual que el item anterior en la sección \ref{comparacion_resultados} fueron
+presentados el análisis e interpretación de los resultados obtenidos según los criterios de
+comparación. 
+
+% \item El desempeño en casi todas las consultas fue altamente superior en el
+% modelo relacional, existen excepciones como en agrupamientos sencillos con
+% muchos datos y utilizando having en donde el modelo objeto relacional es mucho
+% más eficiente que el relacional.
+
+ \item Se ha podido establecer que las bases de datos objeto relacional 
+son más sencillas de modelar, lo cual queda demostrado
+en la versión UML del caso de estudio.
+Una vez que se entiende el funcionamiento y sintaxis resulta muy fácil de
+utilizar. Sin embargo el aprendizaje por parte del programador
+ establece la necesidad de tener un tiempo de capacitación, como elemento
+ fundamental para una implementación satisfactoria, en caso contrario el tiempo
+ de puesta en marcha se ve drásticamente aumentado.
+ 
+ \item  El mayor beneficio de utilizar el modelo objeto relacional fue
+ simplificar enormemente las consultas, al trabajar con punteros a los objetos
+ ya no se hace necesario hacer joins para filtrar datos. Una de las principales
+ desventajas del modelo relacional es la utilización de joins, ya que afecta
+ tanto su rendimiento al entregar los resultados, a mayor número de joins menos
+ óptima es la consulta, además cuando estos son demasiados se dificulta
+ inmensamente la lectura y entendimiento de la consulta.
+ 
+ \item En el caso de los datos semi estructurados, el utilizar XML se hace
+ bastante provechoso mezclando un tipo de dato XMLTYPE dentro de una base objeto
+ relacional, ya que en el mundo real existe información que contiene datos que
+ no tienen una estructura predefina, tal como fue el caso del requerimiento XML
+ del caso de estudio, por lo que se hace necesario implementar y complementar
+ ambas tecnologías. La manipulación de datos es bastante
+ simple de entender y de realizar. \end{itemize}
+\end{itemize}
+
+\section{Contratiempos en la planificación}
+ 
+ \noindent A continuación se mencionan las dificultades encontradas en la
+ investigación, las cuales implicaron un mayor tiempo al planificado:
+ 
+ \begin{itemize}
+%    \item El primer obstáculo fue la aprobación final del tema de memoria por
+%    parte de la comisión. Ya que éste fue recién aceptado a mediados de Junio, lo
+%    que conllevó a reorganizar la planificación inicial de la investigación, la
+%    que establecía como fecha de término el mes de Julio del presente año.
+   
+   \item El segundo inconveniente fue implementar los relacionamientos N a N en
+   el modelo objeto relacional. Tomó más tiempo de lo esperado lograr realizar
+   este proceso y mantener la navegabilidad bidireccional. Se hicieron múltiples
+   pruebas hasta llegar a la solución que finalmente cumpliera con los
+   requerimientos.
+ \end{itemize}
+ 
+ \section{Experiencia personal}
+ 
+ \noindent Fue una gran experiencia,
+ descubrir que existe un mundo más allá del SQL clásico que se enseña en la
+ universidad, en donde se puede modelar problemas del mundo real con mucha más
+ semántica, en el cual realmente se tiene una similitud con los objetos reales.
+ Poder aplicar los conocimientos previamente adquiridos del paradigma de la
+ orientación al objeto y complementarlos con el SQL, para poder generar
+ aplicaciones potentes y sencillas de mantener. 
+ 
+ \noindent La propuesta de transformación de modelo relacional a objeto
+ relacional, sin duda, es uno de los mayores logros de este trabajo de titulación, ya que se
+ encontró la mejor solución para cada caso y manteniendo la navegabilidad
+ bidireccional para modelos complejos, a diferencia de toda la documentación
+ citada en donde sólo mostraban soluciones para navegabilidad unidireccional o
+ bidireccional con modelo demasiado simples.  
+ 
+
+ \section{Trabajo futuro}
+ 
+ \noindent Como trabajo futuro se pretende proponer a una empresa
+ grande de la región, migrar
+ uno de sus sistemas al modelo objeto relacional y XML, en primera instancia
+ para demostrar las ganancias y beneficios que aportaría una implementación
+ de ese estilo en sistemas grandes. Por otro lado se podría evaluar cómo cambia
+ la teoría a la realidad y se comporta la programación orientada a objeto al utilizar este modelo, 
+ verificar la necesidad de hacer modificaciones a la capa persistencia de datos en el desarrollo de software.
+ 
+ \noindent Investigar y verificar cambios del modelo objeto
+ relacional y XML en el motor Oracle en su última versión 12c y cómo esto
+ evoluciona y se diferencia con lo presentado en esta investigación.
+ 
+ 

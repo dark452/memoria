@@ -1,0 +1,2437 @@
+\chapter{Documentación caso de estudio}
+
+
+
+
+\section{Documentación DER} \label{der}
+\noindent \tn{Documentación de entidades}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{personal}                                                     
+\\ \hline Descripción: & Personal del colegio                             
+\\ \hline Tipo:        & Normal                                            
+\\ \hline Atributos:  & \begin{tabular}{ll}
+\underline{rut}: & rut del personal (atributo compuesto \\ 
+&  número correlativo y dígito verificador)\\ 
+nombre\_completo: & Nombre completo del personal (atributo \\  
+& compuesto consta de nombres, apellido \\
+& paterno y materno) \\
+
+ fnac: & Fecha de nacimiento del personal\\ 
+edad: & Edad del personal (atributo derivado)\\ 
+direccion: & Dirección del personal (atributo compuesto \\
+&  consta: calle, número, código postal, ciudad \\ & y región) \\ 
+celular: & Números de celular personal (atributo \\ & multivaluado)\\
+mail: & Mails del personal (atributo multivaluado) \end{tabular} \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{docente}                                                               
+\\ \hline Descripción: & Personal docente del colegio                                  
+\\ \hline Tipo:       & Especialización de personal                                                     
+\\ \hline Atributos:   & \begin{tabular}{ll}
+cant\_cursos: & Cantidad de cursos en que hace clases (atributo \\
+& derivado) \end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre: }     & \tn{no\_docente}                                                               
+\\ \hline Descripción: & Personal no docente del colegio                                  
+\\ \hline Tipo:        & Especialización de personal                                                     
+\\ \hline Atributos:   & No tiene \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{cargo}                                                              
+\\ \hline Descripción: & Cargo que posee el personal no docente                                  
+\\ \hline Tipo:        & Normal                                                     
+\\ \hline Atributos:   & \begin{tabular}{ll}
+\underline{id\_cargo}: & Código identificador del cargo \\
+nom\_c: & Nombre del cargo \\
+desc\_c: & Descripción del cargo\\
+\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{nivel}                                                              
+\\ \hline Descripción: & Nivel de enseñanza de un curso por ejemplo
+1ero básico, 2do medio, etc.
+ \\ \hline Tipo:        & Normal                                                     
+\\ \hline Atributos:   & \begin{tabular}{ll}
+\underline{id\_nivel}: & Código identificador del nivel \\
+nom\_niv: & Nombre del nivel\\
+\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{curso}                                                              
+\\ \hline Descripción: & Curso del colegio por ejemplo 1ero básico A,
+2do medio B, etc.
+ \\ \hline Tipo:        & Débil con respecto a nivel, agregación
+ compuesta por \\ & curso, asignatura y relacionamiento curso\_asignatura
+  \\ \hline Atributos:   & \begin{tabular}{ll}
+\underline le\underline tr\underline a: & Letra identificadora del
+curso \\
+año: & Año del curso por ejemplo 1ero básico A 2013, \\
+& 2do medio B 2011 \\
+\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre: }     & \tn{asignatura}                                                           
+\\ \hline Descripción: & Asignatura dictada en un curso en particular
+ \\ \hline Tipo:        & Normal, agregación compuesta por
+ \\ & curso, asignatura y relacionamiento curso\_asignatura                                                  
+\\ \hline Atributos:   & \begin{tabular}{ll}
+\underline{id\_asig}: & Código identificador de la asignatura \\
+nom\_asig: & Nombre de la asignatura\\
+\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{programa\_tipo}                                                              
+\\ \hline Descripción: & Tipo de programa educacional ejemplo: Unidad,
+Aprendizaje esperado, etc.
+ \\ \hline Tipo:        & Normal \\ \hline 
+ Atributos:  
+& \begin{tabular}{ll} \underline{id\_tp}: & Código identificador del
+tipo de programa
+\\
+nom\_pt: & Nombre del tipo de programa\\
+abrev: & Abreviatura del tipo de programa Ej: U, AE, OFT, etc.
+\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{detalle\_programa}                                                              
+\\ \hline Descripción: & Detalle del programa educacional de una
+asignatura
+\\
+& ejemplo: Sumas y restas (unidad, 1ero básico).
+ \\ \hline Tipo:        & Normal \\ \hline 
+ Atributos:  
+& \begin{tabular}{ll} \underline{id\_dp}: & Código identificador del
+detalle de programa
+\\
+nomdp: & Nombre del detalle de programa, ejemplo unidad1\\
+desc\_dp: & Descripción por ejemplo ``Sumas y restas''\\
+\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{planificacion }                                                             
+\\ \hline Descripción: & Planificación realizada por un docente para
+una asignatura\\
+& de un curso en particular
+ \\ \hline Tipo:        & Normal \\ \hline 
+ Atributos:  
+& \begin{tabular}{ll} \underline{id\_plan}: & Código identificador de
+la planificación
+\\
+tipo\_plan: & Tipo de planificación: Anual, por unidad o por clase \\
+fcreacion: & Fecha de creación de la planificación\\
+ult\_estado: & Último estado por el que paso la planificación\\
+ult\_modif: & Fecha de la última modificación de la planificación\\
+\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{estado }                                                             
+\\ \hline Descripción: & Estados por los que pasa una planificación\\
+  \hline Tipo:        & Normal \\ \hline 
+Atributos:  
+& \begin{tabular}{ll} \underline{id\_estado}: & Código identificador
+del estado\\
+nom\_estado: & Nombre del estado por ejemplo: Vigente, \\
+&	rechazado, borrador\\
+\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{plan\_anual}                   
+\\ \hline Descripción: & Planificación del tipo anual realizada por un
+docente para una asignatura de un curso en particular
+ \\ \hline Tipo:        & Especialización de planificación \\ \hline 
+ Atributos: & No tiene \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{plan\_unidad}                                                            
+\\ \hline Descripción: & Planificación  del tipo por unidad realizada
+por un docente para una asignatura de un curso en particular
+ \\ \hline Tipo:        & Especialización de planificación \\ \hline 
+ Atributos: & No tiene \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{plan\_clase}                                                           
+\\ \hline Descripción: & Planificación  del tipo clase a clase
+realizada por un docente para una asignatura 
+ de un curso en particular
+ \\ \hline Tipo:        & Especialización de planificación \\ \hline 
+ Atributos: & No tiene \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{periodo}                                                           
+\\ \hline Descripción: & periodos (de tiempo) de una planificación
+anual\\
+ \hline Tipo:        & Normal \\ \hline 
+ Atributos: &  \begin{tabular}{ll} \underline{id\_periodo}: &
+ Código identificador del periodo\\
+mes\_ini: & Mes de inicio del periodo\\
+mes\_ter: & Mes de término del periodo\\
+duracion: & Duración del periodo en horas\\
+aprevios: & Aprendizajes previos que debe poseer el curso \\
+& (atributo
+multivaluado)\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{unidad}                                                           
+\\ \hline Descripción: & unidades (a pasar) en una planificación por
+unidad\\
+ \hline Tipo:       & Normal \\ \hline 
+ Atributos: &  \begin{tabular}{ll} \underline{id\_unidad}: &
+ Código identificador de la unidad\\
+fechai: & Fecha de inicio de la unidad\\
+fechat: & Fecha de término de la unidad\\
+duracion: & Duración del periodo en horas\\
+aprevios: & Aprendizajes previos que debe poseer el curso \\
+& (atributo multivaluado) \end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{clase}                                                           
+\\ \hline Descripción: & clases de una planificación clase a clase\\
+ \hline Tipo:        & Normal \\ \hline 
+ Atributos: &  \begin{tabular}{ll} \underline{id\_clase}: & Código
+ identificador de la clase\\
+fecha: & Fecha en que se realizará la clase\\
+horario: & horario en que se hará la clase (atributo compuesto \\
+& consta de día, hora inicio, hora término y duración)\\
+aprevios: & Aprendizajes previos que debe poseer el curso \\
+& (atributo multivaluado) \end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{metodologia}                                                           
+\\ \hline Descripción: & metodología a emplear en un periodo, unidad o
+actividad\\
+ \hline Tipo:        & Normal \\ \hline 
+ Atributos: &  \begin{tabular}{ll} \underline{id\_met}: & Código
+ identificador de la metodología\\
+nom\_met: & Nombre de la metodología\\
+desc\_met: & Descripción de la metodología \end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{recurso}                                                           
+\\ \hline Descripción: & recurso a utilizar en un periodo, unidad o
+actividad\\
+ \hline Tipo:        & Normal \\ \hline 
+ Atributos: &  \begin{tabular}{ll} \underline{id\_rec}: & Código
+ identificador del recurso\\
+nom\_rec: & Nombre del recurso\\
+desc\_rec: & Descripción del recurso \end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{12.15cm}|}
+ \hline
+\tn{Nombre:}      & \tn{actividad}                                                           
+\\ \hline Descripción: & actividad a realizar en una clase\\
+ \hline Tipo:        & Normal \\ \hline 
+ Atributos: &  \begin{tabular}{ll} \underline{id\_act}: & Código
+ identificador de la actividad\\
+desc\_act: & Descripción de la actividad \\
+duracion: & Duración de la actividad \end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+\par \noindent \tn{Documentación de los relacionamientos}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{curso\_asignatura}  \\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& curso \\ 
+&	asignatura\\
+\hline
+Cardinalidad: 	& 1 curso tiene muchas asignaturas\\
+&	1 asignatura pertenece sólo a 1 curso\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{jefe}  \\ \hline 
+Descripción: & Profesor jefe del curso\\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& docente \\ 
+&	curso \\
+\hline
+Cardinalidad: 	& 1 curso tiene sólo un profesor jefe\\
+&	1 profesor puede ser profesor jefe de 0 o 1 curso\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{nivel\_curso}  \\ \hline 
+Descripción: & Nivel de enseñanza al que pertenece el curso\\ \hline 
+Tipo:        & Débil \\ \hline 
+Entidades que participan:	& nivel \\ 
+&	curso \\
+\hline
+Cardinalidad: 	& 1 curso tiene sólo 1 nivel\\
+&	1 nivel puede tener muchos cursos\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{no\_docente\_cargo}  \\ \hline 
+Descripción: & Cargo que posee el no docente\\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& no\_docente \\ 
+&	cargo \\
+\hline
+Cardinalidad: 	& 1 no docente tiene sólo un cargo\\
+&	1 cargo puede tener asociado 1 o más no docentes\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{detalle\_programa\_asignatura} \\ \hline 
+Descripción: & Asignatura a la que pertenece el detalle de programa\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& detalle\_programa \\ 
+&	asignatura \\
+\hline
+Cardinalidad: 	& 1 detalle de programa tiene sólo una asignatura\\
+&	1 asignatura puede tener asociado 1 o más detalles de programas\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{detalle\_programa\_programa\_tipo}  \\ \hline 
+Descripción: & Tipo de programa al que pertenece el detalle de
+programa\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& detalle\_programa \\ 
+&	programa\_tipo \\
+\hline
+Cardinalidad: 	& 1 detalle de programa tiene sólo un tipo de
+programa\\
+&	1 tipo de programa puede tener asociado 1 o más detalles de programa\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{crea}  \\ \hline 
+Descripción: & Un docente crea una planificación\\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& planificacion\\ 
+&	docente \\
+\hline
+Cardinalidad: 	& 1 planificación tiene sólo un docente\\
+&	1 docente puede crear 1 o más planificaciones\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre: }     & \tn{planificacion\_estado}  \\ \hline 
+Descripción: & Estados por los que pasa una planificación\\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& planificacion \\ 
+&	estado\\
+\hline
+Cardinalidad: 	& 1 planificación puede pasar por muchos estados\\
+&	1 estado puede estar asociado a 1 o más planificaciones\\
+ \hline
+Atributos: &  \begin{tabular}{ll} fcambio: & Fecha cambio de
+estado (atributo \\ & multivaluado)  \end{tabular}
+\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre: }     & \tn{evaluacion}  \\ \hline 
+Descripción: & Un no docente evalúa si una planificación si esta
+correcta\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& planificacion \\ 
+&	no\_docente\\
+\hline
+Cardinalidad: 	& 1 planificación puede ser evaluada muchas veces por un
+no docente\\
+&	1 no docente puede evaluar muchas veces una planificación\\
+ \hline
+Atributos: &  \begin{tabular}{ll} EvaDetalle: & Detalle de la
+evaluación (atributo \\ & multivaluado compuesto, consta de \\ & fecha de
+evaluación y un comentario) \end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{plan\_anual\_periodo}  \\ \hline 
+Descripción: & Una planificación anual posee periodos\\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& plan\_anual\\ 
+&	periodo \\
+\hline
+Cardinalidad: 	& 1 periodo pertenece sólo a una planificación anual\\
+&	1 planificación anual puede tener 1 o más periodos\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{plan\_unidad\_unidad}  \\ \hline 
+Descripción: & Una planificación por unidad posee unidades\\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& plan\_unidad\\ 
+&	unidad \\
+\hline
+Cardinalidad: 	& 1 unidad pertenece sólo a una planificación por
+unidad\\
+&	1 planificación por unidad puede tener 1 o más unidades\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{plan\_clase\_clase}  \\ \hline 
+Descripción: & Una planificación clase a clase posee clases\\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& plan\_clase\\ 
+&	clase \\
+\hline
+Cardinalidad: 	& 1 clase pertenece sólo a una planificación clase a
+clase\\
+&	1 planificación clase a clase puede tener 1 o más clases\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{clase\_actividad}  \\ \hline 
+Descripción: & Actividades a realizar en una clase\\ \hline 
+Tipo:        & Normal \\ \hline 
+Entidades que participan:	& clase\\ 
+&	actividad \\
+\hline
+Cardinalidad: 	& 1 actividad pertenece sólo a una clase\\
+&	1 clase puede realizar 1 o más actividades\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{clase\_detalle\_programa}  \\ \hline 
+Descripción: & En una clase se enseñarán detalles de programas
+educacionales\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& clase\\ 
+&	detalle\_programa \\
+\hline
+Cardinalidad: 	& En 1 clase se pueden enseñar muchos detalles de
+programa\\
+&	1 detalle de programa puede ser enseñado en 1 o más clases\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{periodo\_detalle\_programa}  \\ \hline 
+Descripción: & En un periodo se enseñarán detalles de programas
+educacionales\\
+\hline Tipo:       & Normal \\ \hline 
+Entidades que participan:	& periodo\\ 
+&	detalle\_programa \\
+\hline
+Cardinalidad: 	& En 1 periodo se pueden enseñar muchos detalles de
+programa\\
+&	1 detalle de programa puede ser enseñado en 1 o más periodos\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{unidad\_detalle\_programa}  \\ \hline 
+Descripción: & En una unidad se enseñarán detalles de programas
+educacionales\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& unidad\\ 
+&	detalle\_programa \\
+\hline
+Cardinalidad: 	& En 1 unidad se pueden enseñar muchos detalles de
+programa\\
+&	1 detalle de programa puede ser enseñado en 1 o más unidades\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}     & \tn{unidad\_metodologia}  \\ \hline 
+Descripción: & En una unidad se aplicarán metodologías de enseñanza\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& unidad\\ 
+&	metodologia \\
+\hline
+Cardinalidad: 	& En 1 unidad se pueden emplear muchas metodologías\\
+&	1 metodología puede ser aplicada en 1 o más unidades\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{periodo\_metodologia}  \\ \hline 
+Descripción: & En un periodo se aplicarán metodologías de enseñanza\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& periodo\\ 
+&	\metodologia \\
+\hline
+Cardinalidad: 	& En 1 periodo se pueden emplear muchas metodologías\\
+&	1 metodología puede ser aplicada en 1 o más periodos\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{unidad\_recurso}  \\ \hline 
+Descripción: & En una unidad se puede utilizar recursos educativos\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& unidad\\ 
+&	recurso \\
+\hline
+Cardinalidad: 	& En 1 unidad se pueden utilizar muchos recursos
+educativos\\
+&	1 recurso puede ser utilizado en 1 o más unidades\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{periodo\_recurso}  \\ \hline 
+Descripción: & En un periodo se puede utilizar recursos educativos\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& periodo\\ 
+&	recurso \\
+\hline
+Cardinalidad: 	& En 1 periodo se pueden utilizar muchos recursos
+educativos\\
+&	1 recurso puede ser utilizado en 1 o más periodos\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{actividad\_recurso}  \\ \hline 
+Descripción: & En una actividad se puede utilizar recursos
+educativos\\
+\hline Tipo:       & Normal \\ \hline 
+Entidades que participan:	& actividad\\ 
+&	recurso \\
+\hline
+Cardinalidad:	& En 1 actividad se pueden utilizar muchos recursos
+educativos\\
+&	1 recurso puede ser utilizado en 1 o más actividades\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{actividad\_metodologia}  \\ \hline 
+Descripción: & En una actividad se aplicarán metodologías de
+enseñanza\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& actividad\\ 
+&	metodologia \\
+\hline
+Cardinalidad: 	& En 1 actividad se pueden emplear muchas
+metodologías\\
+&	1 metodología puede ser aplicada en 1 o más actividades\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{curso\_asignatura\_docente}  \\ \hline 
+Descripción: & Un docente dicta una asignatura en un curso
+específico\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& curso\\ 
+&	asignatura \\
+&	docente	\\
+\hline
+Cardinalidad: 	& En un 1 curso hay muchas asignaturas que son dictadas
+por 1 docente\\
+&	Muchas asignaturas pertenecen a 1 curso y es dictada por 1 docente\\
+&	1 docente puede dictar muchas asignaturas de 1 curso \\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabular}{|l|p{9.85cm}|}
+ \hline
+\tn{Nombre:}      & \tn{curso\_asignatura\_planificacion}  \\ \hline 
+Descripción: & Se crean planificaciones para una asignatura de un curso
+en específico\\
+\hline Tipo:        & Normal \\ \hline 
+Entidades que participan:	& curso\\ 
+&	asignatura \\
+&	planificacion	\\
+\hline
+Cardinalidad: 	& En un 1 curso hay muchas asignaturas de las que se
+pueden crear muchas planificaciones\\
+&	1 asignatura de 1 curso en particular puede tener muchas planificaciones
+asociadas\\
+&	1 planificación es creada para 1  asignatura de 1 curso en particular
+\\
+ \hline
+Atributos: 	& No tiene\\ \hline
+\end{tabular}
+\end{table}
+
+\section{Documentación modelo relacional} \label{docrelacional}
+
+\par \noindent \tn{Documentación de tablas} \\
+
+\noindent \tn{Nombre Tabla: nivel}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_nivel	& number	&	PK		&	NN,U 	& Identificador de
+nivel de enseñanza \\ \hline nom\_nivel		&	varchar(30)	&			&	NN	
+&
+Nombre del nivel de enseñanza
+\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: programa\_tipo}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} & \tn{Documentación}\\ \hline
+id\_pt	& \tn{number}	&	PK		&	NN,U 	& Identificador de
+tipo de programa \\ \hline 
+nom\_pt		&	varchar2(30)	&			&	NN	
+&
+Nombre del tipo de programa
+\\
+\hline
+abrev		&	varchar2(10)	&			&	NN
+&
+Abreviatura de tipo de programa
+\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: curso}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_nivel	& number	&	PK  FK1		&	NN,U 	& Identificador de
+nivel de enseñanza del curso \\ \hline 
+letra		&	char(1)	&	PK			&	NN	
+&
+Letra del curso
+\\
+\hline
+year		&	number	&			&	NN	
+&
+Año del curso
+\\
+\hline
+num\_correlativo	& number	&	FK2		&	NN,U 	& número de rut
+del profesor jefe \\ \hline dv		&	char(1)	&	FK2		&	NN		&
+dígito verificador del profesor jefe \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\noindent \tn{Nombre Tabla: personal}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline
+num\_correlativo	& number	&	PK		&	NN,U 	& número de rut
+\\ \hline dv		&	char(1)	&	PK		&	NN		&	dígito verificador \\ \hline
+nombres		&	varchar2(50)	&			&	NN 	&	Nombres  de la
+persona \\ \hline
+apaterno		&	varchar2(30)	&		&	NN		&	Apellido
+parterno de la persona \\ \hline
+amaterno		&	varchar2(30)	&		&	NN		&	Apellido
+materno de la persona \\ \hline
+fnac		&	date	&		&	NN		&	Fecha de nacimiento de la
+persona \\ \hline 
+calle		&	varchar2(30)	&			&	NN		&	Calle de la
+dirección de la persona \\ \hline
+num		&	varchar2(10)	&			&	NN		&	Número de la
+dirección de la persona \\ \hline
+cod\_postal		&	varchar2(10)	&			&	NN		&	Código postal de la
+dirección de la persona \\ \hline
+ciudad		&	varchar2(30)	&			&	NN		&	Ciudad donde vive la
+persona \\ \hline
+region		&	varchar2(30)	&			&	NN	&	Región donde vive la
+persona 
+\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: personalmail}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline num\_correlativo	& number	&	PK  FK		&	NN,U 	& número
+de rut \\ \hline dv		&	char(1)	&	PK, FK		&	NN		&	dígito
+verificador \\ \hline mail		&	varchar2(100)	&		PK	&	NN		&	Correo  de la
+persona
+\\
+\hline
+\end{tabular}
+\end{table}
+
+%\newpage
+
+\noindent \tn{Nombre Tabla: personalcelular}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline num\_correlativo	& number	&	PK, FK		&	NN,U 	& número
+de rut \\ \hline dv		&	char(1)	&	PK  FK		&	NN		&	dígito
+verificador \\ \hline celular		&	number	&		PK	&	NN	
+&
+Celular  de la persona
+\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: detalle\_programa}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_dp	& number	&	PK		&	NN,U 	& Identificador de
+detalle de programa \\ \hline 
+nom\_dp		&	varchar2(50)	&			&	NN	
+&
+Nombre del detalle de programa
+\\
+\hline
+desc\_dp		&	varchar2 (1000)	&			&	NN	
+&
+Descripción del detalle de programa
+\\
+\hline
+id\_pt	& number	&	FK1		&	NN,U 	& Identificador de
+tipo de programa \\ \hline 
+id\_asig	& number	&	FK2		&	NN,U 	& Identificador de
+de la asignatura del detalle de programa \\ \hline 
+\end{tabular}
+\end{table}
+
+
+
+
+
+\noindent \tn{Nombre Tabla: docente}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline personal\_num\_correlativo	& number	&	PK  FK		&	NN,U
+& número de rut \\ \hline 
+personal\_dv		&	char(1)	&	PK, FK		&
+NN & dígito verificador \\ \hline
+\end{tabular}
+\end{table}
+
+
+\noindent \tn{Nombre Tabla: no\_docente}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline personal\_num\_correlativo	& number	&	PK  FK1		&
+NN,U 	& número de rut \\ \hline personal\_dv		&	char(1)	&	PK  FK1		&
+NN & dígito verificador \\ \hline
+id\_cargo		&	number	&	FK2		&
+NN & Identificador del cargo del no docente \\ \hline
+\end{tabular}
+\end{table}
+
+
+\noindent \tn{Nombre Tabla: cargo}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_cargo	& number	&	PK	&	NN,U 	&
+Identificador del cargo \\ \hline 
+nom\_c		&
+varchar2(30) &  & NN & Nombre del cargo \\ \hline
+desc\_c		&	varchar2(500)	&			&
+NN & Descripción del cargo \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: estado}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_estado	& number	&	PK		&	NN,U 	&
+Identificador del estado por el que pasa una planificación \\ \hline 
+nom\_estado	& varchar2(30)	&			&	NN,U 	&
+Nombre del estado por el que pasa una planificación \\ \hline 
+\end{tabular}
+\end{table}
+
+\newpage
+\noindent \tn{Nombre Tabla: asignatura}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_asig	& number	&	PK		&	NN,U 	&
+Identificador de la asignatura \\ \hline nom\_asig		&
+varchar2(30) &  & NN & Nombre de la asignatura \\ \hline
+id\_nivel		&	number	&	FK1 FK2		&
+NN & Identificador del nivel al que pertenece la asignatura \\ \hline
+letra		&	char(1)	&	FK2		&
+NN & Letra del curso al que pertenece la asignatura \\ \hline
+num\_correlativo		&	number	&	FK3		&
+NN & Número de rut del profesor que dicta asignatura \\ \hline
+dv		&	char(1)	&	FK3		&
+NN & Dígito verificador del rut de profesor que dicta asignatura \\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: metodologia}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_met	& number	&	PK		&	NN,U 	&
+Identificador de la metodología \\ \hline   
+nom\_met	& varchar2(100)	&			&	NN,U 	&
+Nombre de la metodología \\ \hline
+desc\_met	& varchar2(500)	&		&	NN,U 	&
+Descripción de la metodología\\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+\noindent \tn{Nombre Tabla: planificacion}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_plan	& number	&	PK		&	NN,U 	&
+Identificador de una planificación \\ \hline 
+tipo\_plan	& varchar2(10)	&			&	NN,U 	&
+Tipo de planificación anual, unidad o clase \\ \hline 
+utl\_estado	& varchar2(30)	&			&	NN,U 	&
+Estado actual de la planificación \\ \hline 
+fcreacion	& date	&			&	NN,U 	&
+Fecha de creación de la planificación \\ \hline
+ult\_modif	& date	&			&	NN,U 	&
+Fecha de la última vez que se modificó la planificación \\ \hline
+num\_correlativo	& number	&	FK1		&	NN,U 	&
+Número de rut del profesor que crea la planificación \\ \hline   
+dv	& char(1)	&	FK1		&	NN,U 	&
+Dígito verificador del profesor que crea la planificación \\ \hline
+id\_asig	& number	&	FK2	&	NN,U 	&
+Identificador de la asignatura a la que pertenece la planificación \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+\noindent \tn{Nombre Tabla: plan\_anual}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_plan	& number	&	PK  FK		&	NN,U 	&
+Identificador de la planificación anual \\ \hline 
+\end{tabular}
+\end{table}
+
+\newpage
+\noindent \tn{Nombre Tabla: plan\_unidad}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_plan	& number	&	PK  FK		&	NN,U 	&
+Identificador de la planificación por unidad \\ \hline 
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: plan\_clase}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_plan	& number	&	PK, FK		&	NN,U 	&
+Identificador de la planificación clase a clase \\ \hline 
+\end{tabular}
+\end{table}
+
+
+
+\noindent \tn{Nombre Tabla: periodo}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_periodo	& number	&	PK		&	NN,U 	&
+Identificador del periodo de la planificación anual \\ \hline 
+duracion	& number	&			&	NN,U 	&
+Duración del periodo \\ \hline 
+mes\_ini	& date	&			&	NN,U 	&
+Mes de inicio del periodo \\ \hline 
+mes\_ter	& date	&			&	NN,U 	&
+Mes de término del periodo \\ \hline 
+id\_plan	& number	&		FK1  FK2	&	NN,U 	&
+Identificador de la planificación anual \\ \hline 
+\end{tabular}
+\end{table}
+
+
+\noindent \tn{Nombre Tabla: periodo\_aprevios}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_periodo	& number	&	PK  FK		&	NN,U 	&
+Identificador del periodo de la planificación anual \\ \hline 
+aprevio	& varchar2 (1000)	&		PK	&	NN,U 	&
+Aprendizaje previo \\ \hline 
+\end{tabular}
+\end{table}
+
+\newpage
+\noindent \tn{Nombre Tabla: unidad}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_unidad	& number	&	PK		&	NN,U 	&
+Identificador de la unidad de la planificación por unidad \\ \hline 
+fechai	& date	&			&	NN,U 	&
+Fecha de inicio de la unidad \\ \hline 
+fechat	& date	&			&	NN,U 	&
+Fecha de término de la unidad \\ \hline 
+id\_plan	& number	&		FK1 FK2	&	NN,U 	&
+Identificador de la planificación por unidad \\ \hline 
+\end{tabular}
+\end{table}
+%\newpage
+\noindent \tn{Nombre Tabla: unidad\_aprevios}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_unidad	& number	&	PK FK		&	NN,U 	&
+Identificador de la unidad de la planificación por unidad \\ \hline 
+aprevio	& varchar2 (1000)	&		PK	&	NN,U 	&
+Aprendizaje previo \\ \hline 
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: clase\_aprevios}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_clase	& number	&	PK  FK		&	NN,U 	&
+Identificador de la clase de la planificación clase a clase \\ \hline 
+aprevio	& varchar2 (1000)	&		PK	&	NN,U 	&
+Aprendizaje previo \\ \hline 
+\end{tabular}
+\end{table}
+
+\newpage
+\noindent \tn{Nombre Tabla: clase}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_clase	& number	&	PK		&	NN,U 	&
+Identificador de la clase de la planificación clase a clase \\ \hline 
+duracion	& number	&			&	NN,U 	&
+Duración de la clase \\ \hline 
+dia	& number	&			&	NN,U 	&
+Día en que se realizará la clase \\ \hline 
+hi	& date	&			&	NN,U 	&
+Hora de inicio de la clase \\ \hline 
+ht	& date	&			&	NN,U 	&
+Hora de término de la clase \\ \hline 
+fecha	& date	&			&	NN,U 	&
+Fecha de la clase \\ \hline 
+id\_plan	& number	&		FK1  FK2	&	NN,U 	&
+Identificador de la planificación clase a clase \\ \hline 
+\end{tabular}
+\end{table}
+
+
+
+\noindent \tn{Nombre Tabla: planificacion\_estado}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_plan	& number	&	PK  FK1		&	NN,U 	&
+Identificador de la planificación anual \\ \hline 
+id\_estado	& number	&	PK  FK2		&	NN,U 	&
+Identificador del estado por el que pasa una planificación \\ \hline 
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: metodologia\_unidad}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline unidad\_id\_unidad	& number	&	PK FK1		&	NN,U 	&
+Identificador de la unidad \\ \hline   
+metodologia\_id\_met	& number	&	PK FK2		&	NN,U 	&
+Identificador de la metodología \\ \hline 
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: planificacion\_estado\_fcambio}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_plan	& number	&	PK  FK1  FK2		&	NN,U 	&
+Identificador de la planificación anual \\ \hline 
+id\_estado	& number	&	PK  FK1  FK3		&	NN,U 	&
+Identificador del estado por el que pasa una planificación \\ \hline 
+fcambio	& date	&	PK		&	NN,U 	&
+Fecha en la que se realizó el cambio de estado en una
+planificación
+\\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+\noindent \tn{Nombre Tabla: evaluacion}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline num\_correlativo	& number	&	PK FK1 FK2		&	NN,U 	&
+Número de rut del no docente que validó la evaluación \\ \hline   
+dv	& char(1)	&	PK FK1 FK2		&	NN,U 	&
+Dígito verificador del no docente que validó la planificación \\ \hline
+planificacion\_id\_plan	& number	&	PK  FK3		&	NN,U 	&
+Identificador de la planificación validada
+\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: metodologia\_periodo}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline periodo\_id\_periodo	& number	&	PK FK1		&	NN,U 	&
+Identificador del periodo \\ \hline   
+metodologia\_id\_met	& number	&	PK  FK2		&	NN,U 	&
+Identificador de la metodología \\ \hline 
+\end{tabular}
+\end{table}
+
+\newpage
+\noindent \tn{Nombre Tabla: evaluacion\_detalle}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline num\_correlativo	& number	&	PK  FK1 FK2 FK3		&
+NN,U & Número de rut del no docente que validó la evaluación \\ \hline   
+dv	& char(1)	&	PK  FK1  FK2 FK3		&	NN,U 	&
+Dígito verificador del no docente que validó la planificación \\ \hline
+id\_plan	& number	&	PK FK3 FK4		&	NN,U 	&
+Identificador de la planificación validada\\
+\hline
+fecha\_eva	& date	&	PK	&	NN,U 	&
+Fecha en la que se validó la planificación
+\\
+\hline
+comentario	& varchar2(255)	&		&	NN,U 	&
+Comentarios sobre validación de la planificación
+\\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+
+
+\noindent \tn{Nombre Tabla: recurso}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_rec	& number	&	PK		&	NN,U 	&
+Identificador del recurso educativo \\ \hline   
+nom\_rec	& varchar2(100)	&		&	NN,U 	&
+Nombre del recurso educativo \\ \hline 
+desc\_rec	& varchar2(500)	&		&	NN,U 	&
+Descripción del recurso educativo \\ \hline 
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: recurso\_unidad}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline unidad\_id\_unidad	& number	&	PK FK1		&	NN,U 	&
+Identificador de la unidad de una planificación \\ \hline   
+id\_rec	& number	&	PK FK2		&	NN,U 	&
+Identificador del recurso educativo \\ \hline   
+\end{tabular}
+\end{table}
+
+\newpage
+\noindent \tn{Nombre Tabla: recurso\_periodo}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline periodo\_id\_periodo	& number	&	PK FK1		&	NN,U 	&
+Identificador del periodo de una planificación \\ \hline   
+id\_rec	& number	&	PK FK2		&	NN,U 	&
+Identificador del recurso educativo \\ \hline   
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: actividad}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_act	& number	&	PK	&	NN,U 	&
+Identificador de una actividad \\ \hline  
+desc\_act	& varchar2(500)	&		&	NN,U 	&
+Descripción de una actividad \\ \hline  
+duracion	& number	&		&	NN,U 	&
+Duración de una actividad \\ \hline 
+id\_clase	& number	&	FK1		&	NN,U 	&
+Identificador de una clase de una planificación clase a clase \\ \hline 
+id\_met	& number	&	FK2		&	NN,U 	&
+Identificador de una metodología \\ \hline 
+\end{tabular}
+\end{table}
+
+
+\noindent \tn{Nombre Tabla: recurso\_actividad}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline id\_rec	& number	&	PK FK1		&	NN,U 	&
+Identificador del recurso educativo \\ \hline  
+actividad\_id\_act	& number	&	PK FK2		&	NN,U 	&
+Identificador de una actividad \\ \hline   
+\end{tabular}
+\end{table}
+
+\newpage
+\noindent \tn{Nombre Tabla: detalle\_programa\_unidad}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline detalle\_programa\_id\_dp	& number	&	PK FK1		&	NN,U 	&
+Identificador de detalle de programa \\ \hline 
+unidad\_id\_unidad		&	number	&		PK FK2	&	NN	
+&
+Identificador de una unidad de una planificación por unidad
+\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: detalle\_programa\_periodo}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline detalle\_programa\_id\_dp	& number	&	PK FK1		&	NN,U 	&
+Identificador de detalle de programa \\ \hline 
+periodo\_id\_periodo		&	number	&		PK FK2	&	NN	
+&
+Identificador de un periodo de una planificación anual
+\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent \tn{Nombre Tabla: detalle\_programa\_clase}
+\begin{table}[H]
+\begin{tabular}{|p{4.5cm}|p{2.5cm}|p{1cm}|p{1.5cm}|p{3.55cm}|}
+ \hline
+\tn{Nombre atributo}      & \tn{Tipo dato} & \tn{PK FK} & \tn{Nulo Único} &
+\tn{Documentación}\\ \hline detalle\_programa\_id\_dp	& number	&	PK FK1		&	NN,U 	&
+Identificador de detalle de programa \\ \hline 
+clase\_id\_clase		&	number	&		PK FK2	&	NN	
+&
+Identificador de una clase de una planificación clase a clase
+\\
+\hline
+\end{tabular}
+\end{table}
+
+
+\newpage
+
+\section{Código SQL de creación de tablas del modelo relacional} \label{tablas}
+
+\noindent El modelo relacional fue implementado en la tablespace IMUNOZ, del
+servidor oracle del DISC. \\
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla nivel},
+label=ddl1] 
+  CREATE TABLE "NIVEL" 
+   (	"ID_NIVEL" NUMBER(*,0) NOT NULL ENABLE, 
+	"NOM_NIVEL" NUMBER(*,0),
+  	CONSTRAINT "NIVEL_PK" PRIMARY KEY ("ID_NIVEL"));
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla personal},
+label=ddl2] 
+  CREATE TABLE "PERSONAL" 
+  (	"NUM_CORRELATIVO" NUMBER(*,0) NOT NULL ENABLE, 
+	"DV" CHAR(1) NOT NULL ENABLE, 
+	"NOMBRES" VARCHAR2(255), 
+	"APATERNO" VARCHAR2(255), 
+	"AMATERNO" VARCHAR2(255), 
+	"FNAC" DATE, 
+	"CALLE" VARCHAR2(500), 
+	"NUM" VARCHAR2(10), 
+	"COD_POSTAL" VARCHAR2(10), 
+	"CIUDAD" VARCHAR2(255), 
+	"REGION" VARCHAR2(255),
+	CONSTRAINT "PERSONAL_PK" PRIMARY KEY ("NUM_CORRELATIVO", "DV"));
+  	
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla personalcelular},
+label=ddl2] 
+  CREATE TABLE "PERSONALCELULAR" 
+   (	"CELULAR" NUMBER(*,0) NOT NULL ENABLE, 
+	"NUM_CORRELATIVO" NUMBER(*,0) NOT NULL ENABLE, 
+	"DV" CHAR(1) NOT NULL ENABLE,
+	CONSTRAINT "PERSONALCELULAR_PK" PRIMARY KEY ("CELULAR",	"NUM_CORRELATIVO","DV"),
+	CONSTRAINT "PERSONALCELULAR_PERSONAL_FK" FOREIGN KEY ("NUM_CORRELATIVO", "DV")
+	REFERENCES "PERSONAL" ("NUM_CORRELATIVO", "DV"));
+	 
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla personalemail},
+label=ddl3] 
+  CREATE TABLE "PERSONALMAIL" 
+   (	"MAIL" VARCHAR2(500) NOT NULL ENABLE, 
+	"NUM_CORRELATIVO" NUMBER(*,0) NOT NULL ENABLE, 
+	"DV" CHAR(1) NOT NULL ENABLE,
+	CONSTRAINT "PERSONALMAIL_PK" PRIMARY KEY ("MAIL", "NUM_CORRELATIVO", "DV"),
+	CONSTRAINT "PERSONALMAIL_PERSONAL_FK" FOREIGN KEY ("NUM_CORRELATIVO", "DV") REFERENCES "PERSONAL" ("NUM_CORRELATIVO", "DV"));
+	
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla docente},
+label=ddl4] 
+  CREATE TABLE "DOCENTE" 
+   (	
+	"NUM_CORRELATIVO" NUMBER(*,0) NOT NULL ENABLE, 
+	"DV" CHAR(1) NOT NULL ENABLE,
+	CONSTRAINT "FK_ASS_2" FOREIGN KEY ("PERSONAL_NUM_CORRELATIVO", "PERSONAL_DV")
+	REFERENCES "PERSONAL" ("NUM_CORRELATIVO", "DV"));
+	
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla cargo},
+label=ddl5] 
+  CREATE TABLE "CARGO" 
+   (	"ID_CARGO" NUMBER(*,0) NOT NULL ENABLE, 
+	"NOM_C" VARCHAR2(255), 
+	"DESC_C" VARCHAR2(500),
+	CONSTRAINT "CARGO_PK" PRIMARY KEY ("ID_CARGO"));
+	
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla no\_docente},
+label=ddl6] 
+  CREATE TABLE "NO_DOCENTE" 
+   (	
+	"NUM_CORRELATIVO" NUMBER(*,0) NOT NULL ENABLE, 
+	"DV" CHAR(1) NOT NULL ENABLE,
+	CONSTRAINT "NO_DOCENTE_PK" PRIMARY KEY ("PERSONAL_NUM_CORRELATIVO",	"PERSONAL_DV"),
+	CONSTRAINT "FK_ASS_1" FOREIGN KEY ("PERSONAL_NUM_CORRELATIVO", "PERSONAL_DV") REFERENCES "PERSONAL" ("NUM_CORRELATIVO", "DV"),
+	CONSTRAINT "NO_DOCENTE_CARGO_FK" FOREIGN KEY ("ID_CARGO") REFERENCES "CARGO" ("ID_CARGO"));
+	
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla curso},
+label=ddl7] 
+  CREATE TABLE "CURSO" 
+   (	
+	"LETRA" CHAR(1) NOT NULL ENABLE, 
+	"YEAR" NUMBER(*,0), 
+	"ID_NIVEL" NUMBER(*,0) NOT NULL ENABLE, 
+	"NUM_CORRELATIVO" NUMBER(*,0), 
+	"DV" CHAR(1),	
+	CONSTRAINT "CURSO_PK" PRIMARY KEY ("LETRA", "ID_NIVEL"),
+	CONSTRAINT "CURSO_DOCENTE_FK" FOREIGN KEY ("NUM_CORRELATIVO", "DV") REFERENCES "DOCENTE" ("PERSONAL_NUM_CORRELATIVO", "PERSONAL_DV"),
+	CONSTRAINT "CURSO_NIVEL_FK" FOREIGN KEY ("ID_NIVEL") REFERENCES "NIVEL" ("ID_NIVEL"));	
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla asignatura},
+label=ddl8] 
+  CREATE TABLE "ASIGNATURA" 
+   (	"ID_ASIG" NUMBER(*,0) NOT NULL ENABLE, 
+	"NOM_ASIG" VARCHAR2(255), 
+	"LETRA" CHAR(1), 
+	"ID_NIVEL" NUMBER(*,0), 
+	"NUM_CORRELATIVO" NUMBER(*,0), 
+	"DV" CHAR(1),	
+	CONSTRAINT "ASIGNATURA_PK" PRIMARY KEY ("ID_ASIG"),
+	CONSTRAINT "ASIGNATURA_CURSO_FK" FOREIGN KEY ("LETRA", "ID_NIVEL") REFERENCES "CURSO" ("LETRA", "ID_NIVEL"),
+	CONSTRAINT "ASIGNATURA_DOCENTE_FK" FOREIGN KEY ("NUM_CORRELATIVO", "DV") REFERENCES "DOCENTE" ("PERSONAL_NUM_CORRELATIVO", "PERSONAL_DV"));	
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla programa\_tipo},
+label=ddl9] 
+  CREATE TABLE "PROGRAMA_TIPO" 
+   (	"ID_PT" NUMBER(*,0) NOT NULL ENABLE, 
+	"NOM_PT" VARCHAR2(255), 
+	"ABREV" VARCHAR2(10),	
+	CONSTRAINT "PROGRAMA_TIPO_PK" PRIMARY KEY ("ID_PT"));	
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={DDL Tabla detalle\_programa},
+label=ddl10] 
+  CREATE TABLE "DETALLE_PROGRAMA" 
+   (	"ID_DP" NUMBER(*,0) NOT NULL ENABLE, 
+	"NOM_DP" VARCHAR2(255), 
+	"DESC_DP" VARCHAR2(1000), 
+	"ID_PT" NUMBER(*,0), 
+	"ID_ASIG" NUMBER(*,0),
+	CONSTRAINT "DETALLE_PROGRAMA_PK" PRIMARY KEY ("ID_DP"),
+	CONSTRAINT "DETALLE_PROGRAMA_ASIGNATURA_FK"	
+	FOREIGN KEY ("ID_ASIG")	REFERENCES "ASIGNATURA" ("ID_ASIG"), 
+	CONSTRAINT "DETALLE_PROGRAMA_PROG_TIPO_FK" 
+	FOREIGN KEY ("ID_PT") REFERENCES "PROGRAMA_TIPO" ("ID_PT"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla planificacion},
+label=ddl11] 
+  CREATE TABLE "PLANIFICACION" 
+   (	"ID_PLAN" NUMBER(*,0) NOT NULL ENABLE, 
+	"TIPO_PLAN" VARCHAR2(10), 
+	"ULT_ESTADO" VARCHAR2(255), 
+	"FCREACION" DATE, 
+	"ULT_MODIF" DATE, 
+	"NUM_CORRELATIVO" NUMBER(*,0), 
+	"DV" CHAR(1), 
+	"ID_ASIG" NUMBER(*,0),
+	CONSTRAINT "PLANIFICACION_PK" PRIMARY KEY ("ID_PLAN"),
+	CONSTRAINT "PLANIFICACION_ASIGNATURA_FK" FOREIGN KEY ("ID_ASIG") 
+	REFERENCES "ASIGNATURA" ("ID_ASIG"),
+	CONSTRAINT "PLANIFICACION_DOCENTE_FK" FOREIGN KEY ("NUM_CORRELATIVO", "DV") 
+	REFERENCES "DOCENTE" ("PERSONAL_NUM_CORRELATIVO", "PERSONAL_DV"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla plan\_anual},
+label=ddl12] 
+  CREATE TABLE "PLAN_ANUAL" 
+   (	"PLANIFICACION_ID_PLAN" NUMBER(*,0) NOT NULL ENABLE,
+	CONSTRAINT "PLAN_ANUAL_PK" PRIMARY KEY ("PLANIFICACION_ID_PLAN"),
+	CONSTRAINT "FK_ASS_11" FOREIGN KEY ("PLANIFICACION_ID_PLAN") 
+	REFERENCES "PLANIFICACION" ("ID_PLAN")
+);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla plan\_unidad},
+label=ddl13] 
+  CREATE TABLE "PLAN_UNIDAD" 
+   (	"PLANIFICACION_ID_PLAN" NUMBER(*,0) NOT NULL ENABLE,
+	CONSTRAINT "PLAN_UNIDAD_PK" PRIMARY KEY ("PLANIFICACION_ID_PLAN"),
+	CONSTRAINT "FK_ASS_12" FOREIGN KEY ("PLANIFICACION_ID_PLAN") 
+	REFERENCES "PLANIFICACION" ("ID_PLAN"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla plan\_clase},
+label=ddl13_1] 
+  CREATE TABLE "PLAN_CLASE" 
+   (	"PLANIFICACION_ID_PLAN" NUMBER(*,0) NOT NULL ENABLE,
+	CONSTRAINT "PLAN_CLASE_PK" PRIMARY KEY ("PLANIFICACION_ID_PLAN"),
+	CONSTRAINT "FK_ASS_13" FOREIGN KEY ("PLANIFICACION_ID_PLAN") 
+	REFERENCES "PLANIFICACION" ("ID_PLAN"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla estado},
+label=ddl14] 
+  CREATE TABLE "ESTADO" 
+   (	"ID_ESTADO" NUMBER(*,0) NOT NULL ENABLE, 
+	"NOM_ESTADO" VARCHAR2(255),
+	CONSTRAINT "ESTADO_PK" PRIMARY KEY ("ID_ESTADO"));
+\end{lstlisting}
+	
+\begin{lstlisting}[language=SQL, caption={DDL Tabla planificacion\_estado},
+label=ddl15] 
+  CREATE TABLE "PLANIFICACION_ESTADO" 
+   (	"ID_PLAN" NUMBER(*,0) NOT NULL ENABLE, 
+	"ESTADO_ID_ESTADO" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "PLANIFICACION_ESTADO_PK" PRIMARY KEY ("ID_PLAN",
+	"ESTADO_ID_ESTADO")
+	CONSTRAINT "FK_ASS_19" FOREIGN KEY ("ESTADO_ID_ESTADO")
+	REFERENCES "ESTADO" ("ID_ESTADO"),
+	CONSTRAINT "PLANIFICACION_ESTADO_PLAN_FK1" FOREIGN KEY ("ID_PLAN")
+	REFERENCES "PLANIFICACION" ("ID_PLAN"));
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={DDL Tabla planificacion\_estado\_fcambio}, label=ddl16] 
+   CREATE TABLE "PLANIFICACION_ESTADO_FCAMBIO" 
+   (	"FCAMBIO" DATE NOT NULL ENABLE, 
+	"ID_ESTADO" NUMBER(*,0) NOT NULL ENABLE, 
+	"ID_PLAN" NUMBER(*,0) NOT NULL ENABLE,
+	CONSTRAINT "PLAN_ESTADO_FC_PK" 
+	PRIMARY KEY ("FCAMBIO","ID_ESTADO","ID_PLAN"),
+	CONSTRAINT "PE_FCAMBIO_ESTADO_FK" 
+	FOREIGN KEY ("ID_ESTADO")
+	REFERENCES "ESTADO" ("ID_ESTADO"),
+	CONSTRAINT "PE_FCAMBIO_PLANIFICACION_FK" 
+	FOREIGN KEY ("ID_PLAN") REFERENCES "PLANIFICACION" ("ID_PLAN"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla evaluacion}, label=ddl17] 
+   CREATE TABLE "EVALUACION" 
+   (	"NUM_CORRELATIVO" NUMBER(*,0) NOT NULL ENABLE, 
+	"DV" CHAR(1 BYTE) NOT NULL ENABLE, 
+	"PLANIFICACION_ID_PLAN" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "EVALUACION_PK" 
+	PRIMARY KEY ("NUM_CORRELATIVO", "DV","PLANIFICACION_ID_PLAN"),
+	CONSTRAINT "FK_ASS_43" 
+	FOREIGN KEY ("PLANIFICACION_ID_PLAN")
+	REFERENCES "PLANIFICACION" ("ID_PLAN"),
+	CONSTRAINT "EVALUACION_NO_DOCENTE_FK1" 
+	FOREIGN KEY ("NUM_CORRELATIVO", "DV")
+	REFERENCES "NO_DOCENTE" ("PERSONAL_NUM_CORRELATIVO", "PERSONAL_DV"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla periodo},
+label=ddl19] 
+CREATE TABLE "PERIODO" 
+   (	"ID_PERIODO" NUMBER(*,0) NOT NULL ENABLE, 
+	"DURACION" NUMBER(*,0), 
+	"MES_INI" DATE, 
+	"MER_TER" DATE, 
+	"ID_PLAN" NUMBER(*,0), 
+	CONSTRAINT "PERIODO_PK" PRIMARY KEY ("ID_PERIODO"),
+	CONSTRAINT "PERIODO_PLAN_ANUAL_FK" FOREIGN KEY ("ID_PLAN")
+	REFERENCES "PLAN_ANUAL" ("PLANIFICACION_ID_PLAN"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla evaluacion\_detalle},
+label=ddl18] 
+CREATE TABLE "EVALUACION_DETALLE" 
+   (	"FECHA_EVA" DATE NOT NULL ENABLE, 
+	"COMENTARIO" VARCHAR2(255 BYTE), 
+	"NUM_CORRELATIVO" NUMBER(*,0) NOT NULL ENABLE, 
+	"DV" CHAR(1 BYTE) NOT NULL ENABLE, 
+	"ID_PLAN" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "EVALUACION_DETALLE_PK" PRIMARY KEY ("FECHA_EVA", "NUM_CORRELATIVO","DV", "ID_PLAN"),
+	CONSTRAINT "ED_NO_DOCENTE_FK" FOREIGN KEY ("NUM_CORRELATIVO", "DV")
+	REFERENCES "NO_DOCENTE" ("PERSONAL_NUM_CORRELATIVO", "PERSONAL_DV"),
+	CONSTRAINT "ED_PLANIFICACION_FK" FOREIGN KEY ("ID_PLAN") 
+	REFERENCES "PLANIFICACION" ("ID_PLAN"));
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla unidad},
+label=ddl20] 
+CREATE TABLE "UNIDAD" 
+   (	"ID_UNIDAD" NUMBER(*,0) NOT NULL ENABLE, 
+	"FECHAI" DATE, 
+	"FECHAT" DATE, 
+	"ID_PLAN" NUMBER(*,0), 
+	CONSTRAINT "UNIDAD_PK" PRIMARY KEY ("ID_UNIDAD"),
+	CONSTRAINT "UNIDAD_PLAN_UNIDAD_FK" FOREIGN KEY ("ID_PLAN")
+	REFERENCES "PLAN_UNIDAD" ("PLANIFICACION_ID_PLAN"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla clase},
+label=ddl21] 
+CREATE TABLE "CLASE" 
+   (	"ID_CLASE" NUMBER(*,0) NOT NULL ENABLE, 
+	"FECHA" DATE, 
+	"DURACION" NUMBER(*,0), 
+	"DIA" NUMBER(*,0), 
+	"HI" DATE, 
+	"HT" DATE, 
+	"ID_PLAN" NUMBER(*,0), 
+	CONSTRAINT "CLASE_PK" PRIMARY KEY ("ID_CLASE"),
+	CONSTRAINT "CLASE_PLAN_CLASE_FK" FOREIGN KEY ("ID_PLAN")
+	REFERENCES "PLAN_CLASE" ("PLANIFICACION_ID_PLAN"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla periodo\_aprevios},
+label=ddl22] 
+CREATE TABLE "PERIODO_APREVIOS" 
+   (	"APREVIOS" VARCHAR2(1000 BYTE) NOT NULL ENABLE, 
+	"ID_PERIODO" NUMBER(*,0) NOT NULL ENABLE, 
+	 CONSTRAINT "PERIODO_APREVIOS_PK" PRIMARY KEY ("APREVIOS", "ID_PERIODO"),
+	 CONSTRAINT "PERIODO_APREVIOS_PERIODO_FK" FOREIGN KEY ("ID_PERIODO")
+	 REFERENCES "PERIODO" ("ID_PERIODO"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla unidad\_aprevios},
+label=ddl23] 
+CREATE TABLE "UNIDAD_APREVIOS" 
+   (	"APREVIOS" VARCHAR2(1000 BYTE) NOT NULL ENABLE, 
+	"ID_UNIDAD" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "UNIDAD_APREVIOS_PK" PRIMARY KEY ("ID_UNIDAD", "APREVIOS"),
+	CONSTRAINT "UNIDAD_APREVIOS_UNIDAD_FK" 
+	FOREIGN KEY ("ID_UNIDAD") REFERENCES "UNIDAD" ("ID_UNIDAD"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla clase\_aprevios},
+label=ddl24] 
+CREATE TABLE "CLASE_APREVIOS" 
+   (	"APREVIOS" VARCHAR2(1000 BYTE) NOT NULL ENABLE, 
+	"ID_CLASE" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "CLASE_APREVIOS_PK" PRIMARY KEY ("APREVIOS", "ID_CLASE"),
+	CONSTRAINT "CLASE_APREVIOS_CLASE_FK" FOREIGN KEY ("ID_CLASE")
+	REFERENCES "CLASE" ("ID_CLASE"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla metodologia},
+label=ddl25] 
+CREATE TABLE "METODOLOGIA" 
+   (	"ID_MET" NUMBER(*,0) NOT NULL ENABLE, 
+	"NOM_MET" VARCHAR2(255 BYTE), 
+	"DESC_MET" VARCHAR2(500 BYTE), 
+	CONSTRAINT "METODOLOGIA_PK" PRIMARY KEY ("ID_MET"));
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={DDL Tabla metodologia\_periodo},
+label=ddl26] 
+CREATE TABLE "METODOLOGIA_PERIODO" 
+   (	"PERIODO_ID_PERIODO" NUMBER(*,0) NOT NULL ENABLE, 
+	"METODOLOGIA_ID_MET" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "METODOLOGIA_PERIODO__IDX" 
+	PRIMARY KEY ("PERIODO_ID_PERIODO","METODOLOGIA_ID_MET"),
+	CONSTRAINT "FK_ASS_44" 
+	FOREIGN KEY ("PERIODO_ID_PERIODO")
+	REFERENCES "PERIODO" ("ID_PERIODO"),
+	CONSTRAINT "FK_ASS_45" 
+	FOREIGN KEY ("METODOLOGIA_ID_MET")
+	REFERENCES "METODOLOGIA" ("ID_MET"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla metodologia\_unidad},
+label=ddl27] 
+CREATE TABLE "METODOLOGIA_UNIDAD" 
+   (	"UNIDAD_ID_UNIDAD" NUMBER(*,0) NOT NULL ENABLE, 
+	"METODOLOGIA_ID_MET" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "METODOLOGIA_UNIDAD__IDX" 
+	PRIMARY KEY ("UNIDAD_ID_UNIDAD",
+	"METODOLOGIA_ID_MET"),
+	CONSTRAINT "FK_ASS_46" 
+	FOREIGN KEY ("UNIDAD_ID_UNIDAD")
+	REFERENCES "UNIDAD" ("ID_UNIDAD"),
+	CONSTRAINT "FK_ASS_47" 
+	FOREIGN KEY ("METODOLOGIA_ID_MET")
+	REFERENCES "METODOLOGIA" ("ID_MET"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla recurso},
+label=ddl28]
+CREATE TABLE "RECURSO" 
+   (	"ID_RECURSO" NUMBER(*,0) NOT NULL ENABLE, 
+	"NOM_REC" VARCHAR2(255 BYTE), 
+	"DESC_REC" VARCHAR2(500 BYTE), 
+	 CONSTRAINT "RECURSO_PK" 
+	 PRIMARY KEY ("ID_RECURSO"));
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={DDL Tabla actividad},
+label=ddl29]
+CREATE TABLE "ACTIVIDAD" 
+   (	"ID_ACT" NUMBER(*,0) NOT NULL ENABLE, 
+	"DESC_ACT" VARCHAR2(500 BYTE), 
+	"DURACION" NUMBER(*,0), 
+	"ID_CLASE" NUMBER(*,0), 
+	"ID_MET" NUMBER(*,0), 
+	CONSTRAINT "ACTIVIDAD_PK" PRIMARY KEY ("ID_ACT"),
+	CONSTRAINT "ACTIVIDAD_CLASE_FK" FOREIGN KEY ("ID_CLASE")
+	REFERENCES "CLASE" ("ID_CLASE"),
+	CONSTRAINT "ACTIVIDAD_METODOLOGIA_FK" FOREIGN KEY ("ID_MET")
+	REFERENCES "METODOLOGIA" ("ID_MET"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla recurso\_actividad},
+label=ddl30]
+CREATE TABLE "RECURSO_ACTIVIDAD" 
+   (	"RECURSO_ID_RECURSO" NUMBER(*,0) NOT NULL ENABLE, 
+	"ACTIVIDAD_ID_ACT" NUMBER(*,0) NOT NULL ENABLE, 
+	 CONSTRAINT "RECURSO_ACTIVIDAD__IDX" PRIMARY KEY ("RECURSO_ID_RECURSO",
+	 "ACTIVIDAD_ID_ACT"),
+	 CONSTRAINT "FK_ASS_50" FOREIGN KEY ("RECURSO_ID_RECURSO")
+	 REFERENCES "RECURSO" ("ID_RECURSO"),
+	 CONSTRAINT "FK_ASS_51" FOREIGN KEY ("ACTIVIDAD_ID_ACT")
+	 REFERENCES "ACTIVIDAD" ("ID_ACT"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla recurso\_periodo},
+label=ddl31]
+CREATE TABLE "RECURSO_PERIODO" 
+   (	"PERIODO_ID_PERIODO" NUMBER(*,0) NOT NULL ENABLE, 
+	"RECURSO_ID_RECURSO" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "RECURSO_PERIODO__IDX" PRIMARY KEY ("PERIODO_ID_PERIODO",
+	"RECURSO_ID_RECURSO"),
+	CONSTRAINT "FK_ASS_52" FOREIGN KEY ("PERIODO_ID_PERIODO")
+	REFERENCES "PERIODO" ("ID_PERIODO"), 
+	CONSTRAINT "FK_ASS_53" FOREIGN KEY ("RECURSO_ID_RECURSO")
+	REFERENCES "RECURSO" ("ID_RECURSO"));
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={DDL Tabla recurso\_unidad},
+label=ddl32]
+CREATE TABLE "RECURSO_UNIDAD" 
+   (	"UNIDAD_ID_UNIDAD" NUMBER(*,0) NOT NULL ENABLE, 
+	"RECURSO_ID_RECURSO" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "RECURSO_UNIDAD__IDX" PRIMARY KEY ("UNIDAD_ID_UNIDAD",
+	"RECURSO_ID_RECURSO"),
+	CONSTRAINT "FK_ASS_54" FOREIGN KEY ("UNIDAD_ID_UNIDAD")
+	REFERENCES "UNIDAD" ("ID_UNIDAD"),
+	CONSTRAINT "FK_ASS_55" FOREIGN KEY ("RECURSO_ID_RECURSO")
+	REFERENCES "RECURSO" ("ID_RECURSO"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla detalle\_programa\_clase},
+label=ddl33]
+CREATE TABLE "DETALLE_PROGRAMA_CLASE" 
+   (	"DETALLE_PROGRAMA_ID_DP" NUMBER(*,0) NOT NULL ENABLE, 
+	"CLASE_ID_CLASE" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "DETALLE_PROGRAMA_CLASE__IDX" PRIMARY KEY
+	("DETALLE_PROGRAMA_ID_DP", "CLASE_ID_CLASE"),
+	CONSTRAINT "FK_ASS_37" FOREIGN KEY ("CLASE_ID_CLASE")
+	REFERENCES "CLASE" ("ID_CLASE"),
+	CONSTRAINT "DETALLE_PROGRAMA_CLASE_DE_FK1" FOREIGN KEY ("DETALLE_PROGRAMA_ID_DP")
+	REFERENCES "DETALLE_PROGRAMA" ("ID_DP"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tabla detalle\_programa\_periodo},
+label=ddl34]
+CREATE TABLE "DETALLE_PROGRAMA_PERIODO" 
+   (	"DETALLE_PROGRAMA_ID_DP" NUMBER(*,0) NOT NULL ENABLE, 
+	"PERIODO_ID_PERIODO" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "DETALLE_PROGRAMA_PERIODO__IDX" PRIMARY KEY
+	("DETALLE_PROGRAMA_ID_DP", "PERIODO_ID_PERIODO"),
+	CONSTRAINT "FK_ASS_39" FOREIGN KEY ("PERIODO_ID_PERIODO")
+	REFERENCES "PERIODO" ("ID_PERIODO"),
+	CONSTRAINT "DETALLE_PROGRAMA_PERIODO__FK1" FOREIGN KEY ("DETALLE_PROGRAMA_ID_DP")
+	REFERENCES "DETALLE_PROGRAMA" ("ID_DP"));
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={DDL Tabla detalle\_programa\_unidad},
+label=ddl35]
+CREATE TABLE "DETALLE_PROGRAMA_UNIDAD" 
+   (	"DETALLE_PROGRAMA_ID_DP" NUMBER(*,0) NOT NULL ENABLE, 
+	"UNIDAD_ID_UNIDAD" NUMBER(*,0) NOT NULL ENABLE, 
+	CONSTRAINT "DETALLE_PROGRAMA_UNIDAD__IDX" PRIMARY KEY
+	("DETALLE_PROGRAMA_ID_DP", "UNIDAD_ID_UNIDAD"),
+	CONSTRAINT "FK_ASS_41" FOREIGN KEY ("UNIDAD_ID_UNIDAD")
+	REFERENCES "UNIDAD" ("ID_UNIDAD"),
+	CONSTRAINT "DETALLE_PROGRAMA_UNIDAD_D_FK1" FOREIGN KEY ("DETALLE_PROGRAMA_ID_DP")
+	REFERENCES "DETALLE_PROGRAMA" ("ID_DP"));
+\end{lstlisting}
+
+\section{Mapeo de caso de estudio de entidad relacionamiento / UML a la capa
+objeto relacional}
+\label{tipos_or}
+
+\noindent El modelo objeto relacional fue implementado en otro tablespace del
+servidor Oracle del DISC, esto con el propósito de evitar confusiones y
+futuros problemas.
+El nombre del tablespace es IMUNOZ2. \\
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Nivel},
+label=or1]
+CREATE OR REPLACE TYPE NIVEL_OB AS OBJECT ( 
+	ID_NIVEL  NUMBER(10), NOM_NIVEL VARCHAR2(255));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Curso}, label =or2]
+CREATE OR REPLACE TYPE CURSO_OB AS OBJECT  (
+    REFNIVEL REF NIVEL_OB,
+    ID_NIVEL NUMBER(10),
+    LETRA CHAR(1),   YEAR_ DATE);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo celular personal y varray
+con su listado}, label=or2]
+CREATE OR REPLACE TYPE CELULAR_PERSONA_OB AS OBJECT(
+NUMERO_CELULAR NUMBER(10));
+
+CREATE OR REPLACE TYPE CELULARES AS VARRAY(5) OF CELULAR_PERSONA_OB;
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo email personal y varray de
+con listado}, label=or2]
+CREATE OR REPLACE TYPE EMAIL_PERSONA_OB AS OBJECT (
+CORREO VARCHAR2(500));
+
+CREATE OR REPLACE TYPE MAILS AS VARRAY(5) OF EMAIL_PERSONA_OB;
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Rut personal},
+label=or2]
+CREATE OR REPLACE TYPE RUT_PERSONA_OB AS   OBJECT
+  ( NUM_CORRELATIVO NUMBER(8),
+    DV              CHAR(1));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Nombre completo del
+personal}, label=or3]
+CREATE OR REPLACE TYPE NOMBRE_COMPLETO_PERSONA_OB AS OBJECT (
+		NOMBRES  VARCHAR2(255),
+    APATERNO VARCHAR2(255),
+    AMATERNO VARCHAR2(255));
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Dirección del
+personal}, label=or5]
+CREATE OR REPLACE TYPE DIRECCION_PERSONA_OB AS OBJECT
+  ( CALLE      VARCHAR2(500),
+    NUM        VARCHAR2(10),
+    COD_POSTAL VARCHAR2(10),
+    CIUDAD     VARCHAR2(255),
+    REGION     VARCHAR2(255));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Cargo}, label=or6]
+CREATE OR REPLACE TYPE CARGO_OB AS OBJECT(
+ID_CARGO NUMBER(10), 
+NOM_C   VARCHAR2(255), 
+DESC_C  VARCHAR2(255));
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Personal}, label=or6]
+CREATE OR REPLACE TYPE PERSONAL_OB AS OBJECT(
+  RUT RUT_PERSONA_OB,
+  NOMBRE_COMPLETO NOMBRE_COMPLETO_PERSONA_OB,
+  FNAC DATE,
+  DIRECCION DIRECCION_PERSONA_OB,
+  NUM_CELULARES CELULARES,
+  CORREOS MAILS,
+  MEMBER FUNCTION EDAD RETURN NUMBER)
+  NOT FINAL;
+
+CREATE OR REPLACE TYPE BODY PERSONAL_OB IS
+  MEMBER FUNCTION EDAD RETURN NUMBER IS
+    BEGIN
+     RETURN(TRUNC(MONTHS_BETWEEN(SYSDATE, SELF.FNAC) / 12));
+    END;
+  END;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Docente y No Docente},
+label=or6] 
+CREATE OR REPLACE TYPE DOCENTE_OB UNDER PERSONAL_OB(
+	CURSO_JEFE REF CURSO_OB);
+
+CREATE OR REPLACE TYPE NO_DOCENTE_OB UNDER PERSONAL_OB(
+  CARGO REF CARGO_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Agregando el profesor jefe al curso},
+label=or6] 
+ALTER TYPE CURSO_OB ADD ATTRIBUTE 
+(PROF_JEFE REF DOCENTE_OB) CASCADE;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Asignatura}, label=or6]
+CREATE OR REPLACE TYPE ASIGNATURA_OB AS OBJECT(
+ID_ASIG NUMBER(10), 
+NOM_ASIG VARCHAR2(255), 
+CURSO_DICTA REF CURSO_OB, 
+PROFESOR_DICTA REF DOCENTE_OB);
+\end{lstlisting}
+
+%%%%
+\newpage
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Programa tipo}, label=or6]
+CREATE OR REPLACE TYPE PROGRAMA_TIPO_OB AS OBJECT(
+  ID_PT   NUMBER(10),
+  NOM_PT  VARCHAR2(255),
+  ABREV   VARCHAR2(10));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Detalle Programa },
+label=or6] 
+CREATE OR REPLACE TYPE DETALLE_PROGRAMA_OB AS OBJECT(
+  ID_DP   NUMBER(10),  NOM_DP  VARCHAR2(255),
+  DESC_DP   VARCHAR2(500),
+  ASIGNATURA  REF ASIGNATURA_OB, 
+  PROGRAMA_TIPO   REF PROGRAMA_TIPO_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Planificación},
+label=or6] 
+CREATE OR REPLACE TYPE PLANIFICACION_OB AS OBJECT(
+  ID_PLAN   NUMBER(10),  ULT_MODIF   DATE,
+  ULT_ESTADO    VARCHAR2(30),
+  FCREACION   DATE,
+  TIPO_PLAN   VARCHAR2(10),
+  PROF_CREA   REF DOCENTE_OB, 
+  ASIGNATURA    REF ASIGNATURA_OB) NOT FINAL;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo Planificación anual, unidad
+y clase}, label=or6] 
+CREATE OR REPLACE TYPE PLAN_ANUAL_OB UNDER PLANIFICACION_OB() NOT FINAL;
+
+CREATE OR REPLACE TYPE PLAN_UNIDAD_OB UNDER PLANIFICACION_OB() NOT FINAL;
+
+CREATE OR REPLACE TYPE PLAN_CLASE_OB UNDER PLANIFICACION_OB() NOT FINAL;
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo aprevios y varray con
+su listado}, label=or6] 
+CREATE OR REPLACE TYPE APREVIOS_OB AS OBJECT (
+  APRENDIZAJE_PREV    VARCHAR2(1000));
+
+CREATE OR REPLACE TYPE LISTADO_APREVIOS AS VARRAY(10) OF REF APREVIOS_OB;
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo periodo},
+label=or6] 
+CREATE OR REPLACE TYPE PERIODO_OB AS OBJECT(
+  ID_PERIODO  NUMBER(10),
+  DURACION    NUMBER(3),
+  MES_INI   DATE, 
+  MES_TER   DATE,
+  PLAN_ANUAL_PERTENECE  REF PLAN_ANUAL_OB,
+  APREVIOS    LISTADO_APREVIOS);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo unidad},
+label=or6] 
+CREATE OR REPLACE TYPE UNIDAD_OB AS OBJECT(
+  ID_UNIDAD  NUMBER(10),
+  FECHAI   DATE, 
+  FECHAT   DATE,
+  PLAN_UNIDAD_PERTENECE  REF PLAN_UNIDAD_OB,
+  APREVIOS    LISTADO_APREVIOS);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo clase},
+label=or6] 
+CREATE OR REPLACE TYPE CLASE_OB AS OBJECT(
+  ID_CLASE  NUMBER(10),
+  HORARIO   HORARIO_CLASE_OB, 
+  FECHA   DATE,
+  PLAN_CLASE_PERTENECE  REF PLAN_CLASE_OB,
+  APREVIOS    LISTADO_APREVIOS);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo recurso},
+label=or6] 
+CREATE OR REPLACE TYPE RECURSO_OB AS OBJECT(
+  ID_REC    NUMBER(10),
+  NOM_REC   VARCHAR2(100),
+  DESC_REC    VARCHAR2(500));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo actividad},
+label=or6] 
+CREATE OR REPLACE TYPE ACTIVIDAD_OB AS OBJECT(
+  ID_ACT    NUMBER(10),
+  DESC_ACT    VARCHAR2(500),
+  DURACION    NUMBER(3),
+  CLASE_HECHA   REF CLASE_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo detalle programa periodo -
+tipo intersección para relacionamiento N : N}, label=or6] 
+CREATE OR REPLACE TYPE DETALLE_PROGRAMA_PERIODO_OB AS 
+	OBJECT( DETALLE_PROGRAMA  REF DETALLE_PROGRAMA_OB,
+  PERIODO   REF PERIODO_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo detalle programa unidad -
+tipo intersección para relacionamiento N : N}, label=or6] 
+CREATE OR REPLACE TYPE DETALLE_PROGRAMA_UNIDAD_OB AS 
+  OBJECT( DETALLE_PROGRAMA  REF DETALLE_PROGRAMA_OB,
+  UNIDAD   REF UNIDAD_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo detalle programa clase -
+tipo intersección para relacionamiento N : N}, label=or6] 
+CREATE OR REPLACE TYPE DETALLE_PROGRAMA_CLASE_OB AS 
+	OBJECT(DETALLE_PROGRAMA  REF DETALLE_PROGRAMA_OB,
+  CLASE   REF CLASE_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo recurso actividad tipo intersección para relacionamiento N : N}, label=or6] 
+CREATE OR REPLACE TYPE RECURSO_ACTIVIDAD_OB AS 
+  OBJECT(RECURSO  REF RECURSO_OB,  ACTIVIDAD   REF ACTIVIDAD_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo recurso periodo -
+tipo intersección para relacionamiento N : N}, label=or6] 
+CREATE OR REPLACE TYPE RECURSO_PERIODO_OB AS 
+	OBJECT(PERIODO REF PERIODO_OB, RECURSO   REF RECURSO_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo recurso unidad -
+tipo intersección para relacionamiento N : N}, label=or6] 
+CREATE OR REPLACE TYPE RECURSO_UNIDAD_OB AS 
+	OBJECT(UNIDAD  REF UNIDAD_OB,
+  RECURSO   REF RECURSO_OB);
+\end{lstlisting}
+ \newpage
+\begin{lstlisting}[language=SQL, caption={DDL Tipo metodología periodo -
+tipo intersección para relacionamiento N : N}, label=or6] 
+CREATE OR REPLACE TYPE METODOLOGIA_PERIODO_OB AS 
+	OBJECT(PERIODO  REF PERIODO_OB, 
+  METODOLOGIA   REF METODOLOGIA_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo metodología unidad -
+tipo intersección para relacionamiento N : N}, label=or6] 
+CREATE OR REPLACE TYPE METODOLOGIA_UNIDAD_OB AS OBJECT(
+  UNIDAD  REF UNIDAD_OB, METODOLOGIA   REF METODOLOGIA_OB);
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo varray actividades y
+agrando el listado a la clase y metodología}, label=or6] 
+CREATE OR REPLACE TYPE ACTIVIDADES_CLASE_OB AS VARRAY(5) OF REF ACTIVIDAD_OB;
+
+ALTER TYPE CLASE_OB ADD ATTRIBUTE (ACTIVIDADES ACTIVIDADES_CLASE_OB) CASCADE;
+
+ALTER TYPE METODOLOGIA_OB ADD ATTRIBUTE (ACTIVIDADES ACTIVIDADES_CLASE_OB) CASCADE;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo varray de los tipo
+intersección}, label=or6] 
+CREATE OR REPLACE TYPE DETALLES_PERIODOS AS VARRAY(15)
+OF REF DETALLE_PROGRAMA_PERIODO_OB;
+
+CREATE OR REPLACE TYPE DETALLES_UNIDADES AS VARRAY(15) OF REF DETALLE_PROGRAMA_UNIDAD_OB;
+
+CREATE OR REPLACE TYPE DETALLES_CLASES AS VARRAY(15) OF REF DETALLE_PROGRAMA_CLASE_OB;
+
+CREATE OR REPLACE TYPE RECURSOS_ACTIVIDADES AS VARRAY(15) OF REF RECURSO_ACTIVIDAD_OB;
+
+CREATE OR REPLACE TYPE RECURSOS_PERIODOS AS VARRAY(15) OF REF RECURSO_PERIODO_OB;
+
+CREATE OR REPLACE TYPE RECURSOS_UNIDADES AS VARRAY(15) OF REF RECURSO_UNIDAD_OB;
+
+CREATE OR REPLACE TYPE METODOLOGIAS_PERIODOS AS VARRAY(15) OF REF METODOLOGIA_PERIODO_OB;
+
+CREATE OR REPLACE TYPE METODOLOGIAS_UNIDADES AS VARRAY(15) OF REF METODOLOGIA_UNIDAD_OB;
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Agregando listado de tipos
+intersección en los objetos involucrados}, label=or6]
+ALTER TYPE DETALLE_PROGRAMA_OB ADD ATTRIBUTE (PERIODOS DETALLES_PERIODOS)CASCADE;
+
+ALTER TYPE DETALLE_PROGRAMA_OB ADD ATTRIBUTE (UNIDADES DETALLES_UNIDADES)CASCADE;
+
+ALTER TYPE DETALLE_PROGRAMA_OB ADD ATTRIBUTE (CLASES DETALLES_CLASES)CASCADE;
+
+ALTER TYPE PERIODO_OB ADD ATTRIBUTE (DETALLES DETALLES_PERIODOS)CASCADE;
+
+ALTER TYPE UNIDAD_OB ADD ATTRIBUTE (DETALLES DETALLES_UNIDADES)CASCADE;
+
+ALTER TYPE CLASE_OB ADD ATTRIBUTE (DETALLES DETALLES_CLASES)CASCADE;
+
+ALTER TYPE PERIODO_OB ADD ATTRIBUTE (RECURSOS RECURSOS_PERIODOS)CASCADE;
+
+ALTER TYPE RECURSO_OB ADD ATTRIBUTE (PERIODOS RECURSOS_PERIODOS)CASCADE;
+
+ALTER TYPE UNIDAD_OB ADD ATTRIBUTE (RECURSOS RECURSOS_UNIDADES)CASCADE;
+
+ALTER TYPE RECURSO_OB ADD ATTRIBUTE (UNIDADES RECURSOS_UNIDADES)CASCADE;
+
+ALTER TYPE RECURSO_OB ADD ATTRIBUTE (ACTIVIDADES RECURSOS_ACTIVIDADES)CASCADE;
+
+ALTER TYPE ACTIVIDAD_OB ADD ATTRIBUTE (RECURSOS RECURSOS_ACTIVIDADES)CASCADE;
+
+\end{lstlisting}
+
+%%%
+
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo varray listado periodos,
+unidades y clases}, label=or6] 
+CREATE OR REPLACE TYPE LISTADO_PERIODOS AS VARRAY(50) OF REF PERIODO_OB;
+
+CREATE OR REPLACE TYPE LISTADO_UNIDADES AS VARRAY(50) OF REF UNIDAD_OB;
+
+CREATE OR REPLACE TYPE LISTADO_CLASES AS VARRAY(50) OF REF CLASE_OB;
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Agregando los listados de periodos,
+unidades y clases}, label=or6] 
+ALTER TYPE PLAN_ANUAL_OB ADD ATTRIBUTE (PERIODOS LISTADO_PERIODOS) CASCADE;
+
+ALTER TYPE PLAN_UNIDAD_OB ADD ATTRIBUTE (UNIDADES LISTADO_UNIDADES) CASCADE;
+
+ALTER TYPE PLAN_CLASE_OB ADD ATTRIBUTE (CLASES LISTADO_CLASES) CASCADE;
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo estado}, label=or6] 
+CREATE OR REPLACE TYPE ESTADO_OB AS  OBJECT (
+    ID_ESTADO  NUMBER(10), NOM_ESTADO VARCHAR(255));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo fecha cambio estado
+planificación y varray con su listado}, label=or6] 
+CREATE OR REPLACE TYPE
+FCAMBIO_ESTADO_PLAN AS OBJECT( FECHA_CAMBIO   DATE);
+
+CREATE OR REPLACE TYPE LISTADO_FCAMBIO_ESTADO AS VARRAY(20) OF REF FCAMBIO_ESTADO_PLAN;  
+
+\end{lstlisting}
+\newpage
+\begin{lstlisting}[language=SQL, caption={DDL tipo evaluación detalles y varray con su listado}, label=or6] 
+CREATE OR REPLACE TYPE EVALUACION_DETALLE_OB AS OBJECT(
+  FECHA_EVA   DATE, 
+  COMENTARIO  VARCHAR2(500));
+  
+CREATE OR REPLACE TYPE LISTADO_EVALUACION_DETALLE AS VARRAY(20) OF REF EVALUACION_DETALLE_OB;  
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL Tipo no docente planificacion -
+tipo intersección para relacionamiento N : N y varray con su listado},
+label=or6] 
+CREATE OR REPLACE TYPE PLANIFICACION_ESTADO_OB AS OBJECT (
+	PLANIFICACION REF PLANIFICACION_OB, ESTADO  REF ESTADO_OB,
+	LISTADO_FECHA_CAMBIOS   LISTADO_FCAMBIO_ESTADO);
+
+CREATE OR REPLACE TYPE LISTADO_PLAN_ESTADOS AS VARRAY(50) OF REF PLANIFICACION_ESTADO_OB;
+  
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={Agregando listado de tipos
+intersección en los objetos involucrados},
+label=or6] 
+ALTER TYPE NO_DOCENTE_OB ADD 
+	ATTRIBUTE (PLANIFICACIONES LISTADO_EVALUACIONES) CASCADE;
+
+ALTER TYPE PLANIFICACION_OB ADD 
+	ATTRIBUTE (EVALUADORES LISTADO_EVALUACIONES) CASCADE;
+
+ALTER TYPE PLANIFICACION_OB ADD 
+	ATTRIBUTE (ESTADOS LISTADO_PLAN_ESTADOS) CASCADE;
+
+ALTER TYPE ESTADO_OB ADD 
+	ATTRIBUTE (PLANIFICACIONES LISTADO_PLAN_ESTADOS) CASCADE;
+
+\end{lstlisting}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo varray de no docentes y agregando el listado en cargo}, label=or6] 
+CREATE OR REPLACE TYPE LISTADO_NO_DOCENTE AS 
+	VARRAY(10) OF REF NO_DOCENTE_OB;
+
+ALTER TYPE CARGO_OB ADD ATTRIBUTE (NO_DOCENTES LISTADO_NO_DOCENTE) CASCADE;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo varray de planificaciones y agregando el listado en docente y asignatura}, label=or6] 
+CREATE OR REPLACE TYPE LISTADO_PLANIFICACIONES AS VARRAY(100) OF REF PLANIFICACION_OB;
+
+ALTER TYPE DOCENTE_OB ADD ATTRIBUTE (PLANIFICACIONES LISTADO_PLAN_ESTADOS) CASCADE;
+
+ALTER TYPE ASIGNATURA_OB ADD ATTRIBUTE (PLANIFICACIONES LISTADO_PLANIFICACIONES) CASCADE;
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo varray con listado
+de detalle programa y agregando el listado en asignatura},
+label=or6] 
+CREATE OR REPLACE TYPE LISTADO_DETALLE_PROG AS 
+VARRAY(50) OF REF DETALLE_PROGRAMA_OB;  
+
+ALTER TYPE ASIGNATURA_OB ADD ATTRIBUTE (DETALLES LISTADO_DETALLE_PROG) CASCADE;
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo varray con listado
+de asignaturas y agregando el listado en curso y docente},
+label=or6] 
+CREATE OR REPLACE TYPE LISTADO_ASIGNATURAS AS 
+VARRAY(100) OF REF ASIGNATURA_OB;
+
+ALTER TYPE CURSO_OB ADD ATTRIBUTE (ASIGNATURAS LISTADO_ASIGNATURAS) CASCADE;
+
+ALTER TYPE DOCENTE_OB ADD ATTRIBUTE (ASIGNATURAS LISTADO_ASIGNATURAS) CASCADE;
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL tipo varray con listado
+de cursos y agregando el listado en nivel},
+label=or6] 
+CREATE OR REPLACE TYPE LISTADO_CURSOS AS 
+VARRAY(100) OF REF CURSO_OB;
+
+ALTER TYPE NIVEL_OB ADD ATTRIBUTE (CURSOS LISTADO_CURSOS) CASCADE;
+
+\end{lstlisting}
+
+\newpage
+\section{Mapeo de caso de estudio de la capa objeto relacional a la capa de 
+persistencia}
+\label{tablas_or}
+
+\begin{lstlisting}[language=SQL, caption={DDL tabla nivel, curso, asignatura,
+personal, docente, cargo, no\_docente, estado, planificacion, plan\_anual y
+plan\_unidad}, label=or6] 
+CREATE TABLE NIVEL OF NIVEL_OB( 
+PRIMARY KEY(ID_NIVEL));
+
+CREATE TABLE CURSO OF CURSO_OB (
+ID_NIVEL	SCOPE IS REFNIVEL,
+PRIMARY KEY(ID_NIVEL,LETRA));
+
+CREATE TABLE ASIGNATURA OF ASIGNATURA_OB(
+PRIMARY KEY(ID_ASIG));
+
+CREATE TABLE PERSONAL OF PERSONAL_OB(
+PRIMARY KEY(RUT.NUM_CORRELATIVO,RUT.DV));
+
+CREATE TABLE DOCENTE OF DOCENTE_OB(
+PRIMARY KEY(RUT.NUM_CORRELATIVO,RUT.DV));
+
+CREATE TABLE CARGO OF CARGO_OB(
+PRIMARY KEY(ID_CARGO);
+
+CREATE TABLE NO_DOCENTE OF DOCENTE_OB(
+CARGO SCOPE IS CARGO,
+PRIMARY KEY(RUT.NUM_CORRELATIVO,RUT.DV));
+
+CREATE TABLE ESTADO OF ESTADO_OB (
+PRIMARY KEY(ID_ESTADO));
+
+CREATE TABLE PLANIFICACION OF PLANIFICACION_OB(
+PRIMARY KEY(ID_PLAN));
+
+CREATE TABLE PLAN_ANUAL OF PLAN_ANUAL_OB(
+PRIMARY KEY(ID_PLAN));
+
+CREATE TABLE PLAN_UNIDAD OF PLAN_UNIDAD_OB(
+PRIMARY KEY(ID_PLAN));
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[language=SQL, caption={DDL tabla
+plan\_clase, periodo, unidad y clase}, label=or6] 
+CREATE TABLE PLAN_CLASE OF PLAN_CLASE_OB(
+PRIMARY KEY(ID_PLAN));
+
+CREATE TABLE PERIODO OF PERIODO_OB(
+PLAN_ANUAL_PERTENECE SCOPE IS PLAN_ANUAL,
+PRIMARY KEY(ID_PERIODO));
+
+CREATE TABLE UNIDAD OF UNIDAD_OB(
+PLAN_UNIDAD_PERTENECE SCOPE IS PLAN_UNIDAD,
+PRIMARY KEY(ID_UNIDAD));
+
+CREATE TABLE CLASE OF CLASE_OB(
+PLAN_CLASE_PERTENECE SCOPE IS PLAN_CLASE,
+PRIMARY KEY(ID_CLASE));
+\end{lstlisting}
+
+\begin{lstlisting}[language=SQL, caption={DDL tabla actividad, recurso,
+metodologia, programa\_tipo y detalle\_programa},
+label=or6] 
+CREATE TABLE ACTIVIDAD OF ACTIVIDAD_OB (
+PRIMARY KEY(ID_ASIG));
+
+CREATE TABLE RECURSO OF RECURSO_OB(
+PRIMARY KEY(ID_REC));
+
+CREATE TABLE METODOLOGIA OF METODOLOGIA_OB(
+PRIMARY KEY(ID_MET));
+
+CREATE TABLE PROGRAMA_TIPO OF PROGRAMA_TIPO_OB(
+PRIMARY KEY(ID_PT));
+
+CREATE TABLE DETALLE_PROGRAMA OF DETALLE_PROGRAMA_OB(
+PROGRAMA_TIPO SCOPE IS PROGRAMA_TIPO,
+PRIMARY KEY(ID_DP));
+\end{lstlisting}
+
+\section{Detalles de implementación de nuevo requerimiento utilizando XML}
+\label{anexo_xml}
+
+
+\subsection{Registro de esquema en servidor}
+
+\begin{lstlisting}[language=SQL, caption={Registro esquema XML en servidor},
+label=registroxml] BEGIN
+    DBMS_XMLSCHEMA.REGISTERSCHEMA(
+        schemaurl => 'http://webserver.disc.ucn.cl/~imunoz/schemav.xsd',
+        schemadoc => '<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+				  <xs:element name="curriculum">
+				    <xs:complexType>
+				      <xs:sequence>
+				        <xs:element name="estudios">
+				          <xs:complexType><xs:sequence>
+				              <xs:element name="estudio" maxOccurs="unbounded" minOccurs="0">
+				                <xs:complexType><xs:sequence>
+				                    <xs:element type="xs:string" name="nombre_establecimiento"/>
+				                    <xs:element type="xs:string" name="carrera" minOccurs="0"/>
+				                    <xs:element type="xs:string" name="ciudad"/>
+				                    <xs:element type="xs:short" name="fecha_egreso"/>
+				                  </xs:sequence>
+				                  <xs:attribute type="xs:string" name="nivel" use="optional"/>
+				                </xs:complexType> </xs:element>
+				            </xs:sequence></xs:complexType></xs:element>
+				        <xs:element name="cursos">
+				          <xs:complexType><xs:sequence>
+				              <xs:element name="curso" maxOccurs="unbounded" minOccurs="0">
+				                <xs:complexType><xs:sequence>
+				                    <xs:element type="xs:string" name="tipo"/>
+				                    <xs:element type="xs:string" name="nombre"/>
+				                    <xs:element type="xs:byte" name="horas"/>
+				                  </xs:sequence>
+				                  <xs:attribute type="xs:string" name="area" use="optional"/>
+				                </xs:complexType></xs:element>
+				            </xs:sequence></xs:complexType></xs:element>
+				        <xs:element name="idiomas">
+				          <xs:complexType><xs:sequence>
+				              <xs:element name="idioma" maxOccurs="unbounded" minOccurs="0">
+				                <xs:complexType><xs:sequence>
+				                    <xs:element type="xs:string" name="nivel"/>
+				                  </xs:sequence>
+				                  <xs:attribute type="xs:string" name="nombre" use="optional"/>
+				                </xs:complexType></xs:element></xs:sequence>
+				          </xs:complexType> </xs:element>
+				      </xs:sequence></xs:complexType></xs:element>
+				</xs:schema>', local => FALSE, gentypes => FALSE,
+        genbean => FALSE, gentables => FALSE,
+        force => FALSE,  owner => 'IMUNOZ2',
+        OPTIONS => DBMS_XMLSCHEMA.REGISTER_BINARYXML);
+END;
+\end{lstlisting}
+
+
+\subsection{Verificación de validez de documentos XML}
+
+\noindent Antes de realizar una inserción o actualización en la tabla que
+contiene la columna XML, se debe verificar si el documento XML a insertar o
+actualizar es válido con respecto al esquema registrado en el servidor. En el
+código \ref{triggerxml} se crea un trigger que se encarga de verificar si los
+datos insertados o actualizados en la columna xmltype son validos según el
+esquema registrado. \\
+
+\begin{lstlisting}[language=SQL, caption={Trigger que verifica si el
+documento xml es válido al insertar y actualizar}, label=triggerxml] 
+CREATE TRIGGER trigger_xml BEFORE INSERT OR UPDATE ON personalxml FOR EACH ROW
+DECLARE 
+  newxml XMLType;
+BEGIN
+  newxml := :new.curriculum;
+  XMLTYPE.schemavalidate(newxml);
+END; /
+\end{lstlisting}
